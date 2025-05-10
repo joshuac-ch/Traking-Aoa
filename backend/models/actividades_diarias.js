@@ -15,9 +15,16 @@ const sequelize=require("../src/config/database")
     }
   }
   actividades_diarias.init({    
+    id:{
+      type:DataTypes.BIGINT,
+      allowNull:false,
+      autoIncrement:true,
+      primaryKey:true
+    },
     usuario_id: {
       type:DataTypes.BIGINT,
       allowNull:false,
+     
       references:{
         model:'usuario',
         key:'id'
