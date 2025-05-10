@@ -18,6 +18,7 @@ const sequelize=require("../src/config/database")
     id: {
      type: DataTypes.BIGINT,
      allowNull:false,
+     primaryKey:true,
       autoIncrement:true
     },
     habito_id:{
