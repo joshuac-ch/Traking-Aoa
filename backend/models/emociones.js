@@ -18,7 +18,8 @@ const sequelize=require("../src/config/database")
     id: {
       type:DataTypes.BIGINT,
       allowNull:false,
-      autoIncrement:true    
+      autoIncrement:true,    
+      primaryKey:true
     },
     usuario_id: {
       type:DataTypes.INTEGER,
