@@ -17,14 +17,14 @@ const InsetActividades=async(req,res)=>{
         //const titulo="Estudiar AWS"
         //const descripcion="Descripcion breve"
         //const fecha=new Date()
-        if(!usuario_id,!titulo,!descripcion,!fecha){
+        if(!usuario_id,!titulo,!descripcion){
             return res.status(404).json({message:"No se rellenaroin los campos"})
         }
         const modelo=await ActividadesDiarias.create({
             usuario_id,
             titulo,
             descripcion,
-            fecha
+            fecha:new Date()
         })
         res.status(200).json(modelo)
     }catch(err){
