@@ -1,7 +1,8 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import Constants from "expo-constants"
 export default function Habitos() {
-  const host='172.19.96.1'
+  const host=Constants.expoConfig.extra.host;
   const [habitos, sethabitos] = useState([])
   const FecthHabitos=async()=>{
     try{

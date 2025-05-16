@@ -1,8 +1,9 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-
+import Constants from 'expo-constants'
 export default function usuarios() {
-   const local='172.19.96.1'
+   const local=Constants.expoConfig.extra.host;
+   
    const [dataUser, setdataUser] = useState([])
    const FectUsuarios=async()=>{
     const {data}=await axios.get(`http://${local}:4000/usuarios`)
