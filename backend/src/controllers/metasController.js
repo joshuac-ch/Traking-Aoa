@@ -14,7 +14,7 @@ const GetMetas=async(req,res)=>{
 const InsertMetas=async(req,res)=>{
     try{
         const {usuario_id,titulo,descripcion,proceso,meta_total,fecha_limite}=req.body
-        if(!usuario_id,!titulo,!meta_total,fecha_limite){
+        if(!usuario_id,!titulo,!meta_total,!fecha_limite){
            return res.status(404).json({message:"No se lleno los campos necesarios"})
         }
         //const usuario_id=1
