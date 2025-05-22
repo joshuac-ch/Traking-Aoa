@@ -1,8 +1,10 @@
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router'
 import React, { useEffect, useState } from 'react'
-import { View,Text, TextInput, Image, StyleSheet, Pressable } from 'react-native'
+import { View,Text, TextInput, Image, StyleSheet, Pressable, Switch } from 'react-native'
 import constantes from "expo-constants"
 import axios from 'axios'
+import { IconFrecuencia, IconText, IconTitle } from '../../assets/Icons'
+import { Picker } from '@react-native-picker/picker'
 
 
 export default function DetalleHabito() {
@@ -15,7 +17,8 @@ export default function DetalleHabito() {
     frecuencia:'',
     activo:0,
     fecha_inicio:'',
-    usuario_id:''
+    usuario_id:'',
+    imagen:''
   })
   const FectHabitos=async()=>{
     try{
@@ -26,7 +29,8 @@ export default function DetalleHabito() {
             frecuencia:data.frecuencia,
             activo:data.activo,
             fecha_inicio:data.fecha_inicio,
-            usuario_id:data.usuario_id
+            usuario_id:data.usuario_id,
+            imagen:data.imagen
         })
     }catch(err){
         alert(err.message)
@@ -42,8 +46,10 @@ export default function DetalleHabito() {
     }
   }
   useEffect(()=>{
+    if(id){
     FectHabitos()
-  },[])     
+    }
+  },[id])     
     return (
     <>
     <Stack.Screen options={{title:`Habito N°${id}`}}></Stack.Screen>
@@ -51,30 +57,44 @@ export default function DetalleHabito() {
        {FormDataHabitos!=null?
        <View style={styles.contenedorP}>
             <View>
-                 <Image source={{uri:'https://i.pinimg.com/736x/08/22/42/082242799a37614692811978f6f83c43.jpg'}} style={{width:250,height:300,borderRadius:20}}></Image>
+                 <Image source={{uri:FormDataHabitos.imagen}} style={{width:370,height:350,borderRadius:20}}></Image>
             </View>
-            <View>
-                <Text>Titulo: </Text>
+            <View style={styles.contenedorForm}>
+                <View style={styles.contenedortitulo}>
+                    <IconTitle></IconTitle>
+                    <Text>Titulo: </Text>
+                </View>
                 <TextInput onChangeText={text=>setFormDataHabitos({...FormDataHabitos,titulo:text})}  value={FormDataHabitos.titulo}></TextInput>
             </View>
-            <View>
-                <Text>Descripcion: </Text>
+            <View style={styles.cotenedor_des}>
+                <View style={styles.contenedortitulo}>
+                    <IconText></IconText>
+                    <Text>Descripcion: </Text>
+                </View>                
                 <TextInput onChangeText={text=>setFormDataHabitos({...FormDataHabitos,descripcion:text})} value={FormDataHabitos.descripcion}></TextInput>
             </View>
-            <View>
-                <Text>Frecuencia</Text>
-                <TextInput onChangeText={text=>setFormDataHabitos({...FormDataHabitos,frecuencia:text})} value={FormDataHabitos.frecuencia}></TextInput>
+            <View style={styles.contenedorForm}>
+                <View style={styles.contenedortitulo}>
+                    <IconFrecuencia></IconFrecuencia>
+                    <Text>Frecuencia: </Text>                  
+                </View>                 
+                      <Picker style={{width:100}} selectedValue={FormDataHabitos.frecuencia} onValueChange={value=>setFormDataHabitos({...FormDataHabitos,frecuencia:value})}>
+                             <Picker.Item label='diario' value="diario"></Picker.Item>
+                             <Picker.Item label='semanal' value='semanal'></Picker.Item>
+                             <Picker.Item label='mensual' value='mensual'></Picker.Item>
+                       </Picker>   
+                                  
             </View>
-            <View>
+            <View style={styles.contenedorForm}>
                 <Text>Activo</Text>
-                <TextInput value={FormDataHabitos.activo}></TextInput>
+                <Switch value={FormDataHabitos.activo} onValueChange={value=>setFormDataHabitos({ ...FormDataHabitos,activo:value})}></Switch>
             </View>
-            <View>
+            <View style={styles.contenedorForm}> 
                 <Text>Fecha inicio</Text>
-                <TextInput value={FormDataHabitos.fecha_inicio}></TextInput>
+                <Text>{FormDataHabitos.fecha_inicio} </Text>
             </View>
-            <View>
-                <Pressable onPress={()=>UpdateHabitos()}>
+            <View >
+                <Pressable style={styles.btn_update} onPress={()=>UpdateHabitos()}>
                     <Text>Actualizar datos</Text>
                 </Pressable>
             </View>
@@ -86,14 +106,40 @@ export default function DetalleHabito() {
   )
 }
 const styles=StyleSheet.create({
-    contenedorP:{
-        margin:20,
+    btn_update:{
+        borderWidth:2,
+        borderStyle:'solid',
+        borderColor:'black',
         padding:10,
+        margin:5,
+        borderRadius:20,
+    },
+    contenedorP:{
+        margin:20,        
         textAlign:'left',
         display:'flex',
         justifyContent:'center',
         alignItems:'center',
         borderRadius:20,
         boxShadow:'0px 0px 8px 1px black'
+    },
+    cotenedor_des:{
+        display:'flex',
+        width:'70%',
+        alignItems:'flex-start',
+    },
+    contenedorForm:{
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'space-between',
+       width:'70%',
+        alignItems:'center'
+    },
+   
+    contenedortitulo:{
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center',
+        
     }
 })
