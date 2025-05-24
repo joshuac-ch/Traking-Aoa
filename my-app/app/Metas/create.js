@@ -9,10 +9,10 @@ import { Stack } from 'expo-router'
 export default function create() {
   const {user}=useUser()
   const [FormMetas, setFormMetas] = useState({
-    titulo:'d',
-    descripcion:'d',
+    titulo:'',
+    descripcion:'',
     usuario_id:user.id,
-    proceso:1,
+    proceso:0,
     fecha_limite:new Date(),
     meta_total:100
   })
@@ -54,7 +54,7 @@ export default function create() {
             <TextInput style={styles.form_input} placeholder='ingrese mas detalles' value={FormMetas.descripcion} onChangeText={text=>setFormMetas({...FormMetas,descripcion:text})}></TextInput>
         </View>
         <View>
-            <Text>Fecha Limite</Text>
+            <Text>Fecha Limite: </Text>
             <Pressable onPress={mostrarSelectorFecha} style={{borderWidth:1,borderRadius:5,padding:10,marginTop:5}}>
                 <Text>{FormMetas.fecha_limite.toLocaleDateString()}</Text>
             </Pressable>
