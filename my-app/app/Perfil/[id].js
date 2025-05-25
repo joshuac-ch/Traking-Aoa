@@ -1,9 +1,11 @@
-import { useLocalSearchParams } from 'expo-router'
-import React, { useEffect, useState } from 'react'
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router'
+import React, { useCallback, useEffect, useState } from 'react'
+import { Button, Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 import { useUser } from '../../components/UserContext'
 import axios from 'axios'
 import constantes from "expo-constants"
+import * as ImagePicker from 'expo-image-picker';
+
 export default function DetalleUser() {
   const {id}=useLocalSearchParams()
   const {user}=useUser()
@@ -32,15 +34,48 @@ export default function DetalleUser() {
     }
 
   }
-  useEffect(()=>{
-    ShowUser()
+  useFocusEffect(
+    useCallback(()=>{
+      ShowUser()       
   },[]) 
+  )  
+    
+  const navegar=useRouter()
   //Crear la funcion Update
+    const updatePofile=async()=>{      
+      try{
+        await axios.put(`http://${host}:4000/usuarios/u/${id}`,formUsuarios)
+        alert("Se actualizaron los datos")
+        navegar.push("/Panel")
+      }catch(err){
+        alert("Hubo un error: "+err.message)
+      }
+    }
+
+   const pickImage=async()=>{
+    let result=await ImagePicker.launchImageLibraryAsync({
+      mediaTypes:['images','videos'],
+      allowsEditing:true,
+      aspect:[4,3],
+      quality:1
+    })
+    if(!result.canceled){
+      setformUsuarios({...formUsuarios,imagen:result.assets[0].uri})
+    }
+   
+   } 
     return (
     <>
     <View className='m-4'> 
         <View>
         <Text className='font-black text-xl'>Actualizar Perfil </Text>
+    </View>
+    <View>
+     <Image style={styles.img_form} source={{uri:formUsuarios.imagen}}></Image>
+    </View>
+    <View>
+      <Button onPress={pickImage} title='Seleccionar Imagen'></Button>
+      
     </View>
     <View>
       <Text>Nombre</Text>
@@ -63,7 +98,7 @@ export default function DetalleUser() {
       <TextInput style={styles.form_input} value={formUsuarios.pass} onChangeText={text=>setformUsuarios({...formUsuarios,pass:text})}></TextInput>
     </View>
     <View style={{alignItems:'center'}}>
-      <Pressable style={styles.btn_sub}>
+      <Pressable onPress={()=>updatePofile()} style={styles.btn_sub}>
         <Text>Actualizar Perfil</Text>
       </Pressable>
     </View>
@@ -81,6 +116,15 @@ const styles=StyleSheet.create({
     padding:10,
     marginTop:10,
     marginBottom:10
+  },
+  img_form:{
+    borderWidth:2,
+    borderColor:'black',
+    borderStyle:'solid',
+    padding:10,
+    borderRadius:10,
+    width:100,
+    height:100,
   },
   btn_sub:{
     borderWidth:2,
