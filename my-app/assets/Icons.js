@@ -1,6 +1,9 @@
 import Fontisto from '@expo/vector-icons/Fontisto';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import Entypo from '@expo/vector-icons/Entypo';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import Feather from '@expo/vector-icons/Feather';
 
 export const IconDate=()=>{
     return <Fontisto name="date" size={24} color="black" />
@@ -13,4 +16,25 @@ export const IconLeft=()=>{
 }
 export const IconDelete=()=>{
     return <AntDesign name="delete" size={24} color="black" />
+}
+export const IconElipsis=()=>{
+    return <AntDesign name="ellipsis1" size={24} color="black" />
+}
+export const IconHome=()=>{
+    return <Entypo name="home" size={24} color="black" />
+}
+export const IconSeach=()=>{
+    return <Feather name="search" size={24} color="black" />
+}
+export const IconUser=()=>{
+    return <AntDesign name="user" size={24} color="black" />
+}
+export const IconTitle=()=>{
+    return <MaterialIcons name="title" size={24} color="black" />
+}
+export const IconText=()=>{
+    return <Entypo name="text" size={24} color="black" />
+}
+export const IconFrecuencia=()=>{
+    return <Fontisto name="spinner-refresh" size={24} color="black" />
 }
