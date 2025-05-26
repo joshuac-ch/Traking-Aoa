@@ -1,14 +1,16 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { Pressable, TextInput, View } from 'react-native'
+import { Pressable, StyleSheet, TextInput, View } from 'react-native'
 import { Text } from 'react-native'
 import { useUser } from '../../components/UserContext'
 import Constants from "expo-constants"
+import { Stack } from 'expo-router'
 export default function Create() {
     const host=Constants.expoConfig.extra.host; //No dejar espacios en blancko en el Host
     const {user}=useUser()
     const [DataForm, setDataForm] = useState({
-        usuario_id:user.id,        
+        usuario_id:user.id,
+        imagen:'',        
         titulo:'',
         descripcion:''
     })
@@ -19,24 +21,51 @@ export default function Create() {
             await axios.post(`http://${host}:4000/actividades/i`,DataForm)
             alert("Se enviaon los datos correctamente")
         }catch(err){
-            alert(err.message)
+            alert("Debe llenar todos los campos")
         }
     }
     return (
     <>
-   <View>
+    <Stack.Screen options={{title:'Crear Actividad'}}></Stack.Screen>
+   <View className='m-4'>
+    <View>
+        <Text>Imagen</Text>
+        <TextInput style={styles.form_input} onChangeText={text=>setDataForm({...DataForm,imagen:text})} value={DataForm.imagen} placeholder='ingrese link de imagen'></TextInput>
+    </View>
      <View>
         <Text>Ingrese el titulo</Text>
-        <TextInput onChangeText={text=>setDataForm({...DataForm,titulo:text})} value={DataForm.titulo} placeholder='Titulo...'></TextInput>    
+        <TextInput style={styles.form_input} onChangeText={text=>setDataForm({...DataForm,titulo:text})} value={DataForm.titulo} placeholder='Titulo...'></TextInput>    
     </View>
      <View>
         <Text>Descipcion</Text>
-        <TextInput onChangeText={text=>setDataForm({...DataForm,descripcion:text})} value={DataForm.descripcion} placeholder='Descripcion...'></TextInput>    
-    </View>
-    <Pressable onPress={EnviarDatos}>
-        <Text>Crear Actividad</Text>
+        <TextInput style={styles.form_input} onChangeText={text=>setDataForm({...DataForm,descripcion:text})} value={DataForm.descripcion} placeholder='Descripcion...'></TextInput>    
+    </View >
+    <View style={{alignItems:'center'}}>
+        <Pressable style={styles.btn_sub} onPress={EnviarDatos}>
+        <Text style={{textAlign:'center'}}>Crear Actividad</Text>
     </Pressable>
+    </View>
    </View>
     </>
   )
 }
+const styles=StyleSheet.create({
+    form_input:{
+        borderWidth:2,
+        borderStyle:'solid',
+        borderColor:' black',
+        borderRadius:10,
+        padding:10,
+        width:'100%',
+        marginTop:10,
+    },
+    btn_sub:{
+        borderStyle:'black',
+        borderWidth:2,
+         borderColor:'black',
+         borderRadius:10,
+         marginTop:10,
+         padding:10,        
+         width:150,
+    }
+})
