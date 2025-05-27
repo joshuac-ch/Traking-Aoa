@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import Habitos from '../../hooks/Habitos'
-import { IconAdd, IconDelete } from '../../assets/Icons'
+import { IconAdd, IconDate, IconDelete } from '../../assets/Icons'
 import { Link, Stack } from 'expo-router'
 import axios from 'axios'
 import contantes from "expo-constants"
@@ -50,14 +50,17 @@ export default function index() {
                         </View>
                         <View>
                           <View >
-                            <View style={styles.cont_foot}>
-                              <Text >Activo: {h.activo?1:''}</Text>
+                            <View style={{alignItems:'flex-end'}}>
+                              
                             <Pressable onPress={()=>EliminarHabito(h.id)}>
                               <IconDelete></IconDelete>
                             </Pressable>
                             </View>
-                            
-                            <Text>{h.fecha_inicio}</Text>
+                            <View style={styles.contenedor_date}>
+                              <IconDate></IconDate>
+                               <Text>{h.fecha_inicio?new Date(h.fecha_inicio).toLocaleDateString():''}</Text>
+                            </View>
+                           
                           </View>
                         </View>                        
                       </View>
@@ -72,13 +75,7 @@ export default function index() {
   )
 }
 const styles=StyleSheet.create({
-  cont_foot:{
-    display:'flex',
-    flexDirection:'row',
-    justifyContent:'space-between',
-    alignContent:'flex-end',
-    padding:10
-  },
+  
     con_des:{
         width:150
     },
@@ -106,5 +103,11 @@ const styles=StyleSheet.create({
   buttonPressed: {
     borderWidth: 1,
     borderColor: 'black',
+  },
+  contenedor_date:{
+    flexDirection:'row',
+    
+    justifyContent:'center',
+    alignItems:'center' 
   },
 })
