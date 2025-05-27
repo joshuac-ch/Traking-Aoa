@@ -1,11 +1,11 @@
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router'
 import React, { useEffect, useState } from 'react'
-import { View,Text, TextInput, Image, StyleSheet, Pressable, Switch } from 'react-native'
+import { View,Text, TextInput, Image, StyleSheet, Pressable, Switch, Button } from 'react-native'
 import constantes from "expo-constants"
 import axios from 'axios'
 import { IconFrecuencia, IconText, IconTitle } from '../../assets/Icons'
 import { Picker } from '@react-native-picker/picker'
-
+import * as ImagePicker from 'expo-image-picker'
 
 export default function DetalleHabito() {
   const {id}=useLocalSearchParams()
@@ -40,7 +40,7 @@ export default function DetalleHabito() {
     try{
         await axios.put(`http://${host}:4000/habitos/u/${id}`,FormDataHabitos)
         alert("Se actualizo los datos")
-       // navegar.push("/Panel")
+        //navegar.push("/Panel")
     }catch(err){
         alert(err.message)
     }
@@ -49,7 +49,19 @@ export default function DetalleHabito() {
     if(id){
     FectHabitos()
     }
-  },[id])     
+  },[id])
+  const pickImage=async()=>{
+    let result=await ImagePicker.launchImageLibraryAsync({
+        mediaTypes:['images','videos'],
+        allowsEditing:true,
+        aspect:[4,3],
+        quality:1
+    })
+    if(!result.canceled){
+        setFormDataHabitos({...FormDataHabitos,imagen:result.assets[0].uri})
+    }
+    
+  }     
     return (
     <>
     <Stack.Screen options={{title:`Habito N°${id}`}}></Stack.Screen>
@@ -58,6 +70,9 @@ export default function DetalleHabito() {
        <View style={styles.contenedorP}>
             <View>
                  <Image source={{uri:FormDataHabitos.imagen}} style={{width:370,height:350,borderRadius:20}}></Image>
+                <Button onPress={pickImage} title='Seleccionar imagen'></Button>
+            </View>
+            <View>
             </View>
             <View style={styles.contenedorForm}>
                 <View style={styles.contenedortitulo}>
