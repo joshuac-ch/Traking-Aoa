@@ -59,6 +59,7 @@ export default function DetalleUser() {
       aspect:[4,3],
       quality:1
     })
+    
     if(!result.canceled){
       setformUsuarios({...formUsuarios,imagen:result.assets[0].uri})
     }
