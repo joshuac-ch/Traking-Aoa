@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import Actividades from '../../hooks/Actividades'
-import { IconDate, IconDelete } from '../../assets/Icons'
-import { Link } from 'expo-router'
+import { IconAdd, IconDate, IconDelete } from '../../assets/Icons'
+import { Link, Stack } from 'expo-router'
 import axios from 'axios'
 import constantes from "expo-constants"
 export default function ActividadesDiarias() {
@@ -22,13 +22,19 @@ export default function ActividadesDiarias() {
   }  
   return (
     <>
+    <Stack.Screen options={{title:"Actividades"}}></Stack.Screen>
     <ScrollView>
-        <View style={styles.boton} >
-        <Pressable >
-            <Link href={'/crudactividades/Create'}>Crear Actividad</Link>
-           
-        </Pressable>
-    </View>
+    <View className=''>
+             <View style={styles.header_Acti}>
+            <Text className='font-black text-lg'>Actividades</Text>
+            <View >
+                <Link href={'/crudactividades/Create'} asChild>
+                <Pressable >
+                    <IconAdd ></IconAdd>
+                </Pressable>
+                </Link>        
+            </View>
+         </View>
     {actividades!=null?
     <View>
         {actividades.map((a)=>{
@@ -38,18 +44,20 @@ export default function ActividadesDiarias() {
                         <View style={styles.contenedor} key={a.id}>
                         <View style={styles.subcontenedor} className=''>
                             <Text>Titulo: {a.titulo}</Text>
+                            <Text>Descripcion: </Text>
                             <Text className=''>{a.descripcion}</Text>
                         </View>
                         <View className=''>
-                            <View>
-                                <IconDate/>
-                                <Text> {a.fecha?new Date(a.fecha).getFullYear():''}</Text>
-                            </View>
-                            <View>
+                             <View style={{alignItems:'flex-end'}}>
                                 <Pressable onPress={()=>EliminarActividad(a.id)}>
                                     <IconDelete></IconDelete>
                                 </Pressable>
                             </View>
+                            <View style={styles.cont_fecha}>
+                                <IconDate/>
+                                <Text> {a.fecha?new Date(a.fecha).toLocaleDateString():''}</Text>
+                            </View>
+                           
                         </View>
                         </View>
                     </Pressable>
@@ -60,6 +68,7 @@ export default function ActividadesDiarias() {
     </View>:
     <Text>No hay datos</Text>
     }
+    </View>
     </ScrollView>
     </>
   )
@@ -67,11 +76,7 @@ export default function ActividadesDiarias() {
 const styles=StyleSheet.create({
     boton:{
         boxShadow:'0px 0px 8px 1px black',
-        padding:10,
-        alignItems:'center',
-        marginTop:10,
-        marginLeft:20,
-        width:120,
+        padding:5,        
         backgroundColor:'transparent',
         borderRadius:10
 
@@ -89,6 +94,18 @@ const styles=StyleSheet.create({
     },
     subcontenedor:{
         width:250
+    },
+    header_Acti:{
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'space-between',
+        alignItems:'center',
+        margin:10, 
+    },
+    cont_fecha:{
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center',    
     }
 
 })
