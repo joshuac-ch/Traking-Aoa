@@ -21,6 +21,7 @@ const sequelize=require("../src/config/database")
       autoIncrement:true,
       primaryKey:true
     },
+    imagen:DataTypes.STRING,
     usuario_id: {
       type:DataTypes.BIGINT,
       allowNull:false,

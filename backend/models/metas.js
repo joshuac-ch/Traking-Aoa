@@ -26,7 +26,8 @@ const sequelize=require("../src/config/database")
     descripcion: DataTypes.STRING,
     proceso: DataTypes.INTEGER,
     meta_total: DataTypes.INTEGER,
-    fecha_limite: DataTypes.DATE
+    fecha_limite: DataTypes.DATE,
+    fecha_inicio: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'metas',

@@ -13,6 +13,7 @@ const sequelize=require('../src/config/database')
       usuario.hasMany(models.metas,{foreignKey:'usuario_id'})
       usuario.hasMany(models.actividades_diarias,{foreignKey:'usuario_id'})
       usuario.hasMany(models.emociones,{foreignKey:"usuario_id"})
+      usuario.hasMany(models.logros,{foreignKey:"usuario_id"})
     }
   }
   usuario.init({
@@ -22,6 +23,7 @@ const sequelize=require('../src/config/database')
      primaryKey:true,
      autoIncrement:true
     },
+    imagen:DataTypes.STRING,
     nombre:DataTypes.STRING,
     apellido: DataTypes.STRING,
     correo: DataTypes.STRING,
