@@ -31,7 +31,10 @@ module.exports = {
       },
       fecha_limite: {
         type: Sequelize.DATE
-      }      
+      },
+      fecha_inicio: {
+        type: Sequelize.DATE
+      }            
     });
   },
   async down(queryInterface, Sequelize) {
