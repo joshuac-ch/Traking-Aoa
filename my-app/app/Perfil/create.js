@@ -1,9 +1,9 @@
 import { Stack } from 'expo-router'
 import React, { useState } from 'react'
-import { View,Text,TextInput, Pressable } from 'react-native'
+import { View,Text,TextInput, Pressable, Button, Image } from 'react-native'
 import constantes from 'expo-constants'
 import axios from 'axios'
-
+import * as PickerImage from "expo-image-picker"
 export default function create() {
   const [userDataForm, setuserDataForm] = useState({
     imagen:'',
@@ -22,6 +22,20 @@ export default function create() {
             alert("Hubo un error"+err.message)
    }
   }
+  const AddImage=async()=>{
+    let result=await PickerImage.launchImageLibraryAsync({
+        mediaTypes:['images'],
+        allowsEditing:true,
+        aspect:[4,3],
+        quality:1
+        
+    })
+    if(!result.canceled){
+        return setuserDataForm({...userDataForm,imagen:result.assets[0].uri})
+    }
+     
+  }
+  //paso sigueinte rellenar con datos flasos sobre la app
     return (
     <>
     <Stack.Screen options={{title:'Crear Perfil'}}></Stack.Screen>
@@ -31,7 +45,11 @@ export default function create() {
         </View>
         <View>
             <Text>Imagen: </Text>
-            <TextInput onChangeText={text=>setuserDataForm({...userDataForm,imagen:text})} value={userDataForm.imagen} placeholder='ingrese link de la imagen'></TextInput>
+            <Button title='Agregar Imagen' onPress={AddImage}></Button>
+
+        </View>
+        <View>
+            <Image style={{width:100,height:100}} source={{uri:userDataForm.imagen}}></Image>
         </View>
         <View>
             <Text>Nombre: </Text>
