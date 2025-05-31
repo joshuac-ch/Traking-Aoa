@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router'
 import React, { useState } from 'react'
-import { View,Text,TextInput, Pressable, Button, Image } from 'react-native'
+import { View,Text,TextInput, Pressable, Button, Image, StyleSheet } from 'react-native'
 import constantes from 'expo-constants'
 import axios from 'axios'
 import * as PickerImage from "expo-image-picker"
@@ -41,39 +41,37 @@ export default function create() {
     <Stack.Screen options={{title:'Crear Perfil'}}></Stack.Screen>
     <View className='m-4'>
         <View>
-            <Text>Perfil</Text>
-        </View>
-        <View>
-            <Text>Imagen: </Text>
-            <Button title='Agregar Imagen' onPress={AddImage}></Button>
+            <Text>Foto: </Text>
+            <Image style={styles.image} source={{uri:userDataForm.imagen}}></Image>
+            
 
         </View>
         <View>
-            <Image style={{width:100,height:100}} source={{uri:userDataForm.imagen}}></Image>
+            <Button title='Agregar Imagen' onPress={AddImage}></Button>
         </View>
         <View>
             <Text>Nombre: </Text>
-            <TextInput onChangeText={text=>setuserDataForm({...userDataForm,nombre:text})} value={userDataForm.nombre} placeholder='ingrese nombre'></TextInput>
+            <TextInput style={styles.input_form} onChangeText={text=>setuserDataForm({...userDataForm,nombre:text})} value={userDataForm.nombre} placeholder='ingrese nombre'></TextInput>
         </View>
         <View>
             <Text>Apellido: </Text>
-            <TextInput placeholder='ingrese apellido' onChangeText={text=>setuserDataForm({...userDataForm,apellido:text})} value={userDataForm.apellido}></TextInput>
+            <TextInput style={styles.input_form} placeholder='ingrese apellido' onChangeText={text=>setuserDataForm({...userDataForm,apellido:text})} value={userDataForm.apellido}></TextInput>
         </View>
         <View>
             <Text>Telefono: </Text>
-            <TextInput onChangeText={text=>setuserDataForm({...userDataForm,telefono:text})} value={userDataForm.telefono} placeholder='ingrese telefono'></TextInput>
+            <TextInput style={styles.input_form} onChangeText={text=>setuserDataForm({...userDataForm,telefono:text})} value={userDataForm.telefono} placeholder='ingrese telefono'></TextInput>
         </View>
         <View>
             <Text>Correo: </Text>
-            <TextInput placeholder='ingrese correo electronico' onChangeText={text=>setuserDataForm({...userDataForm,correo:text})} value={userDataForm.correo}></TextInput>
+            <TextInput style={styles.input_form} placeholder='ingrese correo electronico' onChangeText={text=>setuserDataForm({...userDataForm,correo:text})} value={userDataForm.correo}></TextInput>
         </View>
         <View>
             <Text>Contraseña: </Text>
-            <TextInput placeholder='ingrese contraseña segura' onChangeText={text=>setuserDataForm({...userDataForm,pass:text})} value={userDataForm.pass}></TextInput>
+            <TextInput style={styles.input_form} placeholder='ingrese contraseña segura' onChangeText={text=>setuserDataForm({...userDataForm,pass:text})} value={userDataForm.pass}></TextInput>
         </View>
         <View>
-            <Pressable onPress={InsertUser}>
-                <Text>Registrarse</Text>
+            <Pressable style={styles.registrar} onPress={InsertUser}>
+                <Text style={{textAlign:'center',color:'white'}}>Registrarse</Text>
             </Pressable>
         </View>
         
@@ -81,3 +79,36 @@ export default function create() {
     </>
   )
 }
+const styles=StyleSheet.create({
+    image:{
+        alignSelf:'center',
+        width:150,
+        height:150,
+        borderRadius:100,
+        borderWidth:2,
+        borderStyle:'solid',
+        borderColor:'black',
+        margin:10
+    },
+    input_form:{
+        borderWidth:2,
+        borderStyle:'solid',
+        borderColor:'black',
+        width:'100%',
+        height:45,
+        marginTop:10,
+        marginBottom:10,
+        borderRadius:10
+    },
+    registrar:{
+        borderRadius:10,
+        borderStyle:'solid',
+        borderWidth:2,
+        borderColor:'transparent',
+        backgroundColor:'purple',       
+        padding:10,
+        marginTop:10,
+        alignSelf:'center',
+        width:100
+    }    
+})
