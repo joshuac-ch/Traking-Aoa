@@ -4,10 +4,28 @@ import { useUser } from '../../components/UserContext'
 import { Stack, useFocusEffect, useRouter } from 'expo-router'
 import constantes from 'expo-constants' 
 import axios from 'axios'
+import Metas from '../../hooks/Metas'
+import Actividades from '../../hooks/Actividades'
+import Habitos from '../../hooks/Habitos'
 export default function perfil() {
     const {user}=useUser()
     const navegar=useRouter()
     const [user_specific, setuser_specific] = useState([])
+    const [alldata, setalldata] = useState([])
+    const {FectMetas,metas}=Metas()
+    const {FetchActividades,actividades}=Actividades()
+    const {FecthHabitos,habitos}=Habitos()
+    useEffect(()=>{
+            FectMetas(),
+        FecthHabitos(),
+        FetchActividades()
+    },[])
+    
+    useEffect(()=>{       
+            if(metas.length>0){
+                setalldata(metas)   
+            }     
+    },[metas])
     const host=constantes.expoConfig.extra.host
     const FectUserSpecific=async()=>{
         try{
@@ -66,24 +84,68 @@ export default function perfil() {
    
    </View>
  <View>
+    <View style={{display:'flex',flexDirection:'row'}}>
+                {alldata!=null?
+               alldata.map((a)=>{
+                    return(
+                       <View style={styles.proyecto_c}>
+                               <View style={styles.div_c}>
+                                <Text>{a.id}</Text>
+                               </View>
+                            </View> 
+                    )
+                })
+                :<Text>No hay datos</Text>}
+                    
+              </View>
         <View >
             <Text style={styles.proyecto_title}>Proyectos</Text>
         </View>
         <View style={styles.proyecto}>
-            <View>
-                <View style={styles.proyecto_c}></View>
-                <View style={styles.proyecto_c}></View>
-                <View style={styles.proyecto_c}></View>
+              
+            <View style={{display:'flex',flexDirection:'row'}}>
+                <View style={styles.proyecto_c}>
+                    <View style={styles.div_c}><Text >Type</Text></View>
+                </View>
+                <View style={styles.proyecto_c}>
+                    <View style={styles.div_c}><Text>Type</Text></View>
+                </View>
+                <View style={styles.proyecto_c}>
+                    <View style={styles.div_c}><Text>Type</Text></View>
+                </View>
             </View>
-            <View>
-                <View style={styles.proyecto_c}></View>
-                <View style={styles.proyecto_c}></View>
-                <View style={styles.proyecto_c}></View>
+            <View style={{display:'flex',flexDirection:'row'}}>
+                <View style={styles.proyecto_c}>
+                    <View style={styles.div_c}><Text>Type</Text></View>
+                </View>
+                <View style={styles.proyecto_c}>
+                    <View style={styles.div_c}><Text>Type</Text></View>
+                </View>
+                <View style={styles.proyecto_c}>
+                    <View style={styles.div_c}><Text>Type</Text></View>
+                </View>
             </View>
-            <View>
-                <View style={styles.proyecto_c}></View>
-                <View style={styles.proyecto_c}></View>
-                <View style={styles.proyecto_c}></View>
+            <View style={{display:'flex',flexDirection:'row'}}>
+                <View style={styles.proyecto_c}>
+                    <View style={styles.div_c}><Text>Type</Text></View>
+                </View>
+                <View style={styles.proyecto_c}>
+                    <View style={styles.div_c}><Text>Type</Text></View>
+                </View>
+                <View style={styles.proyecto_c}>
+                    <View style={styles.div_c}><Text>Type</Text></View>
+                </View>
+            </View>
+            <View style={{display:'flex',flexDirection:'row'}}>
+                <View style={styles.proyecto_c}>
+                    <View style={styles.div_c}><Text>Type</Text></View>
+                </View>
+                <View style={styles.proyecto_c}>
+                    <View style={styles.div_c}><Text>Type</Text></View>
+                </View>
+                <View style={styles.proyecto_c}>
+                    <View style={styles.div_c}><Text>Type</Text></View>
+                </View>
             </View>
             
             
@@ -100,15 +162,21 @@ const styles=StyleSheet.create({
         padding:20,
     },
     proyecto:{
-        flexDirection:'row',
+        flexDirection:'column',
         justifyContent:'center'       
     },
     proyecto_c:{
-         backgroundColor:'black',
+        flexDirection:'row',
+        justifyContent:'flex-end',
+        backgroundColor:'gray',
         borderRadius:5,
         width:135,
         height:135,
         margin:.8
+    },
+    div_c:{
+       
+        padding:10,
     },
     contenedor:{
         borderWidth:2,
