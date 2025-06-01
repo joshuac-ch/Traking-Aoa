@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Image, ImageBackground, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { useUser } from '../../components/UserContext'
-import { Stack, useFocusEffect, useRouter } from 'expo-router'
+import { Link, Stack, useFocusEffect, useRouter } from 'expo-router'
 import constantes from 'expo-constants' 
 import axios from 'axios'
 import Metas from '../../hooks/Metas'
@@ -22,10 +22,16 @@ export default function perfil() {
     },[])
     
     useEffect(()=>{       
-            if(metas.length>0){
-                setalldata(metas)   
+            if(metas.length>0 && habitos.length>0 && actividades.length>0){
+                const tododata=[
+                    ...metas.map((m)=>({...m,type:'Metas'})),
+                    ...habitos.map((h)=>({...h,type:'Habitos'})),
+                    ...actividades.map((a)=>({...a,type:'Actividades'}))
+                ] 
+                setalldata(tododata)
+                
             }     
-    },[metas])
+    },[metas,actividades,habitos])
     const host=constantes.expoConfig.extra.host
     const FectUserSpecific=async()=>{
         try{
@@ -38,7 +44,9 @@ export default function perfil() {
     useFocusEffect(
         useCallback(()=>{
             if(user.id){
-                FectUserSpecific()
+                FectUserSpecific(),
+                FecthHabitos()//si pongo en el focus calback perimnite acualizarse automaticamente 
+                //hacer la bandeja de entrada
             }
         },[])
     )
@@ -84,15 +92,27 @@ export default function perfil() {
    
    </View>
  <View>
-    <View style={{display:'flex',flexDirection:'row'}}>
+    <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
                 {alldata!=null?
-               alldata.map((a)=>{
+               alldata.map((a,i)=>{
                     return(
-                       <View style={styles.proyecto_c}>
-                               <View style={styles.div_c}>
-                                <Text>{a.id}</Text>
-                               </View>
-                            </View> 
+                      <Link key={i} href={`/${a.type}/${a.id}`} asChild>
+                      <Pressable>
+                         <View style={styles.proyecto_c}>
+                            
+                            <View style={{display:'flex',justifyContent:'space-between'}}>
+                               <ImageBackground source={{uri:a.imagen}} style={{width:130,height:120}}>
+                                    <View style={styles.div_c_header}>
+                                        <Text style={{color:'black'}}>{a.type}</Text>
+                                    </View>
+                               </ImageBackground>
+                                <View style={styles.div_c_body}>
+                                    <Text>{a.titulo.length>18?a.titulo.slice(0,15)+"...":a.titulo}</Text>
+                                </View>
+                            </View>
+                       </View> 
+                      </Pressable>
+                      </Link>
                     )
                 })
                 :<Text>No hay datos</Text>}
@@ -166,18 +186,31 @@ const styles=StyleSheet.create({
         justifyContent:'center'       
     },
     proyecto_c:{
+        
         flexDirection:'row',
-        justifyContent:'flex-end',
-        backgroundColor:'gray',
+        borderWidth:2,
+        borderColor:'black',
+        borderStyle:'solid',
         borderRadius:5,
         width:135,
-        height:135,
-        margin:.8
+        height:165,
+        marginTop:8,
+        marginRight:0.8,
+        marginLeft:0.8,
+        marginBottom:8
     },
-    div_c:{
+    div_c_header:{
        
-        padding:10,
+        alignItems:'flex-end',
     },
+    div_c_body:{        
+        backgroundColor:'#fff',
+        alignItems:'flex-start',      
+        padding:10,
+        borderBottomLeftRadius:5,
+        borderBottomRightRadius:5
+    },
+    
     contenedor:{
         borderWidth:2,
         borderStyle:'solid',
