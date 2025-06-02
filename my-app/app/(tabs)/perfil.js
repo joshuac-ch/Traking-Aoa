@@ -15,6 +15,9 @@ export default function perfil() {
     const {FectMetas,metas}=Metas()
     const {FetchActividades,actividades}=Actividades()
     const {FecthHabitos,habitos}=Habitos()
+    const [dataMetas, setdataMetas] = useState([])
+    const [dataHabitos, setdataHabitos] = useState([])
+    const [dataActividades, setdataActividades] = useState([])
     useEffect(()=>{
             FectMetas(),
         FecthHabitos(),
@@ -29,6 +32,9 @@ export default function perfil() {
                     ...actividades.map((a)=>({...a,type:'Actividades'}))
                 ] 
                 setalldata(tododata)
+                setdataActividades(actividades,{type:"Actividades"})
+                setdataMetas(metas,{type:'Metas'})
+                setdataHabitos(habitos,{type:"Habitos"})
                 
             }     
     },[metas,actividades,habitos])
@@ -45,7 +51,9 @@ export default function perfil() {
         useCallback(()=>{
             if(user.id){
                 FectUserSpecific(),
-                FecthHabitos()//si pongo en el focus calback perimnite acualizarse automaticamente 
+                FecthHabitos(),//si pongo en el focus calback perimnite acualizarse automaticamente 
+                FectMetas(),
+                FetchActividades()
                 //hacer la bandeja de entrada
             }
         },[])
@@ -102,9 +110,9 @@ export default function perfil() {
                             
                             <View style={{display:'flex',justifyContent:'space-between'}}>
                                <ImageBackground source={{uri:a.imagen}} style={{width:130,height:120}}>
-                                    <View style={styles.div_c_header}>
+                                    {/*<View style={styles.div_c_header}>
                                         <Text style={{color:'black'}}>{a.type}</Text>
-                                    </View>
+                                    </View>*/}
                                </ImageBackground>
                                 <View style={styles.div_c_body}>
                                     <Text>{a.titulo.length>18?a.titulo.slice(0,15)+"...":a.titulo}</Text>
@@ -119,8 +127,94 @@ export default function perfil() {
                     
               </View>
         <View >
-            <Text style={styles.proyecto_title}>Proyectos</Text>
+            <Text style={styles.proyecto_title}>Actividades</Text>
         </View>
+         <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
+                {dataActividades!=null?
+               dataActividades.map((a,i)=>{
+                    return(
+                      <Link key={i} href={`/${a.type}/${a.id}`} asChild>
+                      <Pressable>
+                         <View style={styles.proyecto_c}>
+                            
+                            <View style={{display:'flex',justifyContent:'space-between'}}>
+                               <ImageBackground source={{uri:a.imagen}} style={{width:130,height:120}}>
+                                    {/*<View style={styles.div_c_header}>
+                                        <Text style={{color:'black'}}>{a.type}</Text>
+                                    </View>*/}
+                               </ImageBackground>
+                                <View style={styles.div_c_body}>
+                                    <Text>{a.titulo.length>18?a.titulo.slice(0,15)+"...":a.titulo}</Text>
+                                </View>
+                            </View>
+                       </View> 
+                      </Pressable>
+                      </Link>
+                    )
+                })
+                :<Text>No hay datos</Text>}
+                    
+              </View>
+            <View >
+                <Text style={styles.proyecto_title}>Habitos</Text>
+            </View>
+         <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
+                {dataHabitos!=null?
+               dataHabitos.map((a,i)=>{
+                    return(
+                      <Link key={i} href={`/${a.type}/${a.id}`} asChild>
+                      <Pressable>
+                         <View style={styles.proyecto_c}>
+                            
+                            <View style={{display:'flex',justifyContent:'space-between'}}>
+                               <ImageBackground source={{uri:a.imagen}} style={{width:130,height:120}}>
+                                    {/*<View style={styles.div_c_header}>
+                                        <Text style={{color:'black'}}>{a.type}</Text>
+                                    </View>*/}
+                               </ImageBackground>
+                                <View style={styles.div_c_body}>
+                                    <Text>{a.titulo.length>18?a.titulo.slice(0,15)+"...":a.titulo}</Text>
+                                </View>
+                            </View>
+                       </View> 
+                      </Pressable>
+                      </Link>
+                    )
+                })
+                :<Text>No hay datos</Text>}
+                    
+              </View>
+
+            <View >
+                <Text style={styles.proyecto_title}>Metas</Text>
+            </View>
+         <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
+                {dataMetas!=null?
+               dataMetas.map((a,i)=>{
+                    return(
+                      <Link key={i} href={`/${a.type}/${a.id}`} asChild>
+                      <Pressable>
+                         <View style={styles.proyecto_c}>
+                            
+                            <View style={{display:'flex',justifyContent:'space-between'}}>
+                               <ImageBackground source={{uri:a.imagen}} style={{width:130,height:120}}>
+                                    {/*<View style={styles.div_c_header}>
+                                        <Text style={{color:'black'}}>{a.type}</Text>
+                                    </View>*/}
+                               </ImageBackground>
+                                <View style={styles.div_c_body}>
+                                    <Text>{a.titulo.length>18?a.titulo.slice(0,15)+"...":a.titulo}</Text>
+                                </View>
+                            </View>
+                       </View> 
+                      </Pressable>
+                      </Link>
+                    )
+                })
+                :<Text>No hay datos</Text>}
+                    
+              </View>      
+       
         <View style={styles.proyecto}>
               
             <View style={{display:'flex',flexDirection:'row'}}>
