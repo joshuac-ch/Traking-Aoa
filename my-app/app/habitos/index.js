@@ -1,15 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import Habitos from '../../hooks/Habitos'
 import { IconAdd, IconDate, IconDelete } from '../../assets/Icons'
-import { Link, Stack } from 'expo-router'
+import { Link, Stack, useFocusEffect } from 'expo-router'
 import axios from 'axios'
 import contantes from "expo-constants"
+import { useUser } from '../../components/UserContext'
 export default function index() {
-  const {FecthHabitos,habitos}=Habitos()
-  useEffect(()=>{
-    FecthHabitos()
-  },[])
+  const {user}=useUser()
+  const {FecthHabitos,habitos}=Habitos()  
   const EliminarHabito=async(id)=>{
     try{
       const host=contantes.expoConfig.extra.host
@@ -19,14 +18,22 @@ export default function index() {
     }catch(err){
       alert("Hubo un error"+err.message)
     }
-  }  
+  }
+  
+  useFocusEffect(
+    useCallback(()=>{
+      if(user.id){
+        FecthHabitos()
+      }
+    },[user.id])
+  )  
   return (
     <ScrollView>
       <Stack.Screen options={{title:'Habitos'}}></Stack.Screen>
       <View>
        <View style={styles.contenedorHeader}>
             <Text className='font-black'>Habitos</Text>
-            <Link href={'/habitos/create/'} asChild>
+            <Link href={'/Habitos/create/'} asChild>
                 <Pressable>  
                   <IconAdd />  
                 </Pressable>
@@ -36,7 +43,7 @@ export default function index() {
        <View>
         {habitos.map((h)=>{
             return(
-                <Link key={h.id} href={`/habitos/${h.id}`} asChild>
+                <Link key={h.id} href={`/Habitos/${h.id}`} asChild>
                   <Pressable>
                       <View style={styles.contenedor} key={h.id}>
                         <View>
