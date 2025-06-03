@@ -1,10 +1,10 @@
 import React, { use, useCallback, useEffect, useState } from 'react'
-import { Image, Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { Button, Image, Modal, Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
 import { useUser } from '../../components/UserContext'
 
 import PagerView from 'react-native-pager-view'
-import { Link, Tabs, useFocusEffect } from 'expo-router'
-import { IconElipsis, IconLeft } from '../../assets/Icons'
+import { Link, Stack, Tabs, useFocusEffect } from 'expo-router'
+import { IconAdd, IconElipsis, IconLeft } from '../../assets/Icons'
 import constantes from 'expo-constants'
 import axios from 'axios'
 export default function Panel() {
@@ -27,12 +27,31 @@ export default function Panel() {
         }
       },[user.id])
     )
+    const [mostrarModal, setmostrarModal] = useState(true)
+    const [emocionSeleccionada, setemocionSeleccionada] = useState('')
+    const FormEmociones=()=>{
+      alert(`¡Gracias! por tu respuesta de hoy ${miuser.nombre}`)
+      setmostrarModal(false)
+    }
+    const emociones=[
+      {emo:1,des:"Cansado"},
+      {emo:2,des:"Triste"},
+      {emo:3,des:"Neutral"},
+      {emo:4,des:"Molesto"},
+      {emo:5,des:"Feliz"},
+
+    ]
     
+    //agregar imagen a metas en todo
+    //crear notificacions si se cmple o no determinada tarea
+    //Notificaciones push
+    //Envían un recordatorio (“¿Tomaste agua hoy?”).
+    //La notificación puede tener acciones (ej: botón “Sí” que marca como hecho directamente). 
   return (
       <ScrollView>
         
-        
-    
+       
+     <Stack.Screen options={{headerShown:false}}></Stack.Screen>
         <View key={miuser.id}  style={styles.contenedor_perfil}>
         <View className='flex flex-row'>
           <Image style={styles.image} source={{uri:miuser.imagen}}></Image>
@@ -46,7 +65,7 @@ export default function Panel() {
         </View>
         
     </View>
-    
+       
    <View style={styles.contenedorCarrusel}>
       <PagerView style={{ flex: 1 }} initialPage={0}>
         <View key="1" style={{justifyContent:'center',alignItems:'center'}}>
@@ -70,30 +89,62 @@ export default function Panel() {
       </PagerView>      
     </View>
     <View style={styles.vista_acti}>
-      <Link href={"Actividades/ActividadesDiarias"} asChild>
-      <Pressable>
-        <View style={styles.btn_router}>
-          <IconLeft></IconLeft>
-          <Text style={{marginLeft:10}}>Ir a actividades</Text>
-        </View>
-      </Pressable>
-      </Link>
-      <Link href={"/habitos"} asChild>
-       <Pressable>
-         <View style={styles.btn_router}>
-            <IconLeft></IconLeft>
-            <Text style={{marginLeft:10}}>Ir a habitos</Text>
-         </View>
-       </Pressable>
+      <View style={styles.contenedorpresabe}>
+        <Link href={"Actividades/ActividadesDiarias"} asChild>
+          <Pressable >
+            <View style={styles.btn_router}>
+              <IconLeft></IconLeft>
+              <Text style={{marginLeft:10}}>Ir a actividades</Text>
+            </View>
+            
+          </Pressable>
+        </Link>
+        <Link href={"/Actividades/Create"} asChild>
+          <Pressable>
+            <View>
+              <IconAdd></IconAdd>
+            </View>
+          </Pressable>
+        </Link>
+      </View>
+     <View  style={styles.contenedorpresabe}>
+       <Link href={"/Habitos"} asChild>
+          <Pressable>
+            <View style={styles.btn_router}>
+               <IconLeft></IconLeft>
+               <Text style={{marginLeft:10}}>Ir a habitos</Text>
+            </View>
+            
+          </Pressable>
        </Link>
-      <Link href={"/Metas/"} asChild>
+        <Link href={"/Habitos/create"} asChild>
         <Pressable>
+          <View>
+            <IconAdd></IconAdd>
+          </View>
+        </Pressable>
+      </Link>
+     </View>
+
+      <View style={styles.contenedorpresabe}>
+        <Link href={"/Metas/"} asChild>
+        <Pressable >
              <View  style={styles.btn_router}>
                 <IconLeft ></IconLeft>
                 <Text style={{marginLeft:10}}>Ir a metas</Text>
             </View>
+            
         </Pressable>
       </Link>
+      <Link href={"/Metas/create"} asChild>
+        <Pressable>
+          <View>
+            <IconAdd></IconAdd>
+          </View>
+        </Pressable>
+      </Link>
+      </View>
+
       <Link href={"/notificaciones"} asChild>
         <Pressable>
           <View>
@@ -107,15 +158,86 @@ export default function Panel() {
       <View>
         <Text>logros</Text>
       </View>
-      <View>
+      <Link href={"/centro"} asChild>
+      <Pressable>
+        <View>
         <Text>Analisis inteligente</Text>
       </View>
+      </Pressable>
+      </Link>
+
+      <View>
+       <Modal visible={mostrarModal} animationType="slide" transparent>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalBox}>
+            <Text style={{textAlign:'center',marginBottom:10,fontSize:20,fontWeight:'bold'}}>¿Cómo te sientes hoy?</Text>
+            <View style={styles.emociones}>
+              {emociones.map((e, i) => (
+                <Pressable key={i} onPress={() => setemocionSeleccionada(e.des)}>
+                  <Text style={[
+                    styles.radio_emo,
+                    emocionSeleccionada === e.des && {backgroundColor:'purple',color:'white'} 
+                  ]}>
+                    {e.emo}
+                  </Text>
+                  <Text style={{textAlign:'center'}}>{e.des}</Text>
+                </Pressable>
+              ))}
+            </View>
+          <View style={{margin:20}}>
+              <Button onPress={FormEmociones} title='Enviar' ></Button>
+          </View>
+          </View>
+        </View>
+      </Modal>
+        
+      </View>
+      
       
     </View>
     </ScrollView>
   )
 }
 const styles=StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)', // fondo oscuro
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  modalBox: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 20,
+    width: '90%',
+    
+  },
+  radio_emo:{
+    borderWidth:2,
+    borderColor:'black',
+    borderStyle:'solid',
+    width:50,    
+    textAlign:'center',
+    height:50,
+    textAlignVertical: 'center',
+    fontSize:18,
+    borderRadius:99
+  },
+  emociones:{
+    flexDirection:'row',
+    alignItems:'center',  
+    justifyContent:'space-between'
+        
+  },
+  contenedorpresabe:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center',
+    borderRadius:20,
+    margin:10,
+    paddingRight:10,
+    boxShadow:'0px 0px 8px 1px black',
+  },
     contenedor_perfil:{
       display:'flex',
       flexDirection:'row',
@@ -125,12 +247,10 @@ const styles=StyleSheet.create({
       margin:10
     },
     btn_router:{
-      borderRadius:20,
-      boxShadow:'0px 0px 8px 1px black',
-      display:'flex',
       flexDirection:'row',
-      margin:10,
+        
       padding:5,
+      width:280,
       
         
     }
