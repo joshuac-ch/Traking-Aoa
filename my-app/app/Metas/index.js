@@ -1,26 +1,34 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { useUser } from '../../components/UserContext'
 import Metas from '../../hooks/Metas'
 import { IconAdd, IconDelete } from '../../assets/Icons'
-import { Link, Stack } from 'expo-router'
+import { Link, Stack, useFocusEffect } from 'expo-router'
 import axios from 'axios'
 import constantes from 'expo-constants'
 export default function index() {
   const {user}=useUser()
   const {FectMetas,metas}=Metas()  
-  useEffect(()=>{
-    FectMetas()
-  },[])
+  
   const host=constantes.expoConfig.extra.host
   const BTNDelete=async(id)=>{
     try{
         await axios.delete(`http://${host}:4000/metas/d/${id}`)
         alert("Se elimino la meta correctamente")
+        FectMetas()
     }catch(err){
         alert("Hubo un error"+err.message)
     }
   }
+  
+  useFocusEffect(
+    useCallback(()=>{
+       if(user.id){
+        FectMetas()
+       }
+    },[user.id])
+  )
+  
   return (
     <ScrollView>
         <Stack.Screen options={{title:'Metas'}}></Stack.Screen>
