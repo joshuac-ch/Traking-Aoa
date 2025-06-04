@@ -1,0 +1,6 @@
+En caso hay algun error cambiar lo siguiente
+en C:\reac-native-origen\track\my-app\app\_layout.js
+quitar esta linea  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+
+y en C:\reac-native-origen\track\my-app\components\UserContext.js
+quitar const [user, setUser] = useState({id:3}) el {id:3} que esta inicialñizando a uno no existente por ahora  
