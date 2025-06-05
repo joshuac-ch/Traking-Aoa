@@ -22,6 +22,7 @@ const sequelize=require("../src/config/database")
         key:'id'
       }
     },
+    imagen: DataTypes.STRING,
     titulo: DataTypes.STRING,
     descripcion: DataTypes.STRING,
     proceso: DataTypes.INTEGER,
