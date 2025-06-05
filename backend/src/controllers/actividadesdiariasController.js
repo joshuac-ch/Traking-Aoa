@@ -1,7 +1,8 @@
 const ActividadesDiarias=require("../../models/actividades_diarias")
 const getActividades=async(req,res)=>{
     try{
-        const modelo=await ActividadesDiarias.findAll()
+        const {usuario_id}=req.params
+        const modelo=await ActividadesDiarias.findAll({where:{usuario_id}})
         if(!modelo){
             return res.status(404).json({message:"No se encontro ese modelo"})
         }
@@ -12,7 +13,7 @@ const getActividades=async(req,res)=>{
 }
 const InsetActividades=async(req,res)=>{
     try{
-        const {usuario_id,titulo,descripcion,fecha}=req.body
+        const {usuario_id,titulo,descripcion,imagen,fecha}=req.body
         //const usuario_id=1
         //const titulo="Estudiar AWS"
         //const descripcion="Descripcion breve"
@@ -22,6 +23,7 @@ const InsetActividades=async(req,res)=>{
         }
         const modelo=await ActividadesDiarias.create({
             usuario_id,
+            imagen,
             titulo,
             descripcion,
             fecha:new Date()
@@ -50,7 +52,7 @@ const UpdateActividades=async(req,res)=>{
         //const titulo="Hacer clas de react native diario"
         //const descripcion="breve"
         //const fecha=new Date()
-        const {usuario_id,titulo,descripcion,fecha}=req.body
+        const {usuario_id,titulo,descripcion,fecha,imagen}=req.body
         if(!usuario_id,!titulo,!descripcion,!fecha){
             return res.status(404).json({message:"No se llenaron las columnas"})
         }
@@ -60,9 +62,10 @@ const UpdateActividades=async(req,res)=>{
         }
         await modelo.update({
             usuario_id,
+            imagen,
             titulo,
             descripcion,
-            fecha
+            fecha:new Date()
         })
         res.status(200).json(modelo)
     }catch(err){

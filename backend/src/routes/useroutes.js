@@ -25,10 +25,11 @@ router.post("/registros/c",Insert_registros)
 router.get("/metas",GetMetas)
 router.post("/metas/i",InsertMetas)
 router.get("/metas/s/:id",ShowMetas)
-router.get("/metas/u/:id",UpdateMetas)
+router.put("/metas/u/:id",UpdateMetas)
 router.delete('/metas/d/:id',DeleteMetas)
 //------------------------------------------
-router.get("/actividades/",getActividades)
+router.get("/actividades/",getActividades)//<=>
+router.get("/actividades/:usuario_id",getActividades)
 router.post("/actividades/i",InsetActividades)
 router.get("/actividades/s/:id",ShowActividaes)
 router.put("/actividades/u/:id",UpdateActividades)
