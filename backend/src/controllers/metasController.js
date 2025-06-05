@@ -13,14 +13,14 @@ const GetMetas=async(req,res)=>{
 }
 const InsertMetas=async(req,res)=>{
     try{
-        const {usuario_id,titulo,descripcion,proceso,meta_total,fecha_limite}=req.body
+        const {usuario_id,titulo,descripcion,proceso,fecha_inicio,meta_total,fecha_limite,imagen}=req.body
         if(!usuario_id,!titulo,!meta_total,!fecha_limite){
            return res.status(404).json({message:"No se lleno los campos necesarios"})
         }
         //const usuario_id=1
         //const titulo="Levantarse temprano"
         //const descripcion=''
-        const inicio=new Date()
+        //const inicio=total
         //
         //const fecha_limite='2025-05-31 18:35:05'
         //const meta_total=1
@@ -28,9 +28,11 @@ const InsertMetas=async(req,res)=>{
             usuario_id,
             titulo,
             descripcion,
-            proceso:inicio.getDay(),
+            proceso:0,
             meta_total,
-            fecha_limite
+            fecha_limite,
+            imagen,
+            fecha_inicio:new Date()
         })
         res.status(200).json(modelo)
     }catch(err){
@@ -53,8 +55,8 @@ const ShowMetas=async(req,res)=>{
 const UpdateMetas=async(req,res)=>{
     try{
           const {id}=req.params
-          const {usuario_id,titulo,descripcion,proceso,meta_total,fecha_limite}=req.body
-          if(!usuario_id,!titulo,!proceso,!meta_total,!fecha_limite){
+          const {usuario_id,titulo,descripcion,proceso,meta_total,fecha_limite,imagen}=req.body
+          if(!titulo || !meta_total || !fecha_limite){
             return res.status(404).json({message:"No se encontro esa meta"})
           }
           const modelo=await Metas.findByPk(id)
@@ -67,11 +69,13 @@ const UpdateMetas=async(req,res)=>{
             descripcion,
             proceso:proceso,
             meta_total,
+            imagen,
             fecha_limite
           })
           res.status(200).json(modelo)
     }catch(err){
         console.error("Se encontro un error",err.message)
+        
     }    
 }
 const DeleteMetas=async(req,res)=>{

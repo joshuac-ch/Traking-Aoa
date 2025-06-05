@@ -12,8 +12,8 @@ const GetUser=async(req,res)=>{
 }
 const InsertUser=async(req,res)=>{
     try{
-        const {nombre,apellido,correo,telefono}=req.body
-        if(!nombre,!apellido,!correo,!telefono){
+        const {nombre,apellido,correo,pass,telefono,imagen}=req.body
+        if(!nombre||!apellido||!correo||!telefono){
            return res.status(404).json({message:"Hubo un error no pueden estar vacios los campos"})
         }
         //const nombre='nino'
@@ -26,7 +26,8 @@ const InsertUser=async(req,res)=>{
             pass:pass,
             apellido:apellido,
             correo:correo,
-            telefono:telefono
+            telefono:telefono,
+            imagen:imagen
         })
         if(!modelo){
             return res.status(404).json({message:"este modelo no existe"})
@@ -48,7 +49,7 @@ const ShowUser=async(req,res)=>{
 const UpdateUser=async(req,res)=>{
     try{
         const {id}=req.params
-        const {nombre,apellido,correo,telefono}=req.body    
+        const {nombre,apellido,correo,telefono,imagen,pass}=req.body    
         const modelo=await Usuarios.findOne({where:{id}})
         if(!modelo){
             return res.status(404).json({message:"No se encontro ese user"})
@@ -58,11 +59,12 @@ const UpdateUser=async(req,res)=>{
         apellido,
         correo,
         pass,
-        telefono:10320803
+        imagen,
+        telefono
         })
         res.status(200).json(modelo)
     }catch(err){
-        console.error("Hubo un error")
+        console.error("Hubo un error",err.message)
     }
 }
 const DeleteUser=async(req,res)=>{

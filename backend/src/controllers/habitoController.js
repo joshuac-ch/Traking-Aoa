@@ -14,12 +14,13 @@ const InsertHabitos=async(req,res)=>{
     //const activo=1
     //const fecha_inicio
     //const usuario_id=1
-    const {titulo,descripcion,frecuencia,activo,fecha_inicio,usuario_id}=req.body
+    const {titulo,descripcion,imagen,frecuencia,activo,fecha_inicio,usuario_id}=req.body
     if(!titulo,!frecuencia){
         return res.status(404).json({message:"No se llenaron todos los campos"})
     }
     const modelo=await Habitos.create({
         titulo,
+        imagen,
         descripcion,
         frecuencia,
         activo:1,
@@ -30,7 +31,7 @@ const InsertHabitos=async(req,res)=>{
 }
 const UpdateHabito=async(req,res)=>{
     const {id}=req.params
-    const {titulo,descripcion,frecuencia,activo,usuario_id}=req.body
+    const {titulo,descripcion,frecuencia,imagen,activo,usuario_id}=req.body
     //const  titulo="Comer 5 comidas al dia"
     //const descripcion=""
     //const frecuencia="todos los dias"
@@ -45,6 +46,7 @@ const UpdateHabito=async(req,res)=>{
     }
     await modelo.update({
         titulo,
+        imagen,
         descripcion,
         frecuencia,
         activo,
