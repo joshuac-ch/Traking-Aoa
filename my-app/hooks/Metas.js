@@ -1,11 +1,13 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import Constans from "expo-constants"
+import { useUser } from '../components/UserContext'
 export default function Metas() {
   const [metas, setmetas] = useState([])
+  const {user}=useUser()
   const host=Constans.expoConfig.extra.host
   const FectMetas=async()=>{
-    const {data}=await axios.get(`http://${host}:4000/metas`)
+    const {data}=await axios.get(`http://${host}:4000/metas/${user.id}`)
     setmetas(data)
   }
   return {FectMetas,metas}
