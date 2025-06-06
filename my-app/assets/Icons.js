@@ -38,3 +38,6 @@ export const IconText=()=>{
 export const IconFrecuencia=()=>{
     return <Fontisto name="spinner-refresh" size={24} color="black" />
 }
+export const IconSafe=()=>{
+    return <AntDesign name="Safety" size={24} color="black" />
+}
