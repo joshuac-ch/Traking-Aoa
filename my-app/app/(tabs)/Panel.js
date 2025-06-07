@@ -3,7 +3,7 @@ import { Button, Image, Modal, Pressable, ScrollView, StatusBar, StyleSheet, Tex
 import { useUser } from '../../components/UserContext'
 
 import PagerView from 'react-native-pager-view'
-import { Link, Stack, Tabs, useFocusEffect } from 'expo-router'
+import { Link, Stack, Tabs, useFocusEffect, useRouter } from 'expo-router'
 import { IconAdd, IconElipsis, IconLeft } from '../../assets/Icons'
 import constantes from 'expo-constants'
 import axios from 'axios'
@@ -11,13 +11,15 @@ export default function Panel() {
     const {user}=useUser()
     const  host=constantes.expoConfig.extra.host
     const [miuser, setmiuser] = useState([])
+    const navegar=useRouter()
     const ShowUser=async()=>{
       
       try{
         const {data} = await axios.get(`http://${host}:4000/usuarios/s/${user.id}`)
         setmiuser(data)
       }catch(er){
-        alert("Hubo un error"+er.message)
+        //alert("Hubo un error"+er.message)
+        navegar.push("/Login/app")
       }
     }
     useFocusEffect(
@@ -28,11 +30,16 @@ export default function Panel() {
       },[user.id])
     )
     const [mostrarModal, setmostrarModal] = useState(true)
-    const [emocionSeleccionada, setemocionSeleccionada] = useState('')
-    const FormEmociones=()=>{
-      alert(`¡Gracias! por tu respuesta de hoy ${miuser.nombre}`)
+    const [emocionSeleccionada, setemocionSeleccionada] = useState({
+      emocion:"",
+      usuario_id:0,
+      nivel:""      
+    })
+    const FormEmociones=async()=>{
+      //alert(`¡Gracias! por tu respuesta de hoy ${miuser.nombre}`)
+      await axios.post(`http://${host}:4000/emociones/i`,emocionSeleccionada)
       setmostrarModal(false)
-    }
+    }    
     const emociones=[
       {emo:1,des:"Cansado"},
       {emo:2,des:"Triste"},
@@ -41,27 +48,46 @@ export default function Panel() {
       {emo:5,des:"Feliz"},
 
     ]
-    
-    //agregar imagen a metas en todo
+      
+   
+    const ChangeEmcoicon=async()=>{
+      setemocionSeleccionada(prev=>({
+        ...prev,
+        nivel:e.emo,
+        emocion:e.des,
+        usuario_id:user.id
+        
+      }))
+    }
     //crear notificacions si se cmple o no determinada tarea
     //Notificaciones push
     //Envían un recordatorio (“¿Tomaste agua hoy?”).
     //La notificación puede tener acciones (ej: botón “Sí” que marca como hecho directamente). 
+    //mostrar datos para la persona correcta en habito meta y acti mejorar las rutas
   return (
       <ScrollView>
         
        
      <Stack.Screen options={{headerShown:false}}></Stack.Screen>
         <View key={miuser.id}  style={styles.contenedor_perfil}>
-        <View className='flex flex-row'>
+        <View style={{flexDirection:'row'}}>
           <Image style={styles.image} source={{uri:miuser.imagen}}></Image>
-        <View className="justify-center">
-            <Text className="font-black">{miuser.nombre} {miuser.apellido}</Text>
+        <View style={{justifyContent:'center'}}>
+            <Text style={{fontWeight:'bold'}}>{miuser.nombre} {miuser.apellido}</Text>
             <Text >{miuser.correo}</Text>
         </View>
         </View>
         <View>
-            <IconElipsis></IconElipsis>
+            <Link href={"/configuracion"} asChild>
+              <Pressable style={({pressed})=>[
+                {
+                  backgroundColor:pressed?'#fff':"red",
+                  borderRadius:50,padding:10
+                }
+              ]} >
+                <IconElipsis></IconElipsis>
+              </Pressable>
+            </Link>
         </View>
         
     </View>
@@ -165,18 +191,31 @@ export default function Panel() {
       </View>
       </Pressable>
       </Link>
+      <Link href={'/Login/app'} asChild>
+        <Pressable>
+          <Text>Cerrar Session</Text>
+        </Pressable>
+      </Link>
 
       <View>
+       
+       {/*
        <Modal visible={mostrarModal} animationType="slide" transparent>
         <View style={styles.modalContainer}>
           <View style={styles.modalBox}>
             <Text style={{textAlign:'center',marginBottom:10,fontSize:20,fontWeight:'bold'}}>¿Cómo te sientes hoy?</Text>
             <View style={styles.emociones}>
               {emociones.map((e, i) => (
-                <Pressable key={i} onPress={() => setemocionSeleccionada(e.des)}>
+                <Pressable key={i} onPress={() => setemocionSeleccionada(prev=>({
+        ...prev,
+        nivel:e.emo,
+        emocion:e.des,
+        usuario_id:user.id
+        
+      }))}>
                   <Text style={[
                     styles.radio_emo,
-                    emocionSeleccionada === e.des && {backgroundColor:'purple',color:'white'} 
+                    emocionSeleccionada.nivel === e.emo && {backgroundColor:'purple',color:'white'} 
                   ]}>
                     {e.emo}
                   </Text>
@@ -190,6 +229,8 @@ export default function Panel() {
           </View>
         </View>
       </Modal>
+       */}
+      
         
       </View>
       
@@ -239,12 +280,16 @@ const styles=StyleSheet.create({
     boxShadow:'0px 0px 8px 1px black',
   },
     contenedor_perfil:{
+      
       display:'flex',
       flexDirection:'row',
       justifyContent:'space-between',
       alignItems:'center',
       padding:10,
-      margin:10
+      marginLeft:10,
+      marginRight:10,
+      marginBottom:10,
+      marginTop:55
     },
     btn_router:{
       flexDirection:'row',
