@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, TextInput,Text, View, ScrollView, Pressable } from 'react-native'
+import { StyleSheet, TextInput,Text, View, ScrollView, Pressable, Image } from 'react-native'
 import { IconSeach } from '../../assets/Icons'
 import Metas from '../../hooks/Metas'
 import Habitos from '../../hooks/Habitos'
 import Actividades from '../../hooks/Actividades'
-import { Link } from 'expo-router'
+import { Link, Stack } from 'expo-router'
+import usuarios from '../../hooks/usuarios'
 
 export default function Buscardor() {
+    const {FectUsuarios,dataUser}=usuarios()
     const {FectMetas,metas}=Metas()
     const {FecthHabitos,habitos}=Habitos()
     const {FetchActividades,actividades}=Actividades()
@@ -17,7 +19,8 @@ export default function Buscardor() {
     useEffect(()=>{
         FectMetas(),
         FecthHabitos(),
-        FetchActividades()
+        FetchActividades(),
+        FectUsuarios()
     },[])
     useEffect(()=>{
         if(datosbuscados.trim()!=""){
@@ -27,7 +30,11 @@ export default function Buscardor() {
                 a.titulo.toLowerCase().includes(datosbuscados.toLowerCase()))
             const filterhabitos=habitos.filter((h)=>
                 h.titulo.toLowerCase().includes(datosbuscados.toLowerCase()))
+            const filtarUsers=dataUser.filter((u)=>
+                u.nombre.includes(datosbuscados.toLowerCase())
+            )
             const resultadosActuales=[
+              ...filtarUsers.map(a=>({...a,tipo:"Usuario"})),  
               ...filtrado.map(item=>({...item,tipo:'Metas'})),
               ...filterActividad.map(item=>({...item,tipo:'Actividades'})),
               ...filterhabitos.map(item=>({...item,tipo:'Habitos'}))
@@ -61,6 +68,8 @@ export default function Buscardor() {
     return (
    <>
    <ScrollView>
+    
+     <Stack.Screen options={{headerShown:false}}></Stack.Screen>
     <View style={styles.buscar}>
     <TextInput onChangeText={text=>setdatosbuscados(text)} value={datosbuscados}  placeholder='buscar...'></TextInput>
     <IconSeach style={styles.icon_Search}></IconSeach>
@@ -73,6 +82,19 @@ export default function Buscardor() {
         {resultado.length>0?
         resultado.map((m,i)=>{
             return(
+                m.tipo=="Usuario"?
+                <Link key={i} href={`/${m.tipo}`} asChild>
+                    <Pressable onPress={()=>guardarbusqueda(m.id,m.titulo,m.tipo,m.descripcion)}>
+                        <View style={styles.contendor_user}>
+                            <Image source={{uri:m.imagen}} style={{width:50,height:50,borderRadius:50,margin:10}}></Image>
+                            <View>
+                                <Text>{m.nombre}</Text>
+                                <Text style={{fontWeight:'bold'}}>{m.correo}</Text>
+                            </View>
+                        </View>
+                    </Pressable>
+                </Link>
+                :
                 <Link  key={i} href={`/${m.tipo}/${m.id}`} asChild>
                     <Pressable onPress={()=>guardarbusqueda(m.id,m.titulo,m.tipo,m.descripcion)}>
                         <View style={styles.contendor_buscador}>
@@ -122,6 +144,22 @@ export default function Buscardor() {
   )
 }
 const styles=StyleSheet.create({
+    
+    contendor_user:{
+        
+        display:'flex',
+        alignSelf:'center',
+        borderRadius:10,
+        flexDirection:'row',
+        alignItems:'center',
+        width:350,
+        height:80,
+        borderWidth:2,
+        borderStyle:'solid',
+        borderColor:'black',
+        alignContent:'center'
+        
+    },
     contenedor_no_datos:{
        
         margin:20,
@@ -140,7 +178,12 @@ const styles=StyleSheet.create({
         justifyContent:'space-between',
         alignItems:'center',
         alignSelf:'center',
-        margin:10,
+
+        marginLeft:10,
+        marginRight:10,
+        marginBottom:10,
+        marginTop:55,
+
         padding:3,
                 
         borderStyle:'solid',
