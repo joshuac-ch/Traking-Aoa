@@ -171,19 +171,7 @@ export default function Panel() {
       </Link>
       </View>
 
-      <Link href={"/notificaciones"} asChild>
-        <Pressable>
-          <View>
-            <Text>Bandeja de Entrada</Text>
-          </View>
-        </Pressable>
-      </Link>
-      <View>
-        <Text>Preferencias del usuario</Text>
-      </View>
-      <View>
-        <Text>logros</Text>
-      </View>
+      
       <Link href={"/centro"} asChild>
       <Pressable>
         <View>
@@ -191,11 +179,7 @@ export default function Panel() {
       </View>
       </Pressable>
       </Link>
-      <Link href={'/Login/app'} asChild>
-        <Pressable>
-          <Text>Cerrar Session</Text>
-        </Pressable>
-      </Link>
+     
 
       <View>
        
