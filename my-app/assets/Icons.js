@@ -41,3 +41,9 @@ export const IconFrecuencia=()=>{
 export const IconSafe=()=>{
     return <AntDesign name="Safety" size={24} color="black" />
 }
+export const IconLogin=()=>{
+    return <Entypo name="login" size={24} color="black" />
+}
+export const IconBell=()=>{
+    return <Feather name="bell" size={24} color="black" />
+}
