@@ -6,6 +6,7 @@ import Habitos from '../../hooks/Habitos'
 import Actividades from '../../hooks/Actividades'
 import { Link, Stack } from 'expo-router'
 import usuarios from '../../hooks/usuarios'
+import { useUser } from '../../components/UserContext'
 
 export default function Buscardor() {
     const {FectUsuarios,dataUser}=usuarios()
@@ -15,7 +16,7 @@ export default function Buscardor() {
     const [datosbuscados, setdatosbuscados] = useState("")
     const [historial, sethistorial] = useState([])
     const [resultado, setresultado] = useState([])    
-    
+    const {user}=useUser()
     useEffect(()=>{
         FectMetas(),
         FecthHabitos(),
@@ -31,7 +32,7 @@ export default function Buscardor() {
             const filterhabitos=habitos.filter((h)=>
                 h.titulo.toLowerCase().includes(datosbuscados.toLowerCase()))
             const filtarUsers=dataUser.filter((u)=>
-                u.nombre.includes(datosbuscados.toLowerCase())
+                u.nombre!=user.nombre && u.nombre.includes(datosbuscados.toLowerCase())
             )
             const resultadosActuales=[
               ...filtarUsers.map(a=>({...a,tipo:"Usuario"})),  
@@ -74,6 +75,15 @@ export default function Buscardor() {
     <TextInput onChangeText={text=>setdatosbuscados(text)} value={datosbuscados}  placeholder='buscar...'></TextInput>
     <IconSeach style={styles.icon_Search}></IconSeach>
    </View>
+   <View style={{flexDirection:'row',justifyContent:'space-around',margin:20}}>
+    <View>
+        <Text>Actividades</Text>
+    </View>
+    <View>
+        <Text>Usuarios</Text>
+    </View>
+   
+   </View>
    <View>
     <View>
         
@@ -83,7 +93,7 @@ export default function Buscardor() {
         resultado.map((m,i)=>{
             return(
                 m.tipo=="Usuario"?
-                <Link key={i} href={`/${m.tipo}`} asChild>
+                <Link key={i} href={`/Perfil/users/${m.id}`} asChild>
                     <Pressable onPress={()=>guardarbusqueda(m.id,m.titulo,m.tipo,m.descripcion)}>
                         <View style={styles.contendor_user}>
                             <Image source={{uri:m.imagen}} style={{width:50,height:50,borderRadius:50,margin:10}}></Image>
@@ -151,9 +161,10 @@ const styles=StyleSheet.create({
         alignSelf:'center',
         borderRadius:10,
         flexDirection:'row',
+        marginBottom:10,
         alignItems:'center',
         width:350,
-        height:80,
+        height:65,
         borderWidth:2,
         borderStyle:'solid',
         borderColor:'black',
