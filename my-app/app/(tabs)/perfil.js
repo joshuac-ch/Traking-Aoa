@@ -18,12 +18,29 @@ export default function perfil() {
     const [dataMetas, setdataMetas] = useState([])
     const [dataHabitos, setdataHabitos] = useState([])
     const [dataActividades, setdataActividades] = useState([])
+    //useEffect(()=>{
+    //    FectMetas(),
+    //    FecthHabitos(),
+    //    FetchActividades()
+    //},[])
     useEffect(()=>{
-            FectMetas(),
-        FecthHabitos(),
-        FetchActividades()
-    },[])
+       if(actividades.length>0){
+        setdataActividades(actividades.map((a)=>({...a,type:"Actividades"})))
+       } 
+    },[actividades])
     
+    useEffect(()=>{
+        if(habitos.length>0){
+            setdataHabitos(habitos.map((a)=>({...a,type:"Habitos"})))
+        }
+    },[habitos])
+
+    useEffect(()=>{
+        if(metas.length>0){
+            setdataMetas(metas.map((a)=>({...a,type:'Metas'})))
+        }
+    },[metas])
+
     useEffect(()=>{       
             if(metas.length>0 && habitos.length>0 && actividades.length>0){
                 const tododata=[
@@ -32,9 +49,9 @@ export default function perfil() {
                     ...actividades.map((a)=>({...a,type:'Actividades'}))
                 ] 
                 setalldata(tododata)
-                setdataActividades(actividades,{type:"Actividades"})
-                setdataMetas(metas,{type:'Metas'})
-                setdataHabitos(habitos,{type:"Habitos"})
+                //setdataActividades(actividades.map((a)=>({...a,type:"Actividades"})))
+                //setdataMetas(metas.map((m)=>({...m,type:"Metas"})))
+                //setdataHabitos(habitos.map((h)=>({...h,type:"Habitos"})))
                 
             }     
     },[metas,actividades,habitos])
@@ -46,10 +63,10 @@ export default function perfil() {
         }catch(err){
             alert("Hubo un error: ",err.message)
         }
-    }
+    }    
     useFocusEffect(
         useCallback(()=>{
-            if(user.id){
+            if(user.id){               
                 FectUserSpecific(),
                 FecthHabitos(),//si pongo en el focus calback perimnite acualizarse automaticamente 
                 FectMetas(),
@@ -109,11 +126,8 @@ export default function perfil() {
                          <View style={styles.proyecto_c}>
                             
                             <View style={{display:'flex',justifyContent:'space-between'}}>
-                               <ImageBackground source={{uri:a.imagen}} style={{width:130,height:120}}>
-                                    {/*<View style={styles.div_c_header}>
-                                        <Text style={{color:'black'}}>{a.type}</Text>
-                                    </View>*/}
-                               </ImageBackground>
+                               
+                               <Image source={{uri:a.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                 <View style={styles.div_c_body}>
                                     <Text>{a.titulo.length>18?a.titulo.slice(0,15)+"...":a.titulo}</Text>
                                 </View>
@@ -138,11 +152,7 @@ export default function perfil() {
                          <View style={styles.proyecto_c}>
                             
                             <View style={{display:'flex',justifyContent:'space-between'}}>
-                               <ImageBackground source={{uri:a.imagen}} style={{width:130,height:120}}>
-                                    {/*<View style={styles.div_c_header}>
-                                        <Text style={{color:'black'}}>{a.type}</Text>
-                                    </View>*/}
-                               </ImageBackground>
+                               <Image source={{uri:a.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                 <View style={styles.div_c_body}>
                                     <Text>{a.titulo.length>18?a.titulo.slice(0,15)+"...":a.titulo}</Text>
                                 </View>
@@ -167,11 +177,7 @@ export default function perfil() {
                          <View style={styles.proyecto_c}>
                             
                             <View style={{display:'flex',justifyContent:'space-between'}}>
-                               <ImageBackground source={{uri:a.imagen}} style={{width:130,height:120}}>
-                                    {/*<View style={styles.div_c_header}>
-                                        <Text style={{color:'black'}}>{a.type}</Text>
-                                    </View>*/}
-                               </ImageBackground>
+                              <Image source={{uri:a.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                 <View style={styles.div_c_body}>
                                     <Text>{a.titulo.length>18?a.titulo.slice(0,15)+"...":a.titulo}</Text>
                                 </View>
@@ -197,11 +203,7 @@ export default function perfil() {
                          <View style={styles.proyecto_c}>
                             
                             <View style={{display:'flex',justifyContent:'space-between'}}>
-                               <ImageBackground source={{uri:a.imagen}} style={{width:130,height:120}}>
-                                    {/*<View style={styles.div_c_header}>
-                                        <Text style={{color:'black'}}>{a.type}</Text>
-                                    </View>*/}
-                               </ImageBackground>
+                               <Image source={{uri:a.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                 <View style={styles.div_c_body}>
                                     <Text>{a.titulo.length>18?a.titulo.slice(0,15)+"...":a.titulo}</Text>
                                 </View>
@@ -215,55 +217,7 @@ export default function perfil() {
                     
               </View>      
        
-        <View style={styles.proyecto}>
-              
-            <View style={{display:'flex',flexDirection:'row'}}>
-                <View style={styles.proyecto_c}>
-                    <View style={styles.div_c}><Text >Type</Text></View>
-                </View>
-                <View style={styles.proyecto_c}>
-                    <View style={styles.div_c}><Text>Type</Text></View>
-                </View>
-                <View style={styles.proyecto_c}>
-                    <View style={styles.div_c}><Text>Type</Text></View>
-                </View>
-            </View>
-            <View style={{display:'flex',flexDirection:'row'}}>
-                <View style={styles.proyecto_c}>
-                    <View style={styles.div_c}><Text>Type</Text></View>
-                </View>
-                <View style={styles.proyecto_c}>
-                    <View style={styles.div_c}><Text>Type</Text></View>
-                </View>
-                <View style={styles.proyecto_c}>
-                    <View style={styles.div_c}><Text>Type</Text></View>
-                </View>
-            </View>
-            <View style={{display:'flex',flexDirection:'row'}}>
-                <View style={styles.proyecto_c}>
-                    <View style={styles.div_c}><Text>Type</Text></View>
-                </View>
-                <View style={styles.proyecto_c}>
-                    <View style={styles.div_c}><Text>Type</Text></View>
-                </View>
-                <View style={styles.proyecto_c}>
-                    <View style={styles.div_c}><Text>Type</Text></View>
-                </View>
-            </View>
-            <View style={{display:'flex',flexDirection:'row'}}>
-                <View style={styles.proyecto_c}>
-                    <View style={styles.div_c}><Text>Type</Text></View>
-                </View>
-                <View style={styles.proyecto_c}>
-                    <View style={styles.div_c}><Text>Type</Text></View>
-                </View>
-                <View style={styles.proyecto_c}>
-                    <View style={styles.div_c}><Text>Type</Text></View>
-                </View>
-            </View>
-            
-            
-        </View>
+       
         
     </View> 
     </ScrollView>   
@@ -282,7 +236,7 @@ const styles=StyleSheet.create({
     proyecto_c:{
         
         flexDirection:'row',
-        borderWidth:2,
+        borderWidth:1,
         borderColor:'black',
         borderStyle:'solid',
         borderRadius:5,
@@ -298,7 +252,7 @@ const styles=StyleSheet.create({
         alignItems:'flex-end',
     },
     div_c_body:{        
-        backgroundColor:'#fff',
+        backgroundColor:'transparent',
         alignItems:'flex-start',      
         padding:10,
         borderBottomLeftRadius:5,
@@ -323,7 +277,10 @@ const styles=StyleSheet.create({
         display:'flex',       
         justifyContent:'center',
         alignItems:'center',
-        
+      marginLeft:0,
+      marginRight:0,
+      marginBottom:0,
+      marginTop:55
         
        
     },
