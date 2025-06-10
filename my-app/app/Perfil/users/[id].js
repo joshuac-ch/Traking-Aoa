@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Stack, useLocalSearchParams } from 'expo-router'
+import { Link, Stack, useLocalSearchParams } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import constantes from "expo-constants"
@@ -31,7 +31,28 @@ export default function userDiferent() {
         ShowActividadUser()       
         }
     },[id])    
-    
+    const [dataHabitosAnother, setdataHabitosAnother] = useState([])
+    useEffect(()=>{
+        if(id!=null){
+            const showHabitosUser=async()=>{
+                const {data}=await axios.get(`http://${host}:4000/habitos/${id}`)
+                setdataHabitosAnother(data)
+            }
+        showHabitosUser()
+        }
+
+    },[id])
+
+    const [dataMetasAnother, setdataMetasAnother] = useState([])
+    useEffect(()=>{
+        if(id!=null){
+            const showMetasUser=async()=>{
+                const {data}=await axios.get(`http://${host}:4000/metas/${id}`)
+                setdataMetasAnother(data)
+            }
+            showMetasUser()            
+        }                
+    },[id])
     return (    
     <>
         
@@ -75,21 +96,80 @@ export default function userDiferent() {
    
    </View>
    {/*No quedamos aqui revisar que corra bien  */}
-   <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
+    <View>
+        <Text style={{textAlign:'center'}}>Actividades</Text>
+     </View>
+   <View style={{display:'flex',justifyContent:'center',flexDirection:'row',flexWrap:'wrap'}}>
+    
     {dataActividadesOtherUser.length>0?
     dataActividadesOtherUser.map((a,i)=>{
         return(
-            <View key={i}>
-                <View>
-                    <Text>Actividades</Text>
-                </View>
-                <View>
-                    <Text>{a.titulo}</Text>
-                </View>                
-            </View>
+            <Link key={i} href={`/${a.type}/${a.id}`} asChild>
+                                  <Pressable>
+                                     <View style={styles.proyecto_c}>
+                                        
+                                        <View style={{display:'flex',justifyContent:'space-between'}}>
+                                           
+                                           <Image source={{uri:a.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                            <View style={styles.div_c_body}>
+                                                <Text>{a.titulo.length>18?a.titulo.slice(0,15)+"...":a.titulo}</Text>
+                                            </View>
+                                        </View>
+                                   </View> 
+                                  </Pressable>
+                                  </Link>
         )
     })
-    :<Text>No hay datos </Text>}
+    :<Text style={{fontWeight:'bold',fontSize:25}}>No hay datos de actividades Actualmente </Text>}
+   </View>
+   <View>
+        <Text style={{textAlign:'center'}}>Habitos</Text>
+   </View>
+   <View style={{display:'flex',justifyContent:'center',flexDirection:'row',flexWrap:'wrap'}}>
+        {dataHabitosAnother.length>0?
+        dataHabitosAnother.map((h,i)=>{
+            return(
+                <Link href={"habitos"} asChild key={i}>
+                    <Pressable>
+                        <View style={styles.proyecto_c}>
+                            <View style={{display:'flex',justifyContent:'space-between'}}>
+                                <Image source={{uri:h.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                <View style={styles.div_c_body}>
+                                    <Text>{h.titulo.length>18?h.titulo.slice(0,15)+"...":h.titulo}</Text>
+                                </View>
+                            </View>
+                        </View>    
+                    </Pressable>                
+                </Link>             
+                
+            )
+        })
+        :<Text style={{fontWeight:'bold',fontSize:15}}>No hay datos de habitos Actualmente</Text>}
+   </View>
+   <View>
+        <Text style={{textAlign:'center'}}>Metas</Text>
+   </View>
+   <View  style={{display:'flex',flexDirection:'row',justifyContent:'center',flexWrap:'wrap'}}>
+        {dataMetasAnother.length>0?
+        dataMetasAnother.map((m,i)=>{
+            return(
+                <Link asChild href={"/metas"} key={i}>
+                    <Pressable>
+                        <View style={styles.proyecto_c}>
+                            <View style={{display:'flex',justifyContent:'space-between'}}>
+                                <Image source={{uri:m.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                <View style={styles.div_c_body}>
+                                    <Text>{m.titulo.length>18?m.titulo.slice(0,15)+"...":m.titulo}</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </Pressable>
+                </Link>
+            )
+        })
+        :
+            <Text style={{fontWeight:'bold',fontSize:15}}>No hay datos de Metas Actualmente</Text>
+         }
    </View>
  {/*
  <View>
