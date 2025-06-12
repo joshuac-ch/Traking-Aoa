@@ -1,6 +1,6 @@
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router'
 import React, { useEffect, useState } from 'react'
-import { View,Text, TextInput, Image, StyleSheet, Pressable, Switch, Button } from 'react-native'
+import { View,Text, TextInput, Image, StyleSheet, Pressable, Switch, Button, ToastAndroid } from 'react-native'
 import constantes from "expo-constants"
 import axios from 'axios'
 import { IconFrecuencia, IconText, IconTitle } from '../../assets/Icons'
@@ -39,8 +39,8 @@ export default function DetalleHabito() {
   const UpdateHabitos=async()=>{
     try{
         await axios.put(`http://${host}:4000/habitos/u/${id}`,FormDataHabitos)
-        alert("Se actualizo los datos")
-        //navegar.push("/Panel")
+        ToastAndroid.show("Se actualizaron los datos",ToastAndroid.SHORT)
+        navegar.push("/Panel")
     }catch(err){
         alert(err.message)
     }

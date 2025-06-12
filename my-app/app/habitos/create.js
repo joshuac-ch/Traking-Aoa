@@ -1,6 +1,6 @@
 import { Picker } from '@react-native-picker/picker'
 import React, { useState } from 'react'
-import { Pressable, Text, TextInput, View } from 'react-native'
+import { Pressable, StyleSheet, Text, TextInput, ToastAndroid, View } from 'react-native'
 import { useUser } from '../../components/UserContext'
 import axios from 'axios'
 import Constants from "expo-constants"
@@ -11,7 +11,8 @@ export default function create() {
   const [fromHabitos, setfromHabitos] = useState({
     titulo:'',
     descripcion:'',
-    frecuencia:'',   
+    frecuencia:'',
+    imagen:'',   
     activo:1,
     usuario_id:user.id
   }) 
@@ -19,7 +20,8 @@ export default function create() {
     try{
       const local=Constants.expoConfig.extra.host
       await axios.post(`http://${local}:4000/habitos/c`,fromHabitos)
-      alert("Se enviaron los datos  correctamente")
+      ToastAndroid.show("Se enviaron los datos correctamente",ToastAndroid.TOP)
+      
       navegar.push("/Panel")
     }catch(err){
       alert(err.message)
@@ -28,27 +30,63 @@ export default function create() {
   return (
     <View>
       <Stack.Screen options={{title:'Crear Habitos'}}></Stack.Screen>
-        <Text>Crear habito</Text>
+        
+        <View className='m-4'>
+          <View>
+          <Text>Imagen: </Text>
+          <TextInput style={styles.form_input} value={fromHabitos.imagen} onChangeText={text=>setfromHabitos({...fromHabitos,imagen:text})} placeholder='ingrese link de imagen'></TextInput>
+        </View>
         <View>
           <Text>Titulo: </Text>
-          <TextInput value={fromHabitos.titulo} onChangeText={text=>setfromHabitos({...fromHabitos,titulo:text})} placeholder='ingrese titulo'></TextInput>
+          <TextInput style={styles.form_input} value={fromHabitos.titulo} onChangeText={text=>setfromHabitos({...fromHabitos,titulo:text})} placeholder='ingrese titulo'></TextInput>
         </View>
         <View>
           <Text>Descripcion: </Text>
-          <TextInput value={fromHabitos.descripcion} onChangeText={text=>setfromHabitos({...fromHabitos,descripcion:text})} placeholder='descripcion'></TextInput>
+          <TextInput style={styles.form_input} value={fromHabitos.descripcion} onChangeText={text=>setfromHabitos({...fromHabitos,descripcion:text})} placeholder='descripcion'></TextInput>
         </View>
         <View>
-          <Picker selectedValue={fromHabitos.frecuencia} onValueChange={value=>setfromHabitos({...fromHabitos,frecuencia:value})}>
-            <Picker.Item label='diario' value="Diario"></Picker.Item>
-            <Picker.Item label='semanal' value='Semanal'></Picker.Item>
-            <Picker.Item label='Mensual' value='Mensual'></Picker.Item>
+          <Text>Seleccionar frecuencia: </Text>
+          <View style={styles.form_selec}>
+            <Picker selectedValue={fromHabitos.frecuencia} onValueChange={value=>setfromHabitos({...fromHabitos,frecuencia:value})}>
+            <Picker.Item label='diario' value="diario"></Picker.Item>
+            <Picker.Item label='semanal' value='semanal'></Picker.Item>
+            <Picker.Item label='mensual' value='mensual'></Picker.Item>
           </Picker>
+          </View>
         </View>
-        <View>
+        <View style={styles.btn_enviar}>
           <Pressable onPress={CreateHabito}>
-            <Text>Crear Habito</Text>
+            <Text style={{textAlign:'center'}}>Crear Habito</Text>
           </Pressable>
+        </View>
         </View>
     </View>
   )
 }
+const styles=StyleSheet.create({
+  form_input:{
+    borderStyle:'solid',
+    borderWidth:2,
+    borderColor:'black',
+    borderRadius:5,
+    width:'100%',
+    marginTop:5,
+    marginBottom:5,    
+  },
+  form_selec:{
+    borderStyle:'solid',
+    borderWidth:2,
+    borderColor:'black',
+    borderRadius:5,    
+  },
+  btn_enviar:{
+    marginTop:20,
+    alignContent:'center',
+    justifyContent:'center',
+    borderRadius:10,
+    padding:5,    
+    borderColor:'black',
+    borderStyle:'solid',
+    borderWidth:2
+  }
+})

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react'
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Pressable, ScrollView, StyleSheet, Text, ToastAndroid, View } from 'react-native'
 import Habitos from '../../hooks/Habitos'
 import { IconAdd, IconDate, IconDelete } from '../../assets/Icons'
 import { Link, Stack, useFocusEffect } from 'expo-router'
@@ -13,7 +13,7 @@ export default function index() {
     try{
       const host=contantes.expoConfig.extra.host
       await axios.delete(`http://${host}:4000/habitos/d/${id}`)
-      alert("Se elimino el habito")
+      ToastAndroid.show("Se elimino correctamente el habito",ToastAndroid.SHORT)
       FecthHabitos()
     }catch(err){
       alert("Hubo un error"+err.message)
