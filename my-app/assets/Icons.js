@@ -47,3 +47,6 @@ export const IconLogin=()=>{
 export const IconBell=()=>{
     return <Feather name="bell" size={24} color="black" />
 }
+export const IconActivity=()=>{
+    return <Feather name="activity" size={24} color="black" />
+}
