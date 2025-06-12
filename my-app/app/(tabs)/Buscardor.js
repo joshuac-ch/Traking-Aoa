@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, TextInput,Text, View, ScrollView, Pressable, Image } from 'react-native'
-import { IconSeach } from '../../assets/Icons'
+import { StyleSheet, TextInput,Text, View, ScrollView, Pressable, Image, Button } from 'react-native'
+import { IconActivity, IconSeach, IconUser } from '../../assets/Icons'
 import Metas from '../../hooks/Metas'
 import Habitos from '../../hooks/Habitos'
 import Actividades from '../../hooks/Actividades'
-import { Link, Stack } from 'expo-router'
+import { Link, router, Stack, useRouter } from 'expo-router'
 import usuarios from '../../hooks/usuarios'
 import { useUser } from '../../components/UserContext'
+import BusSearch from '../Buscador/bus'
 
 export default function Buscardor() {
     const {FectUsuarios,dataUser}=usuarios()
@@ -17,6 +18,9 @@ export default function Buscardor() {
     const [historial, sethistorial] = useState([])
     const [resultado, setresultado] = useState([])    
     const {user}=useUser()
+    const navegar=useRouter()
+    //si qieres volverlo global solo se volvera si creamos otros hook de metas habitos y actividades pero este seria global
+    //  no solo de nosotros sino de todos sus rutinas
     useEffect(()=>{
         FectMetas(),
         FecthHabitos(),
@@ -25,6 +29,7 @@ export default function Buscardor() {
     },[])
     useEffect(()=>{
         if(datosbuscados.trim()!=""){
+            
             const filtrado=metas.filter((m)=>
                 m.titulo.toLowerCase().includes(datosbuscados.toLowerCase()))
             const filterActividad=actividades.filter((a)=>
@@ -66,6 +71,12 @@ export default function Buscardor() {
             return [...prev,{id,tipo,titulo,descripcion}]            
     })        
     }
+    const EnviarSearch=async()=>{
+        navegar.push({
+            pathname:"/Buscador/bus",
+            params:{entrada:datosbuscados}
+        })
+    }
     return (
    <>
    <ScrollView>
@@ -73,6 +84,7 @@ export default function Buscardor() {
      <Stack.Screen options={{headerShown:false}}></Stack.Screen>
     <View style={styles.buscar}>
     <TextInput onChangeText={text=>setdatosbuscados(text)} value={datosbuscados}  placeholder='buscar...'></TextInput>
+    <Button title='enviar' onPress={(EnviarSearch)}></Button>
     <IconSeach style={styles.icon_Search}></IconSeach>
    </View>
    <View style={{flexDirection:'row',justifyContent:'space-around',margin:20}}>
@@ -94,7 +106,7 @@ export default function Buscardor() {
             return(
                 m.tipo=="Usuario"?
                 <Link key={i} href={`/Perfil/users/${m.id}`} asChild>
-                    <Pressable onPress={()=>guardarbusqueda(m.id,m.titulo,m.tipo,m.descripcion)}>
+                    <Pressable onPress={()=>guardarbusqueda(m.id,m.nombre,m.tipo,m.correo)}>
                         <View style={styles.contendor_user}>
                             <Image source={{uri:m.imagen}} style={{width:50,height:50,borderRadius:50,margin:10}}></Image>
                             <View>
@@ -107,12 +119,14 @@ export default function Buscardor() {
                 :
                 <Link  key={i} href={`/${m.tipo}/${m.id}`} asChild>
                     <Pressable onPress={()=>guardarbusqueda(m.id,m.titulo,m.tipo,m.descripcion)}>
-                        <View style={styles.contendor_buscador}>
-                            <Text>{m.tipo}</Text>
-                            <Text>Titulo: </Text>
-                            <Text>{m.titulo}</Text>
-                            <Text>Descripcion: </Text>
-                            <Text>{m.descripcion}</Text>
+                        <View style={styles.contenedor_mostrar}>
+                            <View style={{marginLeft:10,marginRight:10}}>
+                                <IconActivity></IconActivity>
+                            </View>
+                            <View>
+                                 <Text>{m.tipo}</Text>
+                                 <Text>{m.titulo}</Text>
+                            </View>                            
                         </View>
                     </Pressable>
                 </Link>
@@ -120,24 +134,58 @@ export default function Buscardor() {
         })
         :historial.length>0?
             historial.map((h,i)=>{
+                
+                //el buscardor de ahora sera global y buscarda los show ya no los nuestros 
+                // si quieres buscar los tuyos podras buscarlos en cada categoria correspondiente
+                //para mas adelante
+                //la funcion compartir estara relaciondad con los show que se crearon para compartir y tambien compartir el perfil hal hacer click
+                               
                 return(
-                   <Link key={i} href={`/${h.tipo}/${h.id}`} asChild>
+                    h.tipo=="Usuario"?
+                    <Link key={i} href={`/Perfil/users/${h.id}`} asChild>
                     <Pressable>
                         <View style={styles.contendor_buscador} key={i}>
                             <View style={styles.box}>
-                            <View  style={styles.box}>
+                            <View style={{flexDirection:'row',alignItems:'center'}}>
+                                <View style={{marginRight:10}}>
+                                   <IconUser></IconUser> 
+                                </View>                           
+                                <View>
+                                    <Text>{h.titulo}</Text>
+                                <Text>{h.descripcion}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.box_tipe} >                                
+                                 <Text style={{textAlign:'center',color:'white'}}>{h.tipo}</Text>
+                            </View>                           
+                            </View>
+                            
+                            
+                        </View>
+                    </Pressable>
+                    </Link>
+                    :        
+                    <Link key={i} href={`/${h.tipo}/${h.id}`} asChild>
+                    <Pressable>
+                        <View style={styles.contendor_buscador} key={i}>
+                            <View style={styles.box}>
+                             <View style={{flexDirection:'row',alignContent:'center'}}>
+                                <View style={{marginRight:10}}>
+                                <IconActivity></IconActivity>
+                             </View>
+                            <View  >
                                 <Text>Titulo: </Text>
                                 <Text>{h.titulo}</Text>
+                                <Text>{h.descripcion}</Text>
                             </View>
-                            <View style={styles.box_tipe} >
-                                
+                             </View>
+                            <View style={styles.box_tipe} >                                
                                  <Text style={{textAlign:'center',color:'white'}}>{h.tipo}</Text>
                             </View>
                            
                             </View>
                             
-                            <Text>Descripcion: </Text>
-                            <Text>{h.descripcion}</Text>
+                            
                         </View>
                     </Pressable>
                    </Link>
@@ -212,6 +260,19 @@ const styles=StyleSheet.create({
         borderColor:'black',
         borderRadius:10,
     },
+    contenedor_mostrar:{
+        flexDirection:'row',
+        alignItems:'center',
+        borderWidth:2,
+        borderStyle:'black',
+        borderRadius:10,
+        padding:10,
+        alignSelf:'center',
+        marginTop:10,
+        marginBottom:10,
+        width:350,
+        height:65,
+    },
     contendor_buscador:{
         
         alignSelf:'center',
@@ -220,7 +281,7 @@ const styles=StyleSheet.create({
         borderColor:'black',
         borderRadius:10,
         width:350,
-        height:130,
+        height:100,
         margin:10,
         padding:10,
     },
