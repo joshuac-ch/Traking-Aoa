@@ -50,3 +50,6 @@ export const IconBell=()=>{
 export const IconActivity=()=>{
     return <Feather name="activity" size={24} color="black" />
 }
+export const IconBack=()=>{
+   return <AntDesign name="leftcircle" size={24} color="black" />
+}
