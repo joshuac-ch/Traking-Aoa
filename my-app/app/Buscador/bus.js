@@ -6,7 +6,7 @@ import { Button, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View
 import usuarios from '../../hooks/usuarios'
 import Metas from '../../hooks/Metas'
 import { useUser } from '../../components/UserContext'
-import { IconActivity, IconLeft, IconSeach, IconUser } from '../../assets/Icons'
+import { IconActivity, IconBack, IconSeach, IconUser } from '../../assets/Icons'
 
 //MEJORAR ESTO Y EL BUSCARDOR.JS
 export default function BusSearch() {
@@ -20,6 +20,7 @@ export default function BusSearch() {
       const [resultado, setresultado] = useState([])    
       const {user}=useUser()
       const navegar=useRouter()
+        const [busquedaNueva, setbusquedaNueva] = useState(null)
     useEffect(()=>{
             FectMetas(),
             FecthHabitos(),
@@ -55,7 +56,36 @@ export default function BusSearch() {
                 setresultado('')
             }  
               
-        },[datosbuscados,metas,actividades,habitos])    
+        },[datosbuscados,metas,actividades,habitos])
+     const guardarbusqueda=(id,titulo,tipo,descripcion)=>{
+        //setpalanca(true)
+        
+        sethistorial(prev=>{
+            const existe=prev.some(item=>
+                item.tipo===tipo&&
+                item.titulo===titulo &&
+                item.descripcion===descripcion
+            )
+            if(existe){
+                return prev
+            }
+            //const nueva = { id, tipo, titulo, descripcion };
+            //setbusquedaNueva(nueva)
+            return [...prev,{id,tipo,titulo,descripcion}]           
+    })}
+          //ESTO CAMBIARLO POR UN HISTORY CONTEXT crear un contexto para traer los datos
+          
+    useEffect(()=>{
+        if(busquedaNueva){
+            const nuevoHistoryal=[...historial,busquedaNueva]
+            navegar.setParams({history: JSON.stringify(nuevoHistoryal)}) 
+            navegar.push({
+            pathname:"/Buscardor",
+            params:{history: JSON.stringify(nuevoHistoryal)}
+            }) 
+            setbusquedaNueva(null)           
+        }
+    },[busquedaNueva])
   return (
    <>
     <ScrollView>
@@ -64,7 +94,7 @@ export default function BusSearch() {
     <View style={styles.buscar}>
     <Link asChild href={"/Buscardor"}>
     <Pressable>
-        <IconLeft></IconLeft>
+        <IconBack></IconBack>
     </Pressable>
     </Link>
     <TextInput onChangeText={text=>setdatosbuscados(text)} value={datosbuscados}  placeholder='buscar...'></TextInput>
