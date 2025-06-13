@@ -4,7 +4,7 @@ import { IconActivity, IconSeach, IconUser } from '../../assets/Icons'
 import Metas from '../../hooks/Metas'
 import Habitos from '../../hooks/Habitos'
 import Actividades from '../../hooks/Actividades'
-import { Link, router, Stack, useRouter } from 'expo-router'
+import { Link, router, Stack, useLocalSearchParams, useRouter } from 'expo-router'
 import usuarios from '../../hooks/usuarios'
 import { useUser } from '../../components/UserContext'
 import BusSearch from '../Buscador/bus'
@@ -19,9 +19,14 @@ export default function Buscardor() {
     const [resultado, setresultado] = useState([])    
     const {user}=useUser()
     const navegar=useRouter()
+    const {history}=useLocalSearchParams()
+    const entradaobjeto=history?JSON.parse(history):"no hay datos"
+    console.log(entradaobjeto)
+    
     //si qieres volverlo global solo se volvera si creamos otros hook de metas habitos y actividades pero este seria global
     //  no solo de nosotros sino de todos sus rutinas
-    useEffect(()=>{
+    {/*
+      useEffect(()=>{
         FectMetas(),
         FecthHabitos(),
         FetchActividades(),
@@ -70,7 +75,8 @@ export default function Buscardor() {
             }
             return [...prev,{id,tipo,titulo,descripcion}]            
     })        
-    }
+    }  
+        */}
     const EnviarSearch=async()=>{
         navegar.push({
             pathname:"/Buscador/bus",
@@ -84,9 +90,13 @@ export default function Buscardor() {
      <Stack.Screen options={{headerShown:false}}></Stack.Screen>
     <View style={styles.buscar}>
     <TextInput onChangeText={text=>setdatosbuscados(text)} value={datosbuscados}  placeholder='buscar...'></TextInput>
-    <Button title='enviar' onPress={(EnviarSearch)}></Button>
-    <IconSeach style={styles.icon_Search}></IconSeach>
+   
+    <Pressable onPress={(EnviarSearch)}>
+        <IconSeach style={styles.icon_Search}></IconSeach>
+    </Pressable>
    </View>
+   {
+   /*
    <View style={{flexDirection:'row',justifyContent:'space-around',margin:20}}>
     <View>
         <Text>Actividades</Text>
@@ -197,6 +207,7 @@ export default function Buscardor() {
         </View>}
     </View>
    </View>
+   */}
    </ScrollView>
    </>
   )
