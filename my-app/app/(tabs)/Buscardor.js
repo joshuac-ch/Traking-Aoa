@@ -8,6 +8,7 @@ import { Link, router, Stack, useLocalSearchParams, useRouter } from 'expo-route
 import usuarios from '../../hooks/usuarios'
 import { useUser } from '../../components/UserContext'
 import BusSearch from '../Buscador/bus'
+import { useHistoryial } from '../../components/HistorialProvider'
 
 export default function Buscardor() {
     const {FectUsuarios,dataUser}=usuarios()
@@ -15,13 +16,13 @@ export default function Buscardor() {
     const {FecthHabitos,habitos}=Habitos()
     const {FetchActividades,actividades}=Actividades()
     const [datosbuscados, setdatosbuscados] = useState("")
-    const [historial, sethistorial] = useState([])
+    //const [historial, sethistorial] = useState([])
     const [resultado, setresultado] = useState([])    
     const {user}=useUser()
     const navegar=useRouter()
-    const {history}=useLocalSearchParams()
-    const entradaobjeto=history?JSON.parse(history):"no hay datos"
-    console.log(entradaobjeto)
+    const {historialC}=useHistoryial()
+    //const entradaobjeto=historialC?historialC:"no hay datos"
+    //console.log(entradaobjeto)
     
     //si qieres volverlo global solo se volvera si creamos otros hook de metas habitos y actividades pero este seria global
     //  no solo de nosotros sino de todos sus rutinas
@@ -94,6 +95,60 @@ export default function Buscardor() {
     <Pressable onPress={(EnviarSearch)}>
         <IconSeach style={styles.icon_Search}></IconSeach>
     </Pressable>
+   </View>
+   <View style={{flexDirection:'column',justifyContent:'space-around',margin:20}}>
+        {historialC.map((h,i)=>{           
+            return(
+                    h.tipo=="Usuario"?
+                    <Link key={i} href={`/Perfil/users/${h.id}`} asChild>
+                    <Pressable>
+                        <View style={styles.contendor_buscador} key={i}>
+                            <View style={styles.box}>
+                            <View style={{flexDirection:'row',alignItems:'center'}}>
+                                <View style={{marginRight:10}}>
+                                   <IconUser></IconUser> 
+                                </View>                           
+                                <View>
+                                    <Text>{h.titulo}</Text>
+                                <Text>{h.descripcion}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.box_tipe} >                                
+                                 <Text style={{textAlign:'center',color:'white'}}>{h.tipo}</Text>
+                            </View>                           
+                            </View>
+                            
+                            
+                        </View>
+                    </Pressable>
+                    </Link>
+                    :        
+                    <Link key={i} href={`/${h.tipo}/${h.id}`} asChild>
+                    <Pressable>
+                        <View style={styles.contendor_buscador} key={i}>
+                            <View style={styles.box}>
+                             <View style={{flexDirection:'row',alignItems:'center'}}>
+                                <View style={{marginRight:10}}>
+                                    <IconActivity></IconActivity>
+                                </View>
+                            <View  >
+                                <Text>Titulo: </Text>
+                                <Text>{h.titulo}</Text>
+                                
+                            </View>
+                             </View>
+                            <View style={styles.box_tipe} >                                
+                                 <Text style={{textAlign:'center',color:'white'}}>{h.tipo}</Text>
+                            </View>
+                           
+                            </View>
+                            
+                            
+                        </View>
+                    </Pressable>
+                   </Link>
+                )
+        })}
    </View>
    {
    /*
@@ -292,7 +347,7 @@ const styles=StyleSheet.create({
         borderColor:'black',
         borderRadius:10,
         width:350,
-        height:100,
+        height:70,
         margin:10,
         padding:10,
     },
