@@ -1,7 +1,8 @@
 const habitos = require("../../models/habitos")
 const Habitos=require("../../models/habitos")
 const GetHabitos=async(req,res)=>{
-    const modelo=await Habitos.findAll()
+    const {usuario_id}=req.params
+    const modelo=await Habitos.findAll({where:{usuario_id}})
     if(!modelo){
         return res.status(404).json({message:"No se encontro ese habito"})
     }
