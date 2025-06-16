@@ -1,5 +1,16 @@
 const habitos = require("../../models/habitos")
 const Habitos=require("../../models/habitos")
+const GetHabitosAll=async(req,res)=>{
+    try{
+        const modelo=await Habitos.findAll()
+        if(!modelo){
+            return res.status(404).json({message:"No se encontro el modelo"})
+        }
+        res.status(200).json(modelo)
+    }catch(err){
+        console.error(err.message)
+    }
+}
 const GetHabitos=async(req,res)=>{
     const {usuario_id}=req.params
     const modelo=await Habitos.findAll({where:{usuario_id}})
@@ -80,4 +91,4 @@ const DeleteHabito=async(req,res)=>{
         console.error("Hubo un error",err.message)
     }
 }
-module.exports={GetHabitos,InsertHabitos,UpdateHabito,Showhabito,DeleteHabito}
+module.exports={GetHabitos,InsertHabitos,UpdateHabito,Showhabito,DeleteHabito,GetHabitosAll}
