@@ -1,7 +1,19 @@
 const Metas=require("../../models/metas")
-const GetMetas=async(req,res)=>{
+const GetMetasAll=async(req,res)=>{
     try{
         const modelo=await Metas.findAll()
+        if(!modelo){
+            return res.status(404).json({message:"No se encontro el modelo"})
+        }
+        res.status(200).json(modelo)
+    }catch(err){
+        console.error(err.message)
+    }
+}
+const GetMetas=async(req,res)=>{
+    try{
+        const {usuario_id}=req.params
+        const modelo=await Metas.findAll({where:{usuario_id}})
         if(!modelo){
             return res.status(404).json({message:"No se encontro el modelo"})
         }
@@ -90,4 +102,4 @@ const DeleteMetas=async(req,res)=>{
         console.error("Hubo un error",err.message)
     }
 }
-module.exports={GetMetas,InsertMetas,ShowMetas,UpdateMetas,DeleteMetas}
+module.exports={GetMetas,InsertMetas,ShowMetas,UpdateMetas,DeleteMetas,GetMetasAll}
