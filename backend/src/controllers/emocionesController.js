@@ -18,14 +18,14 @@ const InsertEmociones=async(req,res)=>{
             //const fecha=new Date()
             //const comentario=''
         const {usuario_id,emocion,nivel,fecha,comentario}=req.body
-        if(!usuario_id,!emocion,!nivel,!fecha){
+        if(!usuario_id||!emocion||!nivel){
             return res.status(404).json({message:"No se llenaron todos los campos"})
         }
         const modelo=await Emociones.create({
             usuario_id,
             emocion,
             nivel,
-            fecha,
+            fecha:new Date(),
             comentario
         })
         res.status(200).json(modelo) 
