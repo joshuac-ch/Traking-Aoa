@@ -7,7 +7,9 @@ import usuarios from '../../hooks/usuarios'
 import Metas from '../../hooks/Metas'
 import { useUser } from '../../components/UserContext'
 import { IconActivity, IconBack, IconSeach, IconUser } from '../../assets/Icons'
-
+import { useHistoryial } from '../../components/HistorialProvider'
+import axios from 'axios'
+import constantes from "expo-constants"
 //MEJORAR ESTO Y EL BUSCARDOR.JS
 export default function BusSearch() {
     const {entrada}=useLocalSearchParams()
@@ -20,28 +22,61 @@ export default function BusSearch() {
       const [resultado, setresultado] = useState([])    
       const {user}=useUser()
       const navegar=useRouter()
-        const [busquedaNueva, setbusquedaNueva] = useState(null)
+    //hacer el buscador global en si si es el mismo suario permitirle editar caso que sea otro o no coincia el id tencones que lo rediriga al show
+    //el buscador se implmento el actividades global falta implementear el metas y habitos y redireccion como se menciona arriba! 
+      const [busquedaNueva, setbusquedaNueva] = useState(null) //ver sino seriver no sirve pero igual asegurar quue no haya errores?
+      const host=constantes.expoConfig.extra.host
+      const [actividadesAll, setactividadesAll] = useState([])
+      const ShowMetasOtherUsers=async()=>{
+        const {data}=await axios.get(`http://${host}:4000/actividades/a`)
+        setactividadesAll(data)
+      }  
+      useEffect(()=>{
+        if(actividadesAll!=null){
+        ShowMetasOtherUsers()
+    }
+      },[actividadesAll])
+     const [metasAll, setmetasAll] = useState([])
+     const ShowMetasAll=async()=>{
+        const {data}=await axios.get(`http://${host}:4000/metas/a`)
+        setmetasAll(data)
+     }
+     useEffect(()=>{
+        if(metasAll!=null){
+            ShowMetasAll()
+        }
+     },[metasAll]) 
     useEffect(()=>{
             FectMetas(),
             FecthHabitos(),
-            FetchActividades(),
+            //FetchActividades(),
             FectUsuarios()
         },[])
+    const [HabitosAll, setHabitosAll] = useState([])
+    const ShowHabitosAll=async()=>{
+        const {data}=await axios.get(`http://${host}:4000/habitos/a`)
+        setHabitosAll(data)
+    }   
+    useEffect(()=>{
+        if(HabitosAll!=null){
+            ShowHabitosAll()
+        }
+    },[HabitosAll])    
     useEffect(()=>{
             if(datosbuscados.trim()!=""){
                 
-                const filtrado=metas.filter((m)=>
+                const filtradoMetas=metasAll.filter((m)=>
                     m.titulo.toLowerCase().includes(datosbuscados.toLowerCase()))
-                const filterActividad=actividades.filter((a)=>
+                const filterActividad=actividadesAll.filter((a)=>
                     a.titulo.toLowerCase().includes(datosbuscados.toLowerCase()))
-                const filterhabitos=habitos.filter((h)=>
+                const filterhabitos=HabitosAll.filter((h)=>
                     h.titulo.toLowerCase().includes(datosbuscados.toLowerCase()))
                 const filtarUsers=dataUser.filter((u)=>
                     u.nombre!=user.nombre && u.nombre.includes(datosbuscados.toLowerCase())
                 )
                 const resultadosActuales=[
                   ...filtarUsers.map(a=>({...a,tipo:"Usuario"})),  
-                  ...filtrado.map(item=>({...item,tipo:'Metas'})),
+                  ...filtradoMetas.map(item=>({...item,tipo:'Metas'})),
                   ...filterActividad.map(item=>({...item,tipo:'Actividades'})),
                   ...filterhabitos.map(item=>({...item,tipo:'Habitos'}))
                 
@@ -56,11 +91,11 @@ export default function BusSearch() {
                 setresultado('')
             }  
               
-        },[datosbuscados,metas,actividades,habitos])
-     const guardarbusqueda=(id,titulo,tipo,descripcion)=>{
+        },[datosbuscados,metasAll,actividadesAll,HabitosAll])
+     const {historialC, sethistorialC}=useHistoryial()  
+        const guardarbusqueda=(id,titulo,tipo,descripcion)=>{
         //setpalanca(true)
-        
-        sethistorial(prev=>{
+        sethistorialC(prev=>{
             const existe=prev.some(item=>
                 item.tipo===tipo&&
                 item.titulo===titulo &&
@@ -73,19 +108,10 @@ export default function BusSearch() {
             //setbusquedaNueva(nueva)
             return [...prev,{id,tipo,titulo,descripcion}]           
     })}
+    
           //ESTO CAMBIARLO POR UN HISTORY CONTEXT crear un contexto para traer los datos
-          
-    useEffect(()=>{
-        if(busquedaNueva){
-            const nuevoHistoryal=[...historial,busquedaNueva]
-            navegar.setParams({history: JSON.stringify(nuevoHistoryal)}) 
-            navegar.push({
-            pathname:"/Buscardor",
-            params:{history: JSON.stringify(nuevoHistoryal)}
-            }) 
-            setbusquedaNueva(null)           
-        }
-    },[busquedaNueva])
+       
+    
   return (
    <>
     <ScrollView>
@@ -122,7 +148,9 @@ export default function BusSearch() {
                 <Link key={i} href={`/Perfil/users/${m.id}`} asChild>
                     <Pressable onPress={()=>guardarbusqueda(m.id,m.nombre,m.tipo,m.correo)}>
                         <View style={styles.contendor_user}>
-                            <Image source={{uri:m.imagen}} style={{width:50,height:50,borderRadius:50,margin:10}}></Image>
+                            {m.imagen && m.imagen!=="" &&(
+                                 <Image source={{uri:m.imagen}} style={{width:50,height:50,borderRadius:50,margin:10}}></Image>    
+                            )}                           
                             <View>
                                 <Text>{m.nombre}</Text>
                                 <Text style={{fontWeight:'bold'}}>{m.correo}</Text>
@@ -131,7 +159,7 @@ export default function BusSearch() {
                     </Pressable>
                 </Link>
                 :
-                <Link  key={i} href={`/${m.tipo}/${m.id}`} asChild>
+                <Link  key={i} href={`/${m.tipo}/show/${m.id}`} asChild>
                     <Pressable onPress={()=>guardarbusqueda(m.id,m.titulo,m.tipo,m.descripcion)}>
                         <View style={styles.contenedor_mostrar}>
                             <View style={{marginLeft:10,marginRight:10}}>
