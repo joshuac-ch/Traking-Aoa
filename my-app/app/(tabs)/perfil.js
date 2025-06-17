@@ -127,9 +127,11 @@ export default function perfil() {
                             
                             <View style={{display:'flex',justifyContent:'space-between'}}>
                                
-                               <Image source={{uri:a.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
-                                <View style={styles.div_c_body}>
-                                    <Text>{a.titulo.length>18?a.titulo.slice(0,15)+"...":a.titulo}</Text>
+                               {a.imagen&&(
+                                 <Image source={{uri:a.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                               )}
+                               <View style={styles.div_c_body}>
+                                    <Text>{a.titulo.length>15?a.titulo.slice(0,13)+"...":a.titulo}</Text>
                                 </View>
                             </View>
                        </View> 
@@ -154,7 +156,7 @@ export default function perfil() {
                             <View style={{display:'flex',justifyContent:'space-between'}}>
                                <Image source={{uri:a.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                 <View style={styles.div_c_body}>
-                                    <Text>{a.titulo.length>18?a.titulo.slice(0,15)+"...":a.titulo}</Text>
+                                    <Text>{a.titulo.length>15?a.titulo.slice(0,13)+"...":a.titulo}</Text>
                                 </View>
                             </View>
                        </View> 
@@ -179,7 +181,7 @@ export default function perfil() {
                             <View style={{display:'flex',justifyContent:'space-between'}}>
                               <Image source={{uri:a.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                 <View style={styles.div_c_body}>
-                                    <Text>{a.titulo.length>18?a.titulo.slice(0,15)+"...":a.titulo}</Text>
+                                    <Text>{a.titulo.length>15?a.titulo.slice(0,13)+"...":a.titulo}</Text>
                                 </View>
                             </View>
                        </View> 
@@ -205,7 +207,7 @@ export default function perfil() {
                             <View style={{display:'flex',justifyContent:'space-between'}}>
                                <Image source={{uri:a.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                 <View style={styles.div_c_body}>
-                                    <Text>{a.titulo.length>18?a.titulo.slice(0,15)+"...":a.titulo}</Text>
+                                    <Text>{a.titulo.length>15?a.titulo.slice(0,13)+"...":a.titulo}</Text>
                                 </View>
                             </View>
                        </View> 
