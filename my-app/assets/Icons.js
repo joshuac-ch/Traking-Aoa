@@ -53,3 +53,9 @@ export const IconActivity=()=>{
 export const IconBack=()=>{
    return <AntDesign name="leftcircle" size={24} color="black" />
 }
+export const Iconclock=()=>{
+    return <AntDesign name="clockcircle" size={24} color="black" />
+}
+export const IconCircle=()=>{
+    return <Entypo name="circle" size={24} color="black" />
+}
