@@ -25,10 +25,10 @@ export default function show() {
         showHabito()
     },[]) 
     useEffect(()=>{
-        if(showHabito){
+        if(userCreator){
             showUserCreate()
         }       
-    },[showHabito])//simepre no olvidar la dependencia 
+    },[userCreator])//simepre no olvidar la dependencia 
     
     return (
    <>
