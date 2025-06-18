@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, ToastAndroid, View } from 'react-native'
 import Habitos from '../../hooks/Habitos'
-import { IconAdd, IconDate, IconDelete } from '../../assets/Icons'
+import { IconAdd, IconCircle, Iconclock, IconDate, IconDelete } from '../../assets/Icons'
 import { Link, Stack, useFocusEffect } from 'expo-router'
 import axios from 'axios'
 import contantes from "expo-constants"
@@ -32,7 +32,7 @@ export default function index() {
       <Stack.Screen options={{title:'Habitos'}}></Stack.Screen>
       <View>
        <View style={styles.contenedorHeader}>
-            <Text className='font-black'>Habitos</Text>
+            <Text className='font-black'>Hoy</Text>
             <Link href={'/Habitos/create/'} asChild>
                 <Pressable>  
                   <IconAdd />  
@@ -46,30 +46,24 @@ export default function index() {
                 <Link key={h.id} href={`/Habitos/${h.id}`} asChild>
                   <Pressable>
                       <View style={styles.contenedor} key={h.id}>
-                        <View>
-                            <View>
-                                <Text>Titulo:</Text>
-                                <Text>{h.titulo}</Text>
-                                <Text>Frecuencia: {h.frecuencia}</Text>   
-                            </View>
-                            <Text >{h.descripcion}</Text>
-                          
-                        </View>
-                        <View>
-                          <View >
-                            <View style={{alignItems:'flex-end'}}>
-                              
-                            <Pressable onPress={()=>EliminarHabito(h.id)}>
-                              <IconDelete></IconDelete>
-                            </Pressable>
-                            </View>
-                            <View style={styles.contenedor_date}>
-                              <IconDate></IconDate>
-                               <Text>{h.fecha_inicio?new Date(h.fecha_inicio).toLocaleDateString():''}</Text>
-                            </View>
-                           
+                        <View style={{flexDirection:'row',justifyContent:'flex-start',alignItems:'center'}}>
+                          <View style={{marginRight:10}}>
+                            <Iconclock ></Iconclock>
                           </View>
-                        </View>                        
+                            <View>                               
+                                <Text>{h.titulo}</Text>
+                              <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:5}}>
+                                 <Text>{h.fecha_inicio?new Date(h.fecha_inicio).toLocaleDateString():''}</Text>  
+                                 
+                              </View>
+                            </View>                         
+                        </View>                      
+                        
+                        <View style={{flexDirection:'row',alignItems:'center'}}>
+                          <Pressable onPress={()=>EliminarHabito(h.id)}>
+                              <IconDelete></IconDelete>
+                          </Pressable>
+                        </View>                                        
                       </View>
                   </Pressable>
                 </Link>
