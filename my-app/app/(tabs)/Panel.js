@@ -7,6 +7,7 @@ import { Link, Stack, Tabs, useFocusEffect, useRouter } from 'expo-router'
 import { IconAdd, IconElipsis, IconLeft } from '../../assets/Icons'
 import constantes from 'expo-constants'
 import axios from 'axios'
+import { useHistoryial } from '../../components/HistorialProvider'
 export default function Panel() {
     const {user}=useUser()
     const  host=constantes.expoConfig.extra.host
@@ -48,8 +49,17 @@ export default function Panel() {
       {emo:5,des:"Feliz"},
 
     ]
-      
-   
+    const [dataSeguidor, setdataSeguidor] = useState([])
+    const {seguidor,setseguidor}=useHistoryial()
+     const MostarDatauserSub=async()=>{
+        const {data}=await axios.get(`http://${host}:4000/actividades/37`)
+      setdataSeguidor(data)
+      } 
+     useEffect(()=>{
+     
+       MostarDatauserSub()
+     
+     },[])
     const ChangeEmcoicon=async()=>{
       setemocionSeleccionada(prev=>({
         ...prev,
@@ -179,6 +189,17 @@ export default function Panel() {
       </View>
       </Pressable>
       </Link>
+      <View>
+        {seguidor?
+        dataSeguidor.map((d,i)=>{
+          return(
+          <View key={i}>
+              <Image style={{width:180,height:100,borderRadius:20}} source={{uri:d.imagen}}></Image>  
+          </View>
+          )
+        }):
+        <Text>No hay datos proque no sigues a nadie</Text>}
+      </View>
      
 
       <View>
