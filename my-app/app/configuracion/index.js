@@ -1,10 +1,17 @@
-import { Link, Stack } from 'expo-router'
+import { Link, router, Stack, useRouter } from 'expo-router'
 import React from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import { IconSafe, IconUser } from '../../assets/Icons'
+import { IconLogin, IconSafe, IconUser } from '../../assets/Icons'
+import { useUser } from '../../components/UserContext'
 
 export default function index() {
-  return (
+ const navegar=useRouter()
+ const {user,setUser}=useUser()
+  
+ const logOut=()=>{
+    setUser("")
+ }
+    return (
     <>
     <Stack.Screen options={{headerTitle:"Configuacion"}}></Stack.Screen>
     <View>      
@@ -34,7 +41,22 @@ export default function index() {
                </Link>
             </View>
        </View>
+        <View style={styles.contenedor}>
+            <View style={styles.contenedor_icon}>
+                <IconLogin></IconLogin>
+            </View>
+            <View style={styles.contenedor_info}>              
+                
+                    <Pressable onPress={()=>{
+                         logOut()
+                         router.replace('/Login/app')}}>
+                      <Text>Cerrar Session</Text>
+                    </Pressable>
+                
+            </View>
+       </View>
     </View>
+    
     </>
   )
 }
