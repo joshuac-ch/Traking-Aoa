@@ -4,7 +4,7 @@ import { useUser } from '../../components/UserContext'
 
 import PagerView from 'react-native-pager-view'
 import { Link, Stack, Tabs, useFocusEffect, useRouter } from 'expo-router'
-import { IconAdd, IconElipsis, IconLeft } from '../../assets/Icons'
+import { IconAdd, IconElipsis, IconHeart, IconLeft, IconReply } from '../../assets/Icons'
 import constantes from 'expo-constants'
 import axios from 'axios'
 import { useHistoryial } from '../../components/HistorialProvider'
@@ -49,14 +49,20 @@ export default function Panel() {
       {emo:5,des:"Feliz"},
 
     ]
+    //IMPORTANTE
+    //crear una tabla seguidores en esta tabla cada queu hagamos click see agreagara a nosotros como seguidor nuestro y aparezca
+    // en el principal solo el crear el mostrar y el delete
+    //al elimint osea clickear en el boton dejar de seguir se elimina de nuestra lista esto para que se guarde en la base de datos 
     const [dataSeguidor, setdataSeguidor] = useState([])
-    const {seguidor,setseguidor}=useHistoryial()
+    const {seguidor,setseguidor,usuarioFollowID}=useHistoryial()
      const MostarDatauserSub=async()=>{
-        const {data}=await axios.get(`http://${host}:4000/actividades/37`)
+        //const {data}=await axios.get(`http://${host}:4000/actividades/${usuarioFollowID}`)
+        const {data}=await axios.get(`http://${host}:4000/actividades/${usuarioFollowID}`)
       setdataSeguidor(data)
+      
       } 
      useEffect(()=>{
-     
+      console.log(dataSeguidor)
        MostarDatauserSub()
      
      },[])
@@ -193,8 +199,22 @@ export default function Panel() {
         {seguidor?
         dataSeguidor.map((d,i)=>{
           return(
-          <View key={i}>
-              <Image style={{width:180,height:100,borderRadius:20}} source={{uri:d.imagen}}></Image>  
+          <View key={i} style={styles.modelo_pub}>
+            <View>
+              <Text>{d.titulo}</Text>
+            </View>
+              <Image style={{width:180,height:100,borderRadius:20,alignSelf:'center'}} source={{uri:d.imagen}}></Image>
+              <View style={{flexDirection:'row',justifyContent:'space-around',alignItems:'center'}}>
+              <View style={{flexDirection:'row',marginTop:10,marginBottom:10}}>
+                <IconHeart></IconHeart>
+                <Text  style={{marginLeft:10}}>Me encanta</Text>
+                
+              </View>
+              <View style={{flexDirection:'row'}}>
+                <IconReply></IconReply>
+                <Text style={{marginLeft:10}}>Compartir</Text>
+              </View>
+              </View>  
           </View>
           )
         }):
@@ -245,6 +265,15 @@ export default function Panel() {
   )
 }
 const styles=StyleSheet.create({
+  modelo_pub:{
+    backgroundColor:"white",
+    borderRadius:20,
+    borderColor:"transparent",
+    borderStyle:"solid",
+    borderWidth:2,
+    marginTop:10,
+    marginBottom:10
+  },
   modalContainer: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.5)', // fondo oscuro
