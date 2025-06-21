@@ -5,6 +5,7 @@ const { Get_registros, Insert_registros } = require('../controllers/registro_hab
 const { GetMetas, InsertMetas, ShowMetas, UpdateMetas, DeleteMetas, GetMetasAll } = require('../controllers/metasController')
 const { getActividades, InsetActividades, ShowActividaes, UpdateActividades, DestroyActividaes, getAllActivites } = require('../controllers/actividadesdiariasController')
 const { getEmociones, InsertEmociones } = require('../controllers/emocionesController')
+const { GetSeguidor, CreateSeguidor } = require('../controllers/seguidorController')
 module.exports=router=express()
 
 router.get("/usuarios",GetUser)
@@ -39,3 +40,7 @@ router.delete("/actividades/d/:id",DestroyActividaes)
 //----------------------------------------------------
 router.get("/emociones",getEmociones)
 router.post("/emociones/i",InsertEmociones)
+//----------------------------------------------------
+
+router.get("/seguidores",GetSeguidor)
+router.post("/seguidores/follow",CreateSeguidor)
