@@ -57,15 +57,20 @@ export default function Panel() {
     const {seguidor,setseguidor,usuarioFollowID}=useHistoryial()
      const MostarDatauserSub=async()=>{
         //const {data}=await axios.get(`http://${host}:4000/actividades/${usuarioFollowID}`)
-        const {data}=await axios.get(`http://${host}:4000/actividades/${usuarioFollowID}`)
+                                                                                       // yo seguidor //lo sigo a el   
+        const {data}=await axios.get(`http://${host}:4000/seguidores/actividadesfollow/${user.id}`)
+       // const {data}=await axios.get(`http://${host}:4000/actividades/${usuarioFollowID}`)
       setdataSeguidor(data)
       
-      } 
-     useEffect(()=>{
-      console.log(dataSeguidor)
-       MostarDatauserSub()
+      }
+     useFocusEffect(
+      useCallback(()=>{
+        if(user.id){
+        MostarDatauserSub()
+      }
+      },[])
+     )
      
-     },[])
     const ChangeEmcoicon=async()=>{
       setemocionSeleccionada(prev=>({
         ...prev,
