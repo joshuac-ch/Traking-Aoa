@@ -8,6 +8,7 @@ import { IconAdd, IconElipsis, IconHeart, IconLeft, IconReply } from '../../asse
 import constantes from 'expo-constants'
 import axios from 'axios'
 import { useHistoryial } from '../../components/HistorialProvider'
+import { ToastAndroid } from 'react-native'
 export default function Panel() {
     const {user}=useUser()
     const  host=constantes.expoConfig.extra.host
@@ -57,7 +58,7 @@ export default function Panel() {
     const {seguidor,setseguidor,usuarioFollowID}=useHistoryial()
      const MostarDatauserSub=async()=>{
         //const {data}=await axios.get(`http://${host}:4000/actividades/${usuarioFollowID}`)
-                                                                                       // yo seguidor //lo sigo a el   
+                                                                              // yo seguidor //lo sigo a el   
         const {data}=await axios.get(`http://${host}:4000/seguidores/actividadesfollow/${user.id}`)
        // const {data}=await axios.get(`http://${host}:4000/actividades/${usuarioFollowID}`)
       setdataSeguidor(data)
@@ -66,6 +67,7 @@ export default function Panel() {
      useFocusEffect(
       useCallback(()=>{
         if(user.id){
+          console.log(user.id)
         MostarDatauserSub()
       }
       },[])
