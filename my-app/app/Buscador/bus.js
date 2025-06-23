@@ -14,9 +14,9 @@ import constantes from "expo-constants"
 export default function BusSearch() {
     const {entrada}=useLocalSearchParams()
       const {FectUsuarios,dataUser}=usuarios()
-      const {FectMetas,metas}=Metas()
-      const {FecthHabitos,habitos}=Habitos()
-      const {FetchActividades,actividades}=Actividades()
+      //const {FectMetas,metas}=Metas()
+      //const {FecthHabitos,habitos}=Habitos()
+      //const {FetchActividades,actividades}=Actividades()
       const [datosbuscados, setdatosbuscados] = useState(entrada)
       const [historial, sethistorial] = useState([])
       const [resultado, setresultado] = useState([])    
@@ -31,24 +31,22 @@ export default function BusSearch() {
         const {data}=await axios.get(`http://${host}:4000/actividades/a`)
         setactividadesAll(data)
       }  
-      useEffect(()=>{
-        if(actividadesAll!=null){
-        ShowMetasOtherUsers()
-    }
-      },[actividadesAll])
+      useEffect(()=>{       
+        ShowMetasOtherUsers()    
+      },[])//ESTE NO TENIA EL CERRAR GENERO UN BUCLE
      const [metasAll, setmetasAll] = useState([])
      const ShowMetasAll=async()=>{
         const {data}=await axios.get(`http://${host}:4000/metas/a`)
         setmetasAll(data)
      }
      useEffect(()=>{
-        if(metasAll!=null){
+       
             ShowMetasAll()
-        }
-     },[metasAll]) 
+        
+     },[]) 
     useEffect(()=>{
-            FectMetas(),
-            FecthHabitos(),
+            //FectMetas(),
+            //FecthHabitos(),
             //FetchActividades(),
             FectUsuarios()
         },[])
@@ -58,10 +56,10 @@ export default function BusSearch() {
         setHabitosAll(data)
     }   
     useEffect(()=>{
-        if(HabitosAll!=null){
+        
             ShowHabitosAll()
-        }
-    },[HabitosAll])    
+        
+    },[])//ESTE NO TENIA EL CERRAR GENERO UN BUCLE SILENCIOSO   
     useEffect(()=>{
             if(datosbuscados.trim()!=""){
                 
