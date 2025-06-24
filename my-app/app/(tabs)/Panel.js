@@ -62,15 +62,16 @@ export default function Panel() {
         const {data}=await axios.get(`http://${host}:4000/seguidores/actividadesfollow/${user.id}`)
        // const {data}=await axios.get(`http://${host}:4000/actividades/${usuarioFollowID}`)
       setdataSeguidor(data)
-      
+      //console.log(data)
+      //tener en cuenta el true de esetado si no es true no muestra datos
       }
      useFocusEffect(
       useCallback(()=>{
         if(user.id){
-          console.log(user.id)
+        
         MostarDatauserSub()
       }
-      },[])
+      },[user.id])
      )
      
     const ChangeEmcoicon=async()=>{
@@ -82,6 +83,7 @@ export default function Panel() {
         
       }))
     }
+    
     //crear notificacions si se cmple o no determinada tarea
     //Notificaciones push
     //Envían un recordatorio (“¿Tomaste agua hoy?”).
@@ -203,10 +205,13 @@ export default function Panel() {
       </Pressable>
       </Link>
       <View>
-        {seguidor?
+        {
+       dataSeguidor.length>0?
         dataSeguidor.map((d,i)=>{
           return(
-          <View key={i} style={styles.modelo_pub}>
+         <Link key={i} asChild href={`/Actividades/show/${d.id}`}>
+         <Pressable>
+           <View  style={styles.modelo_pub}>
             <View>
               <Text>{d.titulo}</Text>
             </View>
@@ -223,9 +228,12 @@ export default function Panel() {
               </View>
               </View>  
           </View>
+         </Pressable>
+         </Link>
           )
-        }):
-        <Text>No hay datos proque no sigues a nadie</Text>}
+        })
+       :<Text>No esta suscrito a ningun canal</Text>
+        }
       </View>
      
 
