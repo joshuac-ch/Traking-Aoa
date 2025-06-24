@@ -12,6 +12,7 @@ const GetSeguidor=async(req,res)=>{
         console.error(err)
     }
 }
+
 const GetActividadesSeguidor=async(req,res)=>{
     try{
         const { seguidor_id } = req.params;
@@ -36,6 +37,54 @@ const GetActividadesSeguidor=async(req,res)=>{
         console.error(err)
     }
 }
+const DeleteActividadSeguidor=async(req,res)=>{
+    try{
+        const {seguidor_id,userID}=req.params
+        const modeloSeguidor=await Seguidor.update(
+            {estado:false},
+            {
+            where:{
+                seguidor_id,
+                seguido_id:userID,
+                estado:true
+            }}
+                      
+        ) 
+        if(!modeloSeguidor){
+            return res.status(404).json({message:"No sigue ese usuario"})
+        }
+       
+        
+        res.status(200).json("Se elimino correectamente el seguidor")
+    }catch(err){
+        console.error(err.message)
+    }
+}
+const EstatusFollow=async(req,res)=>{
+    try{
+        const {seguidor_id,seguido_id}=req.params
+        const existe=await Seguidor.findOne({
+            where:{seguidor_id,seguido_id,estado:true}
+        })
+        res.status(200).json(existe)
+    }catch(err){
+        console.error(err.message)
+    }
+}
+const showUserFollow=async(req,res)=>{
+    try{
+        const {seguidor_id}=req.params
+        const modelo=await Seguidor.findOne({
+            where:{seguidor_id}
+        })
+        if(!modelo){
+            return res.status(404).json({message:"No sigue a este usuario"})
+        }
+        res.status(200).json(modelo)
+    }catch(err){
+        console.error(err.message)
+    }
+} 
 const CreateSeguidor=async(req,res)=>{
     try{
         const {seguidor_id,seguido_id,fecha,estado}=req.body
@@ -49,4 +98,4 @@ const CreateSeguidor=async(req,res)=>{
     }catch(err){
     console.error(err)
 }}
-module.exports={CreateSeguidor,GetSeguidor,GetActividadesSeguidor}
+module.exports={CreateSeguidor,GetSeguidor,GetActividadesSeguidor,DeleteActividadSeguidor,showUserFollow,EstatusFollow}
