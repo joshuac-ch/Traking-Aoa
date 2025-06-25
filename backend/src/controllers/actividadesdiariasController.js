@@ -1,4 +1,15 @@
 const ActividadesDiarias=require("../../models/actividades_diarias")
+const getAllActivites=async(req,res)=>{
+    try{
+        const modelo=await ActividadesDiarias.findAll()
+        if(!modelo){
+            return res.status(404).json({message:"No se encontro el modelo"})
+        }
+        res.status(200).json(modelo)
+    }catch(err){
+        console.error(err.message)
+    }
+}
 const getActividades=async(req,res)=>{
     try{
         const {usuario_id}=req.params
@@ -84,4 +95,4 @@ const DestroyActividaes=async(req,res)=>{
         console.error(err.message)
     }    
 }
-module.exports={getActividades,InsetActividades,ShowActividaes,UpdateActividades,DestroyActividaes}
+module.exports={getActividades,InsetActividades,ShowActividaes,UpdateActividades,DestroyActividaes,getAllActivites}
