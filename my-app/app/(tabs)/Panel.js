@@ -55,16 +55,28 @@ export default function Panel() {
     // en el principal solo el crear el mostrar y el delete
     //al elimint osea clickear en el boton dejar de seguir se elimina de nuestra lista esto para que se guarde en la base de datos 
     const [dataSeguidor, setdataSeguidor] = useState([])
+    
     const {seguidor,setseguidor,usuarioFollowID}=useHistoryial()
-     const MostarDatauserSub=async()=>{
-        //const {data}=await axios.get(`http://${host}:4000/actividades/${usuarioFollowID}`)
-                                                                              // yo seguidor //lo sigo a el   
+     const MostarDatauserSub=async()=>{        
         const {data}=await axios.get(`http://${host}:4000/seguidores/actividadesfollow/${user.id}`)
-       // const {data}=await axios.get(`http://${host}:4000/actividades/${usuarioFollowID}`)
-      setdataSeguidor(data)
+        const PublicacionCreador=await Promise.all(
+          data.map(async(p)=>{
+            const res=await  axios.get(`http://${host}:4000/usuarios/s/${p.usuario_id}`)
+            
+            return{
+              ...p,
+              creador:res.data
+            }
+          })
+        )
+       setdataSeguidor(PublicacionCreador)
+       
+           
       //console.log(data)
       //tener en cuenta el true de esetado si no es true no muestra datos
       }
+   
+     
      useFocusEffect(
       useCallback(()=>{
         if(user.id){
@@ -208,14 +220,31 @@ export default function Panel() {
         {
        dataSeguidor.length>0?
         dataSeguidor.map((d,i)=>{
+          
+          
           return(
-         <Link key={i} asChild href={`/Actividades/show/${d.id}`}>
-         <Pressable>
-           <View  style={styles.modelo_pub}>
-            <View>
+                     
+           <View key={i} style={styles.modelo_pub}>
+              
+            <View style={{margin:10}}>
+             <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
+               <View style={{flexDirection:'row',justifyContent:'flex-start',alignItems:'center'}}>
+                <View>
+                  <Image source={{uri:d.creador.imagen}} style={{width:50,height:50,borderRadius:50,marginRight:15}}></Image>
+                </View>
+                <View>
+                  <Text>{d.creador.nombre}</Text>
+                  <Text style={{fontWeight:'bold'}}>{d.creador.correo}</Text>
+                </View>
+              </View>
+              <View>
+                <IconElipsis></IconElipsis>
+              </View>
+             </View>
               <Text>{d.titulo}</Text>
+              <Text>{d.descripcion}</Text>
             </View>
-              <Image style={{width:180,height:100,borderRadius:20,alignSelf:'center'}} source={{uri:d.imagen}}></Image>
+              <Image style={{width:200,height:250,borderRadius:20,alignSelf:'center'}} source={{uri:d.imagen}}></Image>
               <View style={{flexDirection:'row',justifyContent:'space-around',alignItems:'center'}}>
               <View style={{flexDirection:'row',marginTop:10,marginBottom:10}}>
                 <IconHeart></IconHeart>
@@ -228,8 +257,8 @@ export default function Panel() {
               </View>
               </View>  
           </View>
-         </Pressable>
-         </Link>
+         
+        
           )
         })
        :<Text>No esta suscrito a ningun canal</Text>
