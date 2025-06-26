@@ -75,7 +75,7 @@ export default function Panel() {
       //console.log(data)
       //tener en cuenta el true de esetado si no es true no muestra datos
       }
-   
+      
      
      useFocusEffect(
       useCallback(()=>{
@@ -85,7 +85,29 @@ export default function Panel() {
       }
       },[user.id])
      )
-     
+    
+    const [dataSeguidorHabitos, setdataSeguidorHabitos] = useState([])
+    const ShowHabitosFollow=async()=>{
+      const {data}=await axios.get(`http://${host}:4000/seguidores/habitosFollow/${user.id}`)
+      const PublicacionHabitos=await Promise.all(
+        data.map(async(h)=>{
+          const res=await axios.get(`http://${host}:4000/usuarios/s/${h.usuario_id}`)
+          return{
+            ...h,
+            creador:res.data,
+            type:"Habito"
+          }
+        })
+      )
+      setdataSeguidorHabitos(PublicacionHabitos)  
+    }
+    useFocusEffect(
+      useCallback(()=>{
+        if(user.id){
+          ShowHabitosFollow()
+        }
+      },[user.id])
+    )
     const ChangeEmcoicon=async()=>{
       setemocionSeleccionada(prev=>({
         ...prev,
@@ -264,8 +286,51 @@ export default function Panel() {
        :<Text>No esta suscrito a ningun canal</Text>
         }
       </View>
-     
-
+      <View>
+      {
+        dataSeguidorHabitos.length>0?
+        dataSeguidorHabitos.map((h)=>{
+          return(
+            <View style={styles.modelo_pub} key={h.id}>
+              <View style={{margin:10}}>
+              <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                <View style={{flexDirection:'row',alignItems:'center'}}>
+                  <View>
+                    <Image source={{uri:h.creador.imagen}} style={{width:50,height:50,borderRadius:50,marginRight:15}}></Image>                
+                </View>
+                <View>
+                  <View style={{flexDirection:'row'}}>
+                     <Text style={{marginRight:20}}>{h.creador.nombre}</Text>
+                     <Text style={{color:'#787777'}}>{h.type}</Text>
+                  </View>                 
+                  <Text style={{fontWeight:'bold'}}>{h.creador.correo}</Text>
+                </View>
+                </View>
+                <View>
+                  <IconElipsis></IconElipsis>
+                </View>
+              </View>
+             <View style={{marginLeft:5,marginTop:10,marginBottom:15}}>
+              <View>
+                <Text>{h.titulo}</Text>
+                <Text>{h.descripcion}</Text>
+              </View>
+             </View>
+              
+              <View>
+                 <Image source={{uri:h.imagen}} style={{width:180,height:250,alignSelf:'center',borderRadius:20}}></Image>
+              </View>
+             </View>
+           </View>
+          )
+        })
+        :
+        <View>
+          <Text>No esta suscrito </Text>
+        </View>
+      }  
+      </View>  
+        
       <View>
        
        {/*
