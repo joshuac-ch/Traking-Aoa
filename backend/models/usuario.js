@@ -14,6 +14,9 @@ const sequelize=require('../src/config/database')
       usuario.hasMany(models.actividades_diarias,{foreignKey:'usuario_id'})
       usuario.hasMany(models.emociones,{foreignKey:"usuario_id"})
       usuario.hasMany(models.logros,{foreignKey:"usuario_id"})
+      usuario.hasMany(models.noti,{foreignKey:"usuario_id"})
+      usuario.belongsToMany(models.usuario,{as:"seguidos",through:models.seguidores,foreignKey:"seguidor_id",otherKey:"seguido_id"})
+      usuario.belongsToMany(models.usuario,{as:"seguidores",through:models.seguidores,foreignKey:"seguido_id",otherKey:"seguidor_id"})
     }
   }
   usuario.init({
