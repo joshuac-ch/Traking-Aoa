@@ -1,4 +1,5 @@
 const actividades_diarias = require("../../models/actividades_diarias")
+const habitos = require("../../models/habitos")
 const Seguidor=require("../../models/seguidores")
 const GetSeguidor=async(req,res)=>{
     try{
@@ -20,7 +21,7 @@ const GetActividadesSeguidor=async(req,res)=>{
     const relaciones = await Seguidor.findAll({
       where: {
         seguidor_id,
-        estado: true
+        estado: true //solo mostrara las que sean verdadera si es falsa no la muestra OJO 
       }
     });
 
@@ -37,6 +38,23 @@ const GetActividadesSeguidor=async(req,res)=>{
         console.error(err)
     }
 }
+
+const GetHabitosSeguidor=async(req,res)=>{
+    try{
+        const {seguidor_id}=req.params
+        const modelo=await Seguidor.findAll({
+            where:{seguidor_id,estado:true}
+        })
+        const Listseguidos=modelo.map((s)=>s.seguido_id)
+        const modelhabitos=await habitos.findAll({
+            where:{usuario_id:Listseguidos}
+        })
+        res.status(200).json(modelhabitos)
+    }catch(err){
+        console.error(err.message)
+    }
+}
+
 const DeleteActividadSeguidor=async(req,res)=>{
     try{
         const {seguidor_id,userID}=req.params
@@ -98,4 +116,4 @@ const CreateSeguidor=async(req,res)=>{
     }catch(err){
     console.error(err)
 }}
-module.exports={CreateSeguidor,GetSeguidor,GetActividadesSeguidor,DeleteActividadSeguidor,showUserFollow,EstatusFollow}
+module.exports={CreateSeguidor,GetSeguidor,GetActividadesSeguidor,DeleteActividadSeguidor,showUserFollow,EstatusFollow,GetHabitosSeguidor}
