@@ -4,11 +4,13 @@ import { useUser } from '../../components/UserContext'
 
 import PagerView from 'react-native-pager-view'
 import { Link, Stack, Tabs, useFocusEffect, useRouter } from 'expo-router'
-import { IconAdd, IconElipsis, IconHeart, IconLeft, IconReply } from '../../assets/Icons'
+import { IconAdd, IconElipsis, IconHeart, IconHeartActive, IconLeft, IconReply } from '../../assets/Icons'
 import constantes from 'expo-constants'
 import axios from 'axios'
 import { useHistoryial } from '../../components/HistorialProvider'
 import { ToastAndroid } from 'react-native'
+
+import { FontAwesome } from '@expo/vector-icons'; // o tu icono específico
 export default function Panel() {
     const {user}=useUser()
     const  host=constantes.expoConfig.extra.host
@@ -108,6 +110,7 @@ export default function Panel() {
         }
       },[user.id])
     )
+    
     const ChangeEmcoicon=async()=>{
       setemocionSeleccionada(prev=>({
         ...prev,
@@ -117,12 +120,12 @@ export default function Panel() {
         
       }))
     }
-    
-    //crear notificacions si se cmple o no determinada tarea
-    //Notificaciones push
-    //Envían un recordatorio (“¿Tomaste agua hoy?”).
-    //La notificación puede tener acciones (ej: botón “Sí” que marca como hecho directamente). 
-    //mostrar datos para la persona correcta en habito meta y acti mejorar las rutas
+  
+  const [meEncanta, setmeEncanta] = useState()
+  const toggleLove=()=>{
+    setmeEncanta(!meEncanta)
+  }
+   
   return (
       <ScrollView>
         
@@ -150,7 +153,9 @@ export default function Panel() {
         </View>
         
     </View>
-       
+    <View style={{marginLeft:35}}>
+              <Text>Metas para este {new Date().getFullYear()} </Text>
+    </View>   
    <View style={styles.contenedorCarrusel}>
       <PagerView style={{ flex: 1 }} initialPage={0}>
         <View key="1" style={{justifyContent:'center',alignItems:'center'}}>
@@ -306,8 +311,8 @@ export default function Panel() {
                   <Text style={{fontWeight:'bold'}}>{h.creador.correo}</Text>
                 </View>
                 </View>
-                <View>
-                  <IconElipsis></IconElipsis>
+                <View >
+                  <IconElipsis ></IconElipsis>
                 </View>
               </View>
              <View style={{marginLeft:5,marginTop:10,marginBottom:15}}>
@@ -320,14 +325,34 @@ export default function Panel() {
               <View>
                  <Image source={{uri:h.imagen}} style={{width:180,height:250,alignSelf:'center',borderRadius:20}}></Image>
               </View>
+               <View style={{flexDirection:'row',justifyContent:'space-around',alignItems:'center'}}>
+              <View style={{flexDirection:'row',marginTop:10,marginBottom:10,alignItems:'center'}}>
+               <Pressable onPress={toggleLove}>
+                <View style={{
+                   backgroundColor: 'white', // fondo para que se vea bien la sombra
+                   padding: 10,
+                   borderRadius: 30, // redondeado total
+                   boxShadow:meEncanta?"0px 0px 20px 0px red":"",                              
+                   elevation:6,// Android,                  
+                   alignSelf: 'center',
+                }}>
+                  <IconHeartActive color={meEncanta?"red":"black"}></IconHeartActive>
+                  
+                </View>
+               </Pressable>
+                <Text  style={{marginLeft:10}}>Me encanta</Text>
+                
+              </View>
+              <View style={{flexDirection:'row'}}>
+                <IconReply></IconReply>
+                <Text style={{marginLeft:10}}>Compartir</Text>
+              </View>
+              </View>  
              </View>
            </View>
           )
         })
-        :
-        <View>
-          <Text>No esta suscrito </Text>
-        </View>
+        :""        
       }  
       </View>  
         
