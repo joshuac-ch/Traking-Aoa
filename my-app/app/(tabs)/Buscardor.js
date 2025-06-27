@@ -23,9 +23,7 @@ export default function Buscardor() {
     const {historialC}=useHistoryial()
     //const entradaobjeto=historialC?historialC:"no hay datos"
     //console.log(entradaobjeto)
-    
-    //si qieres volverlo global solo se volvera si creamos otros hook de metas habitos y actividades pero este seria global
-    //  no solo de nosotros sino de todos sus rutinas
+        
     {/*
       useEffect(()=>{
         FectMetas(),
