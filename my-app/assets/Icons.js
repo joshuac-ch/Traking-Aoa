@@ -59,11 +59,11 @@ export const Iconclock=()=>{
 export const IconCircle=()=>{
     return <Entypo name="circle" size={24} color="black" />
 }
-export const IconHeart=()=>{
-    return <AntDesign name="hearto" size={24} color="black" />
+export const IconHeart=({color="black"})=>{
+    return <AntDesign name="hearto" size={24} color={color} />
 }
-export const IconHeartActive=()=>{
-    return <AntDesign name="heart" size={24} color="black" />
+export const IconHeartActive=({color="black"})=>{
+    return <AntDesign name="heart" size={24} color={color} />
 }
 export const IconReply=()=>{
     return <Entypo name="reply" size={24} color="black" />
