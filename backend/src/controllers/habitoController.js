@@ -1,5 +1,6 @@
 const habitos = require("../../models/habitos")
 const Habitos=require("../../models/habitos")
+const publicaciones = require("../../models/publicaciones")
 const GetHabitosAll=async(req,res)=>{
     try{
         const modelo=await Habitos.findAll()
@@ -38,6 +39,12 @@ const InsertHabitos=async(req,res)=>{
         activo:1,
         fecha_inicio:new Date(),
         usuario_id,
+    })
+    await publicaciones.create({
+        usuario_id,
+        contenido_id:modelo.id,
+        tipo:"Habito",
+        creacion:new Date()
     })
     res.status(200).json({message:"Se creo el habito correctamente"})
 }
