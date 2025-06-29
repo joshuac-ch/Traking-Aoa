@@ -1,4 +1,5 @@
 const ActividadesDiarias=require("../../models/actividades_diarias")
+const publicaciones = require("../../models/publicaciones")
 const getAllActivites=async(req,res)=>{
     try{
         const modelo=await ActividadesDiarias.findAll()
@@ -38,6 +39,12 @@ const InsetActividades=async(req,res)=>{
             titulo,
             descripcion,
             fecha:new Date()
+        })
+        await publicaciones.create({
+            usuario_id:usuario_id,
+            contenido_id:modelo.id,
+            tipo:"Actividad",
+            creacion:new Date()
         })
         res.status(200).json(modelo)
     }catch(err){
