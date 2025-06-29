@@ -1,4 +1,5 @@
 const actividades_diarias = require("../../models/actividades_diarias")
+const habitos = require("../../models/habitos")
 const publicaciones = require("../../models/publicaciones")
 const Seguidor = require("../../models/seguidores")
 const usuario = require("../../models/usuario")
@@ -23,6 +24,9 @@ const getPublicacionFollow=async(req,res)=>{
             let contendo=0
             if(p.tipo=="Actividad"){
                 contendo=await actividades_diarias.findByPk(p.contenido_id)
+            }
+            else if(p.tipo=="Habito"){
+                contendo=await habitos.findByPk(p.contenido_id)
             }
             let creador=await usuario.findByPk(p.usuario_id)
             return{
