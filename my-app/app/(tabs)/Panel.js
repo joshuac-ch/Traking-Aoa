@@ -10,7 +10,6 @@ import axios from 'axios'
 import { useHistoryial } from '../../components/HistorialProvider'
 import { ToastAndroid } from 'react-native'
 
-import { FontAwesome } from '@expo/vector-icons'; // o tu icono específico
 export default function Panel() {
     const {user}=useUser()
     const  host=constantes.expoConfig.extra.host
@@ -87,7 +86,26 @@ export default function Panel() {
       }
       },[user.id])
      )
+     const [dataPublicacionFollow, setdataPublicacionFollow] = useState([])
+    const ShowPublicacion=async()=>{
+      const {data}=await axios.get(`http://${host}:4000/publicaciones/feed/${user.id}`)
+      setdataPublicacionFollow(data)        
+    }
+    useFocusEffect(
+      useCallback(()=>{
+        if(user.id){
+          ShowPublicacion()
+        }
+      },[user.id])
+    )
+    const LovePublicacion=async(user,pub)=>{
+      await axios.post(`http://${host}:4000/publicacion/likes/i/${user}/${pub}`) 
+      ToastAndroid.show("Me encanta esta publicacion",ToastAndroid.BOTTOM) 
+    }
     
+    
+    /*
+   
     const [dataSeguidorHabitos, setdataSeguidorHabitos] = useState([])
     const ShowHabitosFollow=async()=>{
       const {data}=await axios.get(`http://${host}:4000/seguidores/habitosFollow/${user.id}`)
@@ -110,6 +128,7 @@ export default function Panel() {
         }
       },[user.id])
     )
+    */
     
     const ChangeEmcoicon=async()=>{
       setemocionSeleccionada(prev=>({
@@ -120,11 +139,20 @@ export default function Panel() {
         
       }))
     }
-  
-  const [meEncanta, setmeEncanta] = useState()
-  const toggleLove=()=>{
-    setmeEncanta(!meEncanta)
+    const [dataCountLoves, setdataCountLoves] = useState(0)
+  const CountIlove=async(pub)=>{
+    const {data}=await axios .get(`http://${host}:4000/publicacion/likes/conteo/${pub}`)
+    setdataCountLoves(data)
   }
+ 
+  const [meEncanta, setmeEncanta] = useState()
+  const toggleLove=async(user,pub)=>{
+    setmeEncanta(!meEncanta)
+    if(!meEncanta){
+      LovePublicacion(user,pub)
+    }
+    
+    }
    
   return (
       <ScrollView>
@@ -134,9 +162,9 @@ export default function Panel() {
         <View key={miuser.id}  style={styles.contenedor_perfil}>
         <View style={{flexDirection:'row'}}>
           <Image style={styles.image} source={{uri:miuser.imagen}}></Image>
-        <View style={{justifyContent:'center'}}>
-            <Text style={{fontWeight:'bold'}}>{miuser.nombre} {miuser.apellido}</Text>
-            <Text >{miuser.correo}</Text>
+        <View style={{flexDirection:'column',justifyContent:"flex-start",marginTop:10,height:20}}>{/*Verficar esto */}
+            <Text >{miuser.nombre} {miuser.apellido}</Text>
+            <Text style={{fontWeight:'bold'}}>{miuser.correo}</Text>
         </View>
         </View>
         <View>
@@ -245,14 +273,14 @@ export default function Panel() {
       </Link>
       <View>
         {
-       dataSeguidor.length>0?
-        dataSeguidor.map((d,i)=>{
+       dataPublicacionFollow.length>0?
+        dataPublicacionFollow.map((d,i)=>{
           
           
           return(
                      
-           <View key={i} style={styles.modelo_pub}>
-              
+           <View  key={i} style={styles.modelo_pub}>
+             
             <View style={{margin:10}}>
              <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
                <View style={{flexDirection:'row',justifyContent:'flex-start',alignItems:'center'}}>
@@ -260,7 +288,10 @@ export default function Panel() {
                   <Image source={{uri:d.creador.imagen}} style={{width:50,height:50,borderRadius:50,marginRight:15}}></Image>
                 </View>
                 <View>
-                  <Text>{d.creador.nombre}</Text>
+                  <View style={{flexDirection:'row'}}>
+                    <Text style={{marginRight:20}}>{d.creador.nombre}</Text>
+                    <Text style={{color:'#787777'}}>{d.tipo}</Text>
+                  </View>
                   <Text style={{fontWeight:'bold'}}>{d.creador.correo}</Text>
                 </View>
               </View>
@@ -268,16 +299,29 @@ export default function Panel() {
                 <IconElipsis></IconElipsis>
               </View>
              </View>
-              <Text>{d.titulo}</Text>
-              <Text>{d.descripcion}</Text>
+              <Text>{d.contendo.titulo}</Text>
+              <Text>{d.contendo.descripcion}</Text>
             </View>
-              <Image style={{width:200,height:250,borderRadius:20,alignSelf:'center'}} source={{uri:d.imagen}}></Image>
+              <Image style={{width:200,height:250,borderRadius:20,alignSelf:'center'}} source={{uri:d.contendo.imagen}}></Image>
               <View style={{flexDirection:'row',justifyContent:'space-around',alignItems:'center'}}>
-              <View style={{flexDirection:'row',marginTop:10,marginBottom:10}}>
-                <IconHeart></IconHeart>
-                <Text  style={{marginLeft:10}}>Me encanta</Text>
-                
+              
+                <View style={{flexDirection:'row',alignItems:'center',marginTop:10,marginBottom:10}}>
+                  {/*Esto mejorar el CountLove no puede quedarse asi */}
+                 <Pressable onPress={()=>toggleLove(user.id,d.id)&&CountIlove(d.id)}>
+                  <View style={{
+                    backgroundColor:"white",
+                    padding:10,
+                    borderRadius:50,
+                    elevation:6,
+                    boxShadow:meEncanta?"0px 0px 8px 1px red":""
+                   
+                  }}>
+                     <IconHeartActive color={meEncanta?"red":"black"}></IconHeartActive>
+                  </View>
+                 </Pressable>
+                  <Text  style={{marginLeft:10}}>hay {dataCountLoves?dataCountLoves:"00"} Me encanta</Text>                
               </View>
+             
               <View style={{flexDirection:'row'}}>
                 <IconReply></IconReply>
                 <Text style={{marginLeft:10}}>Compartir</Text>
@@ -291,6 +335,7 @@ export default function Panel() {
        :<Text>No esta suscrito a ningun canal</Text>
         }
       </View>
+      {/*
       <View>
       {
         dataSeguidorHabitos.length>0?
@@ -355,6 +400,7 @@ export default function Panel() {
         :""        
       }  
       </View>  
+      */}
         
       <View>
        
