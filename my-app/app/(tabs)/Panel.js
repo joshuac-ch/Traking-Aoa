@@ -139,21 +139,52 @@ export default function Panel() {
         
       }))
     }
-    const [dataCountLoves, setdataCountLoves] = useState(0)
+    const [dataCountLoves, setdataCountLoves] = useState({})
   const CountIlove=async(pub)=>{
     const {data}=await axios .get(`http://${host}:4000/publicacion/likes/conteo/${pub}`)
-    setdataCountLoves(data)
+    setdataCountLoves(prev=>({...prev,[pub]:data}))
   }
- 
-  const [meEncanta, setmeEncanta] = useState()
+  const DeleteLove=async(user,pub)=>{
+    await axios.delete(`http://${host}:4000/publicacion/likes/d/${user}/${pub}`)
+    ToastAndroid.show("Se quito el me encanta esta publicacion",ToastAndroid.BOTTOM) 
+  } 
+  const [meEncanta, setmeEncanta] = useState({})
   const toggleLove=async(user,pub)=>{
-    setmeEncanta(!meEncanta)
-    if(!meEncanta){
-      LovePublicacion(user,pub)
-    }
+   const yaDisteLike=meEncanta[pub]
+   const estado={
+    ...meEncanta,
+    [pub]:!yaDisteLike
+  }
+  setmeEncanta(estado)  
+  if(!yaDisteLike){
+     await LovePublicacion(user,pub)
+  }else{
+     await DeleteLove(user,pub)
+  }
+  await CountIlove(pub)
     
-    }
-   
+  }
+  
+  //ver esto aumentarle el contador ver si debe ser si o si el meEncanta 
+    const cargarLikes = async () => {
+    const { data } = await axios.get(`http://${host}:4000/publicacion/likes/getLove/${user.id}`)
+    const likesMap = {}
+    data.forEach(pubID => {
+      likesMap[pubID] = true
+    })
+    setmeEncanta(likesMap)    
+  }
+  useFocusEffect(
+    useCallback(()=>{
+      if(user.id){
+        cargarLikes()
+      }
+    },[user.id])
+  )
+  
+  
+
+  
   return (
       <ScrollView>
         
@@ -275,7 +306,7 @@ export default function Panel() {
         {
        dataPublicacionFollow.length>0?
         dataPublicacionFollow.map((d,i)=>{
-          
+            
           
           return(
                      
@@ -307,19 +338,19 @@ export default function Panel() {
               
                 <View style={{flexDirection:'row',alignItems:'center',marginTop:10,marginBottom:10}}>
                   {/*Esto mejorar el CountLove no puede quedarse asi */}
-                 <Pressable onPress={()=>toggleLove(user.id,d.id)&&CountIlove(d.id)}>
+                 <Pressable onPress={()=>toggleLove(user.id,d.id)}>
                   <View style={{
                     backgroundColor:"white",
                     padding:10,
                     borderRadius:50,
                     elevation:6,
-                    boxShadow:meEncanta?"0px 0px 8px 1px red":""
+                    boxShadow:meEncanta[d.id]?"0px 0px 8px 1px red":""
                    
                   }}>
-                     <IconHeartActive color={meEncanta?"red":"black"}></IconHeartActive>
+                     <IconHeartActive color={meEncanta[d.id]?"red":"black"}></IconHeartActive>
                   </View>
                  </Pressable>
-                  <Text  style={{marginLeft:10}}>hay {dataCountLoves?dataCountLoves:"00"} Me encanta</Text>                
+                  <Text  style={{marginLeft:10}}>hay {dataCountLoves[d.id]||"0"} Me encanta</Text>                
               </View>
              
               <View style={{flexDirection:'row'}}>
