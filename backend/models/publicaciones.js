@@ -11,6 +11,7 @@ const sequelize=require("../src/config/database")
      */
     static associate(models) {
       publicaciones.belongsTo(models.usuario,{foreignKey:"usuario_id"})
+      publicaciones.hasMany(models.likes_publicacion,{foreignKey:"publicacion_id"})
       // define association here
     }
   }
