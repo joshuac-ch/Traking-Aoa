@@ -7,7 +7,8 @@ import axios from 'axios'
 import Metas from '../../hooks/Metas'
 import Actividades from '../../hooks/Actividades'
 import Habitos from '../../hooks/Habitos'
-export default function perfil() {
+import { IconActivity, IconHeart } from '../../assets/Icons'
+export default function Perfil() {
     const {user}=useUser()
     const navegar=useRouter()
     const [user_specific, setuser_specific] = useState([])
@@ -75,6 +76,10 @@ export default function perfil() {
             }
         },[])
     )
+    const [SeeLovePost, setSeeLovePost] = useState()
+    const redirigir=()=>{
+        navegar.push("/Perfil/Love")
+    }
   return (
    <>
    <ScrollView>
@@ -131,7 +136,7 @@ export default function perfil() {
                                  <Image source={{uri:a.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                )}
                                <View style={styles.div_c_body}>
-                                    <Text>{a.titulo.length>15?a.titulo.slice(0,13)+"...":a.titulo}</Text>
+                                    <Text>{a.titulo.length>15?a.titulo.slice(0,12)+"...":a.titulo}</Text>
                                 </View>
                             </View>
                        </View> 
@@ -142,10 +147,21 @@ export default function perfil() {
                 :<Text>No hay datos</Text>}
                     
               </View>
+        <View style={{flexDirection:'row',justifyContent:'space-around',margin:15,alignItems:"center"}}>
+             <View>
+                <IconActivity></IconActivity>
+              </View>
+              <View>
+                <Pressable onPress={redirigir}>
+                    <IconHeart></IconHeart>    
+                </Pressable>           
+              </View>    
+        </View>  
+             
         <View >
             <Text style={styles.proyecto_title}>Actividades</Text>
         </View>
-         <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
+         <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap',justifyContent:'center'}}>
                 {dataActividades!=null?
                dataActividades.map((a,i)=>{
                     return(
@@ -156,7 +172,7 @@ export default function perfil() {
                             <View style={{display:'flex',justifyContent:'space-between'}}>
                                <Image source={{uri:a.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                 <View style={styles.div_c_body}>
-                                    <Text>{a.titulo.length>15?a.titulo.slice(0,13)+"...":a.titulo}</Text>
+                                    <Text>{a.titulo.length>15?a.titulo.slice(0,12)+"...":a.titulo}</Text>
                                 </View>
                             </View>
                        </View> 
@@ -170,7 +186,7 @@ export default function perfil() {
             <View >
                 <Text style={styles.proyecto_title}>Habitos</Text>
             </View>
-         <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
+         <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap',justifyContent:'center'}}>
                 {dataHabitos!=null?
                dataHabitos.map((a,i)=>{
                     return(
@@ -181,7 +197,7 @@ export default function perfil() {
                             <View style={{display:'flex',justifyContent:'space-between'}}>
                               <Image source={{uri:a.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                 <View style={styles.div_c_body}>
-                                    <Text>{a.titulo.length>15?a.titulo.slice(0,13)+"...":a.titulo}</Text>
+                                    <Text>{a.titulo.length>15?a.titulo.slice(0,12)+"...":a.titulo}</Text>
                                 </View>
                             </View>
                        </View> 
@@ -196,7 +212,7 @@ export default function perfil() {
             <View >
                 <Text style={styles.proyecto_title}>Metas</Text>
             </View>
-         <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
+         <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap',justifyContent:'center'}}>
                 {dataMetas!=null?
                dataMetas.map((a,i)=>{
                     return(
@@ -229,6 +245,9 @@ export default function perfil() {
 const styles=StyleSheet.create({
     proyecto_title:{
         textAlign:'center',
+        fontWeight:'bold',
+        textDecorationLine:"underline",
+       
         padding:20,
     },
     proyecto:{
