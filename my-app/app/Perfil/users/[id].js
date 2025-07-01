@@ -1,13 +1,16 @@
 import axios from 'axios'
-import { Link, Stack, useLocalSearchParams } from 'expo-router'
-import React, { useEffect, useState } from 'react'
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Link, Stack, useFocusEffect, useLocalSearchParams } from 'expo-router'
+import React, { useCallback, useEffect, useState } from 'react'
+import { Image, Pressable, ScrollView, StyleSheet, Text, ToastAndroid, View } from 'react-native'
 import constantes from "expo-constants"
 import Actividades from '../../../hooks/Actividades'
+import { useHistoryial } from '../../../components/HistorialProvider'
+import { useUser } from '../../../components/UserContext'
 
-export default function userDiferent() {
+export default function UserDiferent() {
     const [UserDiferent, setUserDiferent] = useState([])
     const {id}=useLocalSearchParams()
+    const {user}=useUser()
     const host=constantes.expoConfig.extra.host
     const ShowUsers=async()=>{
 
@@ -53,6 +56,51 @@ export default function userDiferent() {
             showMetasUser()            
         }                
     },[id])
+    const {setusuarioFollowID}=useHistoryial()
+    
+    const [NewSeguidorForm, setNewSeguidorForm] = useState({
+        seguidor_id:user.id,
+        seguido_id:id,
+        fecha:new Date(),
+        estado:true
+    })
+    //pasarle a la variable seeguidor nestra valor de estadoActalFollow
+    const [estadoActualFollow, setestadoActualFollow] = useState(false)
+    const GetFollow=async()=>{
+        const {data}=await axios.get(`http://${host}:4000/seguidores/actividadesfollow/estatus/${user.id}/${id}`)
+            setestadoActualFollow(data.estado)
+                 
+    }
+    
+    useFocusEffect(
+  useCallback(() => {
+    if (user.id && id) {
+      GetFollow()
+                
+    }
+  }, [user.id, id])
+)
+
+    
+    const {seguidor,setseguidor}=useHistoryial()
+    const PressSeguir=async()=>{
+            if(!seguidor){
+                await axios.post(`http://${host}:4000/seguidores/follow/`,NewSeguidorForm)
+                setseguidor(true)
+                setusuarioFollowID(id)
+                setestadoActualFollow(true)    
+                return true
+            }else{
+                await axios.delete(`http://${host}:4000/seguidores/actidadesfollow/delete/${user.id}/${id}`,NewSeguidorForm) 
+                setseguidor(false)
+                setestadoActualFollow(false)
+                return false
+            }
+            //ToastAndroid.show("Usted comienza a seguir a este usuario",ToastAndroid.BOTTOM)
+           
+        
+    
+    }
     return (    
     <>
         
@@ -68,23 +116,31 @@ export default function userDiferent() {
     </View>
     <View style={styles.contenedor_sub}>
         <View style={styles.box}>
-            <Text>390</Text>
-            <Text>Siguiendo</Text>
+            <Text>390 </Text>
+            
+            <Text>Siguiendo </Text>
         </View>
         <View style={styles.box}>
-            <Text>322K</Text>
+            <Text>312K</Text>
             <Text>Seguidores</Text>
         </View>
         <View style={styles.box}>
-            <Text>4</Text>
+            <Text>40</Text>
             <Text>Me gusta</Text>
+            
         </View>
     </View>
     <View style={styles.contenedor_edit}>
         <View style={styles.contenedor}>
-            <Pressable onPress={()=>navegar.push(`/Perfil/${UserDiferent.id}`)}>
-                <Text>Siguiendo</Text>
+            <Pressable onPress={PressSeguir} >
+                
+                <Text>{estadoActualFollow?"Siguiendo":"Seguir"}</Text>
             </Pressable>
+            {/*
+            <Pressable onPress={()=>navegar.push(`/Perfil/${UserDiferent.id}`)}>
+                <Text>Siguiedndo</Text>
+            </Pressable> SE PODRIA SAR PARA ENVIAR MENSAJES
+            */}
         </View>
         <View style={styles.contenedor}>
             <Pressable>
@@ -104,23 +160,27 @@ export default function userDiferent() {
     {dataActividadesOtherUser.length>0?
     dataActividadesOtherUser.map((a,i)=>{
         return(
-            <Link key={i} href={`/${a.type}/${a.id}`} asChild>
+            <Link key={i} href={`/Actividades/show/${a.id}`} asChild>
                                   <Pressable>
                                      <View style={styles.proyecto_c}>
                                         
                                         <View style={{display:'flex',justifyContent:'space-between'}}>
                                            
-                                           <Image source={{uri:a.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
-                                            <View style={styles.div_c_body}>
-                                                <Text>{a.titulo.length>18?a.titulo.slice(0,15)+"...":a.titulo}</Text>
+                                           {a.imagen&&(
+                                            <Image source={{uri:a.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                            )}
+                                           <View style={styles.div_c_body}>
+                                               
+                                                <Text>{a.titulo.length>15?a.titulo.slice(0,12)+"...":a.titulo}</Text>
                                             </View>
+                                             
                                         </View>
                                    </View> 
                                   </Pressable>
                                   </Link>
         )
     })
-    :<Text style={{fontWeight:'bold',fontSize:25}}>No hay datos de actividades Actualmente </Text>}
+    :<Text style={{fontWeight:'bold',fontSize:15}}>No hay datos de actividades Actualmente </Text>}
    </View>
    <View>
         <Text style={{textAlign:'center'}}>Habitos</Text>
@@ -129,13 +189,15 @@ export default function userDiferent() {
         {dataHabitosAnother.length>0?
         dataHabitosAnother.map((h,i)=>{
             return(
-                <Link href={"habitos"} asChild key={i}>
+                <Link href={`/Habitos/show/${h.id}`} asChild key={i}>
                     <Pressable>
                         <View style={styles.proyecto_c}>
                             <View style={{display:'flex',justifyContent:'space-between'}}>
-                                <Image source={{uri:h.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                {h.imagen&&(
+                                    <Image source={{uri:h.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                )}
                                 <View style={styles.div_c_body}>
-                                    <Text>{h.titulo.length>18?h.titulo.slice(0,15)+"...":h.titulo}</Text>
+                                    <Text>{h.titulo.length>15?h.titulo.slice(0,12)+"...":h.titulo}</Text>
                                 </View>
                             </View>
                         </View>    
@@ -153,13 +215,15 @@ export default function userDiferent() {
         {dataMetasAnother.length>0?
         dataMetasAnother.map((m,i)=>{
             return(
-                <Link asChild href={"/metas"} key={i}>
+                <Link asChild href={`/Metas/show/${m.id}`} key={i}>
                     <Pressable>
                         <View style={styles.proyecto_c}>
                             <View style={{display:'flex',justifyContent:'space-between'}}>
-                                <Image source={{uri:m.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                {m.imagen&&(
+                                    <Image source={{uri:m.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                )}
                                 <View style={styles.div_c_body}>
-                                    <Text>{m.titulo.length>18?m.titulo.slice(0,15)+"...":m.titulo}</Text>
+                                    <Text>{m.titulo.length>15?m.titulo.slice(0,12)+"...":m.titulo}</Text>
                                 </View>
                             </View>
                         </View>
