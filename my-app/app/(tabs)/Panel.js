@@ -174,10 +174,12 @@ export default function Panel() {
     })
     setmeEncanta(likesMap)    
   }
+   
   useFocusEffect(
     useCallback(()=>{
       if(user.id){
         cargarLikes()
+        
       }
     },[user.id])
   )
@@ -350,7 +352,8 @@ export default function Panel() {
                      <IconHeartActive color={meEncanta[d.id]?"red":"black"}></IconHeartActive>
                   </View>
                  </Pressable>
-                  <Text  style={{marginLeft:10}}>hay {dataCountLoves[d.id]||"0"} Me encanta</Text>                
+                                               
+                  <Text  style={{marginLeft:10}}>{/*{dataCountLoves[d.id]||"0"} */}Me encanta</Text>                
               </View>
              
               <View style={{flexDirection:'row'}}>
