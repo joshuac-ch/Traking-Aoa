@@ -68,21 +68,27 @@ export default function DetalleActividad() {
         <View style={styles.contenedor}>         
            <View>
              <View  style={styles.contenedor_img} className='p-4'>
-                <Image source={{uri:Formdata.imagen}} style={{width:200,height:250,borderRadius:20}}></Image>
-                <Button onPress={pickImage} title='Seleccionar Imagen'></Button>
+                {Formdata.imagen&&(
+                    <Image source={{uri:Formdata.imagen}} style={{width:200,height:250,borderRadius:20}}></Image>
+                )}
+                <Pressable onPress={pickImage} >
+                    <View style={styles.button}>
+                        <Text>Seleccionar Imagen</Text>
+                    </View>
+                </Pressable>
             </View>
             <View className=''>
                 <Text className='font-black'>Titutlo: </Text>
-                <TextInput value={Formdata.titulo} onChangeText={text=>setFordata({...Formdata,titulo:text})}></TextInput>
+                <TextInput style={styles.input_form} value={Formdata.titulo} onChangeText={text=>setFordata({...Formdata,titulo:text})}></TextInput>
                 
             </View >
             <View >
                 <Text  className='font-black'>Desripcion:</Text>
-                <TextInput value={Formdata.descripcion} onChangeText={text=>setFordata({...Formdata,descripcion:text})}></TextInput>
+                <TextInput style={styles.des_input_form} value={Formdata.descripcion} onChangeText={text=>setFordata({...Formdata,descripcion:text})}></TextInput>
             </View>
             <View className=''>
-                <Text  className='font-black'>Fecha Creada: </Text>
-                <Text>{Formdata.fecha}</Text>
+                <Text  className='font-black'>Fecha Emitida: </Text>
+                <Text>{Formdata.fecha?new Date(Formdata.fecha).toLocaleDateString():""}</Text>
             
           </View>
           <View style={{alignItems:'center'}}>
@@ -98,6 +104,35 @@ export default function DetalleActividad() {
   )
 }
 const styles=StyleSheet.create({
+    button:{
+        borderRadius:10,
+        borderWidth:2,
+        borderColor:"black",
+        borderStyle:'solid',
+        margin:20,
+        padding:10
+    },
+    input_form:{
+        borderWidth:2,
+        backgroundColor:'white',
+        borderStyle:'solid',
+        borderColor:"black",
+        borderRadius:10,
+        marginTop:10,
+        marginBottom:10,
+    },
+    des_input_form:{
+        borderColor:"black",
+        borderStyle:'solid',
+        borderWidth:2,
+        textAlignVertical:"top",
+        flexWrap:'wrap',
+        backgroundColor:"white",
+        borderRadius:10,
+        marginTop:10,
+        marginBottom:10,
+        height:100
+    },
     contenedor:{
         margin:10,
         
