@@ -106,6 +106,16 @@ const showUserFollow=async(req,res)=>{
 const CreateSeguidor=async(req,res)=>{
     try{
         const {seguidor_id,seguido_id,fecha,estado}=req.body
+        const existe=await Seguidor.findOne({
+            where:{seguidor_id,seguido_id}
+        })
+        if(existe){
+            const model=await Seguidor.update({
+                fecha:new Date(),
+                estado:true  
+            },{where:{seguidor_id,seguido_id}})
+            return res.json(model)
+        } 
        const modelo=await Seguidor.create({
             seguidor_id,
             seguido_id,
@@ -116,4 +126,5 @@ const CreateSeguidor=async(req,res)=>{
     }catch(err){
     console.error(err)
 }}
+// a partir de los cambios ya se actualiza sin crear de mas ahora con esto crear el contador 
 module.exports={CreateSeguidor,GetSeguidor,GetActividadesSeguidor,DeleteActividadSeguidor,showUserFollow,EstatusFollow,GetHabitosSeguidor}
