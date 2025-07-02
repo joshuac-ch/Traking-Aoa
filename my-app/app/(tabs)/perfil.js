@@ -8,6 +8,7 @@ import Metas from '../../hooks/Metas'
 import Actividades from '../../hooks/Actividades'
 import Habitos from '../../hooks/Habitos'
 import { IconActivity, IconHeart } from '../../assets/Icons'
+import Love from "../Perfil/Love.js"
 export default function Perfil() {
     const {user}=useUser()
     const navegar=useRouter()
@@ -80,6 +81,7 @@ export default function Perfil() {
     const redirigir=()=>{
         navegar.push("/Perfil/Love")
     }
+    const [vistaActiva, setvistaActiva] = useState("actividad")
   return (
    <>
    <ScrollView>
@@ -121,7 +123,21 @@ export default function Perfil() {
     </View>
    
    </View>
- <View>
+   <View style={{flexDirection:'row',justifyContent:'space-around',margin:15,alignItems:"center"}}>
+             <View>
+                <Pressable onPress={()=>setvistaActiva("actividad")}>                    
+                    <IconActivity></IconActivity>
+                </Pressable>                
+              </View>
+              <View>
+                <Pressable onPress={()=>setvistaActiva("love")}>
+                    <IconHeart></IconHeart>    
+                </Pressable>           
+              </View>    
+        </View>  
+    <View>
+        {vistaActiva=="actividad"?
+        <View>
     <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
                 {alldata!=null?
                alldata.map((a,i)=>{
@@ -147,16 +163,7 @@ export default function Perfil() {
                 :<Text>No hay datos</Text>}
                     
               </View>
-        <View style={{flexDirection:'row',justifyContent:'space-around',margin:15,alignItems:"center"}}>
-             <View>
-                <IconActivity></IconActivity>
-              </View>
-              <View>
-                <Pressable onPress={redirigir}>
-                    <IconHeart></IconHeart>    
-                </Pressable>           
-              </View>    
-        </View>  
+       
              
         <View >
             <Text style={styles.proyecto_title}>Actividades</Text>
@@ -237,7 +244,9 @@ export default function Perfil() {
        
        
         
-    </View> 
+        </View> 
+        :<Love></Love>}
+    </View>
     </ScrollView>   
    </>
   )
