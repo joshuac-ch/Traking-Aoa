@@ -2,8 +2,9 @@ import axios from 'axios'
 import React, { useCallback, useState } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { useUser } from '../../components/UserContext'
-import { useFocusEffect } from 'expo-router'
+import { Link, useFocusEffect } from 'expo-router'
 import constantes from "expo-constants"
+import { Pressable } from 'react-native'
 export default function Love() {
     const [dataLove, setdataLove] = useState([])
     const host=constantes.expoConfig.extra.host
@@ -23,24 +24,28 @@ export default function Love() {
   return (
     <>
     <View style={{margin:10}}>
-        <Text>Me encanta</Text>
+        
         {dataLove.length>0?
         <View style={{flexDirection:'row',justifyContent:'center',flexWrap:'wrap'}}>
         {dataLove.map((p)=>{
-            return(
-                <View key={p.id}>
+            return(                
+                    <Link key={p.id} asChild href={`/${p.tipo}/show/${p.valor.id}`}>
+                    <Pressable key={p.id}>                   
                     <View >
                         <View style={styles.contenedor_imagen}>
-                        <Image style={{width:130,height:180,borderRadius:5}} source={{uri:p.valor.imagen}}></Image>
+                        <Image style={{width:117,height:180,borderRadius:5,alignSelf:'center'}} source={{uri:p.valor.imagen}}></Image>
                         <Text style={{textAlign:'left'}}>{p.valor.titulo}</Text>
                         </View> 
-                    </View>                                       
-                </View>
+                    </View>
+                    </Pressable>                                       
+                
+                    </Link>
+             
             )
            })}
         </View>
         :
-        <Text>No hay PostLoves</Text>}
+        <Text style={{textAlign:'center'}}>No hay PostLoves</Text>}
     </View>
     </>
   )
@@ -48,10 +53,16 @@ export default function Love() {
 const styles=StyleSheet.create({
     contenedor_imagen:{
         height:200,
-        width:130,
-        margin:0,
+        width:120,
+        marginLeft:2,
+        marginRight:2,
+        marginTop:10,
+        marginBottom:5,
         flexDirection:'column',
         backgroundColor:'white',
-        borderRadius:5
+        borderRadius:5,
+        borderColor:"red",
+        borderWidth:2,
+        borderStyle:"solid"
     }
 })
