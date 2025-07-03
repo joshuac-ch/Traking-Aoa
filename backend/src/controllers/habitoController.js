@@ -43,7 +43,7 @@ const InsertHabitos=async(req,res)=>{
     await publicaciones.create({
         usuario_id,
         contenido_id:modelo.id,
-        tipo:"Habito",
+        tipo:"Habitos",
         creacion:new Date()
     })
     res.status(200).json({message:"Se creo el habito correctamente"})
