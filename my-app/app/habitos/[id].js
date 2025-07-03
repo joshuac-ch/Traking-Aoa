@@ -69,24 +69,27 @@ export default function DetalleHabito() {
        {FormDataHabitos!=null?
        <View style={styles.contenedorP}>
             <View>
-                 <Image source={{uri:FormDataHabitos.imagen}} style={{width:370,height:350,borderRadius:20}}></Image>
+                {FormDataHabitos.imagen&&(
+                     <Image source={{uri:FormDataHabitos.imagen}} style={{width:370,height:350,borderRadius:20}}></Image>
+                )}
+                
                 <Button onPress={pickImage} title='Seleccionar imagen'></Button>
             </View>
             <View>
             </View>
-            <View style={styles.contenedorForm}>
+            <View style={styles.cotenedor_des}>
                 <View style={styles.contenedortitulo}>
                     <IconTitle></IconTitle>
                     <Text>Titulo: </Text>
                 </View>
-                <TextInput onChangeText={text=>setFormDataHabitos({...FormDataHabitos,titulo:text})}  value={FormDataHabitos.titulo}></TextInput>
+                <TextInput style={styles.input_form} onChangeText={text=>setFormDataHabitos({...FormDataHabitos,titulo:text})}  value={FormDataHabitos.titulo}></TextInput>
             </View>
             <View style={styles.cotenedor_des}>
                 <View style={styles.contenedortitulo}>
                     <IconText></IconText>
                     <Text>Descripcion: </Text>
                 </View>                
-                <TextInput onChangeText={text=>setFormDataHabitos({...FormDataHabitos,descripcion:text})} value={FormDataHabitos.descripcion}></TextInput>
+                <TextInput style={styles.input_form_des} onChangeText={text=>setFormDataHabitos({...FormDataHabitos,descripcion:text})} value={FormDataHabitos.descripcion}></TextInput>
             </View>
             <View style={styles.contenedorForm}>
                 <View style={styles.contenedortitulo}>
@@ -106,7 +109,7 @@ export default function DetalleHabito() {
             </View>
             <View style={styles.contenedorForm}> 
                 <Text>Fecha inicio</Text>
-                <Text>{FormDataHabitos.fecha_inicio} </Text>
+                <Text>{FormDataHabitos.fecha_inicio?new Date(FormDataHabitos.fecha_inicio).toLocaleDateString():""} </Text>
             </View>
             <View >
                 <Pressable style={styles.btn_update} onPress={()=>UpdateHabitos()}>
@@ -121,6 +124,36 @@ export default function DetalleHabito() {
   )
 }
 const styles=StyleSheet.create({
+    button:{
+        borderRadius:10,
+        borderWidth:2,
+        borderColor:"black",
+        borderStyle:'solid',
+        margin:20,
+        padding:10
+    },
+    input_form:{
+        width:"100%", 
+        borderWidth:2,
+        backgroundColor:'white',
+        borderStyle:'solid',
+        borderColor:"black",
+        borderRadius:10,
+        marginTop:10,
+       
+    },
+    input_form_des:{
+        width:"100%",
+        height:80,
+        textAlignVertical:'top',
+        borderWidth:2,
+        backgroundColor:'white',
+        borderStyle:'solid',
+        borderColor:"black",
+        borderRadius:10,
+        marginTop:10,
+       
+    },
     btn_update:{
         borderWidth:2,
         borderStyle:'solid',
@@ -139,6 +172,7 @@ const styles=StyleSheet.create({
         boxShadow:'0px 0px 8px 1px black'
     },
     cotenedor_des:{
+        marginTop:10,
         display:'flex',
         width:'70%',
         alignItems:'flex-start',
