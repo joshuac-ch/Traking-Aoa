@@ -126,5 +126,18 @@ const CreateSeguidor=async(req,res)=>{
     }catch(err){
     console.error(err)
 }}
-// a partir de los cambios ya se actualiza sin crear de mas ahora con esto crear el contador 
-module.exports={CreateSeguidor,GetSeguidor,GetActividadesSeguidor,DeleteActividadSeguidor,showUserFollow,EstatusFollow,GetHabitosSeguidor}
+const ContadorSeguidores=async(req,res)=>{
+    const {seguido_id}=req.params
+    const seg=await Seguidor.count({where:{seguido_id,estado:true}})
+    res.status(200).json(seg)
+}
+const ContadorSiguiendo=async(req,res)=>{
+    const {seguidor_id}=req.params
+    const modeloSeg=await Seguidor.count({where:{seguidor_id,estado:true}})
+    res.status(200).json(modeloSeg)
+
+}
+module.exports={CreateSeguidor,GetSeguidor,GetActividadesSeguidor,
+    DeleteActividadSeguidor,showUserFollow,EstatusFollow,
+    GetHabitosSeguidor,ContadorSeguidores,ContadorSiguiendo
+}
