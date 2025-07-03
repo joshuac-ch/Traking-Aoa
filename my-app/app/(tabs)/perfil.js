@@ -82,6 +82,26 @@ export default function Perfil() {
         navegar.push("/Perfil/Love")
     }
     const [vistaActiva, setvistaActiva] = useState("actividad")
+
+    const [Follows, setFollows] = useState(1)
+    const ShowFollow=async()=>{
+        const {data}=await axios.get(`http://${host}:4000/seguidor/count/${user.id}`)
+        setFollows(data)
+    }
+    useEffect(()=>{
+        ShowFollow()
+    },[])
+    const [PubLoves, setPubLoves] = useState(0)
+    const ShowPubLoves=async()=>{
+        const {data}=await axios.get(`http://${host}:4000/publicacion/loves/conteo/${user.id}`)
+        setPubLoves(data)
+    }
+    useFocusEffect(
+        useCallback(()=>{
+            ShowPubLoves()
+        },[])
+    )
+    
   return (
    <>
    <ScrollView>
@@ -100,11 +120,11 @@ export default function Perfil() {
             <Text>Siguiendo</Text>
         </View>
         <View style={styles.box}>
-            <Text>322K</Text>
+            <Text>{Follows}K</Text>
             <Text>Seguidores</Text>
         </View>
         <View style={styles.box}>
-            <Text>4</Text>
+            <Text>{PubLoves}</Text>
             <Text>Me gusta</Text>
         </View>
     </View>
