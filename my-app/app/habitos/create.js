@@ -22,7 +22,7 @@ export default function create() {
       await axios.post(`http://${local}:4000/habitos/c`,fromHabitos)
       ToastAndroid.show("Se enviaron los datos correctamente",ToastAndroid.TOP)
       
-      navegar.push("/Panel")
+      navegar.replace("/Panel")
     }catch(err){
       alert(err.message)
     }
