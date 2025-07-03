@@ -43,7 +43,7 @@ const InsetActividades=async(req,res)=>{
         await publicaciones.create({
             usuario_id:usuario_id,
             contenido_id:modelo.id,
-            tipo:"Actividad",
+            tipo:"Actividades",
             creacion:new Date()
         })
         res.status(200).json(modelo)
