@@ -51,15 +51,16 @@ const ShowLoves=async(req,res)=>{
   const {userID}=req.params
   const modelo=await LikesPub.findAll({
     where:{usuario_id:userID}
+  
   })
   const dataExpandida=await Promise.all(
     modelo.map(async(d)=>{
       let publicacion=await publicaciones.findByPk(d.publicacion_id)
       let valor=null
-      if(publicacion.tipo=="Actividad"){
+      if(publicacion.tipo=="Actividades"){
           valor=await actividades_diarias.findByPk(publicacion.contenido_id)
       }
-      else if(publicacion.tipo=="Habito"){
+      else if(publicacion.tipo=="Habitos"){
         valor=await habitos.findByPk(publicacion.contenido_id)
       }
       let creador=await usuario.findByPk(d.usuario_id)
@@ -73,6 +74,11 @@ const ShowLoves=async(req,res)=>{
   )
   res.status(200).json(dataExpandida)
 }
+const ShowLovesCount=async(req,res)=>{
+  const {userID}=req.params
+  const modelo=await LikesPub.count({where:{usuario_id:userID}})
+  res.status(200).json(modelo)
+}
 const RemoveLove=async(req,res)=>{
     const {pubID,userID}=req.params
     await LikesPub.destroy({
@@ -81,5 +87,5 @@ const RemoveLove=async(req,res)=>{
     res.status(200).json({message:"Se elimino el like"})
 
 }
-module.exports={InsertLove,ConteoLikes,RemoveLove,GetLikesUsuario,ShowLoves}
+module.exports={InsertLove,ConteoLikes,RemoveLove,GetLikesUsuario,ShowLoves,ShowLovesCount}
 
