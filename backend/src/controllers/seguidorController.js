@@ -1,6 +1,7 @@
 const actividades_diarias = require("../../models/actividades_diarias")
 const habitos = require("../../models/habitos")
 const Seguidor=require("../../models/seguidores")
+const usuario = require("../../models/usuario")
 const GetSeguidor=async(req,res)=>{
     try{
         //const {seguidor_id,seguido_id}=req.params
@@ -137,7 +138,27 @@ const ContadorSiguiendo=async(req,res)=>{
     res.status(200).json(modeloSeg)
 
 }
+const ListaSeguidores=async(req,res)=>{
+    const {userID}=req.params
+    const modelo=await Seguidor.findAll({where:{seguidor_id:userID,estado:true}})
+    const userExpandido=await Promise.all(
+        modelo.map(async(m)=>{           
+            let creador= await usuario.findByPk(m.seguido_id)//aca ponemos que nos debuleva los seguidos esto es una funcion para ver nuestros seguidos
+                                //mñana probar con aqui poner seguidorID seria para Lista seguidores??
+            return{                
+                creador
+            }
+        })
+    )
+    res.status(200).json(userExpandido)
+}
+//arreglar eseta funcion o probarla haber
+const ListaSiguiendo=async(req,res)=>{
+    const {userID}=req.params
+    const modelo=await Seguidor.findAll({where:{seguido_id:userID,estado:true}})
+    res.status(200).json(modelo)
+}
 module.exports={CreateSeguidor,GetSeguidor,GetActividadesSeguidor,
     DeleteActividadSeguidor,showUserFollow,EstatusFollow,
-    GetHabitosSeguidor,ContadorSeguidores,ContadorSiguiendo
+    GetHabitosSeguidor,ContadorSeguidores,ContadorSiguiendo,ListaSeguidores,ListaSiguiendo
 }
