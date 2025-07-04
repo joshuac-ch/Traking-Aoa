@@ -22,10 +22,10 @@ const getPublicacionFollow=async(req,res)=>{
     const publicacionExpandida=await Promise.all(
         publicacion.map(async(p)=>{
             let contendo=0
-            if(p.tipo=="Actividad"){
+            if(p.tipo=="Actividades"){
                 contendo=await actividades_diarias.findByPk(p.contenido_id)
             }
-            else if(p.tipo=="Habito"){
+            else if(p.tipo=="Habitos"){
                 contendo=await habitos.findByPk(p.contenido_id)
             }
             let creador=await usuario.findByPk(p.usuario_id)
