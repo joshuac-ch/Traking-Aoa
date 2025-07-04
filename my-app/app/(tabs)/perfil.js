@@ -101,7 +101,19 @@ export default function Perfil() {
             ShowPubLoves()
         },[])
     )
-    
+    const [myfollows, setmyfollows] = useState([])
+    const Myfollows=async()=>{
+        const {data}=await axios.get(`http://${host}:4000/seguidores/count/${user.id}`)
+        setmyfollows(data)
+    }
+    useFocusEffect(
+        useCallback(()=>{
+            if(user.id){
+                Myfollows()
+            }
+        },[user.id])
+    )
+   
   return (
    <>
    <ScrollView>
@@ -115,14 +127,18 @@ export default function Perfil() {
         <Text >{user_specific.correo}</Text>
     </View>
     <View style={styles.contenedor_sub}>
-        <View style={styles.box}>
-            <Text>390</Text>
-            <Text>Siguiendo</Text>
-        </View>
-        <View style={styles.box}>
-            <Text>{Follows}K</Text>
-            <Text>Seguidores</Text>
-        </View>
+        <Pressable onPress={()=> navegar.push("Perfil/users/ListaSiguiendo")}>
+            <View style={styles.box}>
+                <Text>{myfollows}</Text>
+                <Text>Siguiendo</Text>
+            </View>
+        </Pressable>
+        <Pressable onPress={()=> navegar.push("Perfil/users/ListaSeguidores")}>
+            <View style={styles.box}>
+                <Text>{Follows}</Text>
+                <Text>Seguidores</Text>
+            </View>
+        </Pressable>
         <View style={styles.box}>
             <Text>{PubLoves}</Text>
             <Text>Me gusta</Text>
