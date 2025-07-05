@@ -5,6 +5,7 @@ import { useUser } from '../../../components/UserContext'
 import axios from 'axios'
 import { useFocusEffect } from 'expo-router'
 import constantes from "expo-constants" 
+import ListaFollos from '../../../components/ListaFollos'
 
 export default function ListaSiguiendo() {
     const {user}=useUser()
@@ -16,7 +17,7 @@ export default function ListaSiguiendo() {
   }
   const [misSeguidores, setmisSeguidores] = useState([])  
   const ShowSeguidores=async()=>{
-        const {data}=await axios.get(`http://${host}:4000/listaseguidores/usuario/${user.id}`)
+        const {data}=await axios.get(`http://${host}:4000/listasiguiendo/usuario/${user.id}`)
         setmisSeguidores(data)
     }
   useFocusEffect(
@@ -28,33 +29,8 @@ export default function ListaSiguiendo() {
   ) 
   return (
     <>    
-    <View style={{margin:10}}>
-                    <View>
-                        <IconBack></IconBack>
-                    </View>
-                    <View>
-                        <Text>{DataUser.correo}</Text>
-                    </View>
-                    {misSeguidores.length>0?
-                    misSeguidores.map((m,i)=>{
-                        return(
-                            <View key={i}>
-                                <View>
-                                    <Image source={{uri:m.creador.imagen}} style={{height:50,width:50,borderRadius:50}}></Image>    
-                                </View>                        
-                                <View>
-                                    <Text>{m.creador.nombre}</Text>
-                                    <Text>{m.creador.correo}</Text>
-                                </View>
-                            </View>
-                        )   
-        
-                    })
-                    :
-                    <Text>No sigo a nadie </Text>
-                    }
-                    
-                </View>
-    </>
+    <ListaFollos user={DataUser} lista={misSeguidores}></ListaFollos>
+    </>    
+    
   )
 }
