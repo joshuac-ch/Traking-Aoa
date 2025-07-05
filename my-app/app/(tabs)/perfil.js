@@ -77,10 +77,6 @@ export default function Perfil() {
             }
         },[])
     )
-    const [SeeLovePost, setSeeLovePost] = useState()
-    const redirigir=()=>{
-        navegar.push("/Perfil/Love")
-    }
     const [vistaActiva, setvistaActiva] = useState("actividad")
 
     const [Follows, setFollows] = useState(1)
@@ -113,7 +109,18 @@ export default function Perfil() {
             }
         },[user.id])
     )
-   
+   const navegarListaFollow=()=>{
+    navegar.push({
+        pathname:"Perfil/users/ListaPrincipal",
+        params:{estado:"seguidores"}
+    })
+   }
+    const navegarListaSiguiendo=()=>{
+    navegar.push({
+        pathname:"Perfil/users/ListaPrincipal",
+        params:{estado:"siguiendo"}
+    })
+   }
   return (
    <>
    <ScrollView>
@@ -127,13 +134,13 @@ export default function Perfil() {
         <Text >{user_specific.correo}</Text>
     </View>
     <View style={styles.contenedor_sub}>
-        <Pressable onPress={()=> navegar.push("Perfil/users/ListaSiguiendo")}>
+        <Pressable onPress={()=> navegarListaSiguiendo()}>
             <View style={styles.box}>
                 <Text>{myfollows}</Text>
                 <Text>Siguiendo</Text>
             </View>
         </Pressable>
-        <Pressable onPress={()=> navegar.push("Perfil/users/ListaSeguidores")}>
+        <Pressable onPress={()=>navegarListaFollow()}>
             <View style={styles.box}>
                 <Text>{Follows}</Text>
                 <Text>Seguidores</Text>
