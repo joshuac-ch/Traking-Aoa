@@ -80,7 +80,28 @@ export default function UserDiferent() {
     }
   }, [user.id, id])
 )
-
+    const [countSeguidores, setcountSeguidores] = useState(1)
+    const CountSeguidores=async()=>{
+        const {data}=await axios.get(`http://${host}:4000/seguidor/count/${id}`)
+        setcountSeguidores(data)
+    }
+    useFocusEffect(
+        useCallback(()=>{
+            if(id){
+                CountSeguidores()
+            }
+        },[id])
+    )
+    const [countLovePub, setcountLovePub] = useState(0)
+    const CountLove=async()=>{
+        const {data}=await axios.get(`http://${host}:4000/publicacion/loves/conteo/${id}`)
+        setcountLovePub(data)
+    }
+    useFocusEffect(
+        useCallback(()=>{
+            CountLove()
+        })
+    )
     
     const {seguidor,setseguidor}=useHistoryial()
     const PressSeguir=async()=>{
@@ -88,19 +109,34 @@ export default function UserDiferent() {
                 await axios.post(`http://${host}:4000/seguidores/follow/`,NewSeguidorForm)
                 setseguidor(true)
                 setusuarioFollowID(id)
-                setestadoActualFollow(true)    
-                return true
+                setestadoActualFollow(true) 
+                ToastAndroid.show("siguiendo a este usuario",ToastAndroid.BOTTOM)   
+                
             }else{
                 await axios.delete(`http://${host}:4000/seguidores/actidadesfollow/delete/${user.id}/${id}`,NewSeguidorForm) 
                 setseguidor(false)
-                setestadoActualFollow(false)
-                return false
+                setestadoActualFollow(false)               
+                
             }
+            await CountSeguidores()
             //ToastAndroid.show("Usted comienza a seguir a este usuario",ToastAndroid.BOTTOM)
            
         
     
     }
+    const [myfollows, setmyfollows] = useState([])
+    const Myfollows=async()=>{
+        const {data}=await axios.get(`http://${host}:4000/seguidores/count/${id}`)
+        setmyfollows(data)
+    }
+    useFocusEffect(
+        useCallback(()=>{
+            if(id){
+                Myfollows()
+            }
+        },[id])
+    )
+    
     return (    
     <>
         
@@ -116,16 +152,16 @@ export default function UserDiferent() {
     </View>
     <View style={styles.contenedor_sub}>
         <View style={styles.box}>
-            <Text>390 </Text>
+            <Text>{myfollows}</Text>
             
             <Text>Siguiendo </Text>
         </View>
         <View style={styles.box}>
-            <Text>312K</Text>
+            <Text>{countSeguidores}</Text>
             <Text>Seguidores</Text>
         </View>
         <View style={styles.box}>
-            <Text>40</Text>
+            <Text>{countLovePub}</Text>
             <Text>Me gusta</Text>
             
         </View>
