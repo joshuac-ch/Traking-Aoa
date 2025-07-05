@@ -5,6 +5,8 @@ import { useUser } from '../../../components/UserContext'
 import axios from 'axios'
 import { useFocusEffect } from 'expo-router'
 import constantes from "expo-constants" 
+import { Image } from 'react-native'
+import ListaFollos from '../../../components/ListaFollos'
 
 export default function ListaSeguidores() {
   const {user}=useUser()
@@ -14,26 +16,23 @@ export default function ListaSeguidores() {
     const {data}=await axios.get(`http://${host}:4000/usuarios/s/${user.id}`)
     setDataUser(data)
   }
-  
+  const [dataSeguidores, setdataSeguidores] = useState([])
+  const ShowSeguidores=async()=>{
+    const {data}=await axios.get(`http://${host}:4000/listaseguidores/usuario/${user.id}`)
+    setdataSeguidores(data)
+  }
   useFocusEffect(
     useCallback(()=>{
-        ShowUser()       
+        ShowUser()
+        ShowSeguidores()       
     },[])
     
   ) 
     
   return (
-    
     <>
-         <View style={{margin:10}}>
-                <View>
-                    <IconBack></IconBack>
-                </View>
-                <View>
-                    <Text>{DataUser.correo}</Text>
-                </View>                
-                
-            </View>
-        </>
+    <ListaFollos user={DataUser} lista={dataSeguidores}></ListaFollos>
+    </> 
+    
   )
 }
