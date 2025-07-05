@@ -138,7 +138,7 @@ const ContadorSiguiendo=async(req,res)=>{
     res.status(200).json(modeloSeg)
 
 }
-const ListaSeguidores=async(req,res)=>{
+const ListaSiguiendo=async(req,res)=>{
     const {userID}=req.params
     const modelo=await Seguidor.findAll({where:{seguidor_id:userID,estado:true}})
     const userExpandido=await Promise.all(
@@ -153,10 +153,18 @@ const ListaSeguidores=async(req,res)=>{
     res.status(200).json(userExpandido)
 }
 //arreglar eseta funcion o probarla haber
-const ListaSiguiendo=async(req,res)=>{
+const ListaSeguidores=async(req,res)=>{
     const {userID}=req.params
     const modelo=await Seguidor.findAll({where:{seguido_id:userID,estado:true}})
-    res.status(200).json(modelo)
+    const userExpandido=await Promise.all(
+        modelo.map(async(m)=>{
+            let creador=await usuario.findByPk(m.seguidor_id)
+            return{
+                creador
+            }
+        })
+    )
+    res.status(200).json(userExpandido)
 }
 module.exports={CreateSeguidor,GetSeguidor,GetActividadesSeguidor,
     DeleteActividadSeguidor,showUserFollow,EstatusFollow,
