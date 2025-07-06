@@ -9,6 +9,7 @@ import * as ImagePicker from 'expo-image-picker'
 export default function DetalleActividad() {
   const {id}=useLocalSearchParams()
   const navegar=useRouter()
+  const {user}=useUser()
   const local=Constantes.expoConfig.extra.host
   const [detalleactividad, setdetalleactividad] = useState([])
   const [Formdata, setFordata] = useState({
@@ -59,13 +60,22 @@ export default function DetalleActividad() {
        if(!result.canceled){
            setFordata({...Formdata,imagen:result.assets[0].uri})
        }}
-    
+    const publicar=async()=>{
+        await axios.post(`http://${local}:4000/publicacion/actividad/${id}/${user.id}`)
+        alert("Se realizo la publicacion") 
+    }
     return (
    <>
    <Stack.Screen options={{title:`Actividad N°${id}`}}></Stack.Screen>
-    <View>
+    <View>        
         {detalleactividad!=null?
-        <View style={styles.contenedor}>         
+        <View style={styles.contenedor}>
+            <Pressable onPress={publicar} style={{alignSelf:'flex-end',borderRadius:10,padding:10,backgroundColor:"purple",boxShadow:"0px 0px 7px 1px purple"}}>
+                <View>
+                    <Text style={{color:"white"}}>Publicar</Text>
+                </View>
+            </Pressable>
+
            <View>
              <View  style={styles.contenedor_img} className='p-4'>
                 {Formdata.imagen&&(
