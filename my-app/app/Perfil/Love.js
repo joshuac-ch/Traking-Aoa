@@ -23,7 +23,7 @@ export default function Love() {
     )
   return (
     <>
-    <View style={{margin:10}}>
+    <View>
         
         {dataLove.length>0?
         <View style={{flexDirection:'row',justifyContent:'center',flexWrap:'wrap'}}>
@@ -33,8 +33,8 @@ export default function Love() {
                     <Pressable key={p.id}>                   
                     <View >
                         <View style={styles.contenedor_imagen}>
-                        <Image style={{width:117,height:180,borderRadius:5,alignSelf:'center'}} source={{uri:p.valor.imagen}}></Image>
-                        <Text style={{textAlign:'left'}}>{p.valor.titulo}</Text>
+                        <Image style={{width:129.4,height:180,borderTopLeftRadius:8,borderTopRightRadius:8,alignSelf:'center'}} source={{uri:p.valor.imagen}}></Image>
+                        <Text style={{textAlign:'left',padding:5}}>{p.valor.titulo}</Text>
                         </View> 
                     </View>
                     </Pressable>                                       
@@ -52,16 +52,17 @@ export default function Love() {
 }
 const styles=StyleSheet.create({
     contenedor_imagen:{
-        height:200,
-        width:120,
+        height:210,
+        width:133,
         marginLeft:2,
         marginRight:2,
         marginTop:10,
         marginBottom:5,
         flexDirection:'column',
         backgroundColor:'white',
-        borderRadius:5,
-        borderColor:"red",
+        borderRadius:10,
+        boxShadow:"0px 0px 8px 1px black",
+        borderColor:"black",
         borderWidth:2,
         borderStyle:"solid"
     }
