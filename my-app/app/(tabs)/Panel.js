@@ -9,6 +9,7 @@ import constantes from 'expo-constants'
 import axios from 'axios'
 import { useHistoryial } from '../../components/HistorialProvider'
 import { ToastAndroid } from 'react-native'
+import Metas from '../../hooks/Metas'
 
 export default function Panel() {
     const {user}=useUser()
@@ -129,7 +130,12 @@ export default function Panel() {
       },[user.id])
     )
     */
-    
+   const {FectMetas,metas}=Metas()
+    useFocusEffect(
+      useCallback(()=>{
+        FectMetas()
+      },[])
+    )
     const ChangeEmcoicon=async()=>{
       setemocionSeleccionada(prev=>({
         ...prev,
@@ -215,28 +221,24 @@ export default function Panel() {
         
     </View>
     <View style={{marginLeft:35}}>
-              <Text>Metas para este {new Date().getFullYear()} </Text>
+              <Text>Metas para este {new Date().getFullYear()} crear el ultimo model</Text>
     </View>   
    <View style={styles.contenedorCarrusel}>
       <PagerView style={{ flex: 1 }} initialPage={0}>
-        <View key="1" style={{justifyContent:'center',alignItems:'center'}}>
-          <Image style={styles.imagenCarrusel} source={{uri:'https://i.pinimg.com/736x/48/5a/d2/485ad255cde385445e8ae312e1a99c97.jpg'}}></Image>
-           <View style={styles.TextCarrusel}>
-            <Text>Proyecto 1 Mision</Text>
-          </View>
-        </View>
-        <View key="2" style={{justifyContent:'center',alignItems:'center'}} >
-            <Image style={styles.imagenCarrusel} source={{uri:'https://i.pinimg.com/736x/d2/c4/d5/d2c4d52b69f3d40c38ed12aa9870c2c5.jpg'}}></Image>
-          <View style={styles.TextCarrusel}>
-            <Text>Proyecto 2 Mision</Text>
-          </View>
-        </View>
-        <View key="3" style={{justifyContent:'center',alignItems:'center'}}>
-          <Image style={styles.imagenCarrusel} source={{uri:'https://i.pinimg.com/736x/c6/03/91/c60391cd96ba2d9b44c02276e1a96baf.jpg'}}></Image>
-          <View style={styles.TextCarrusel}>
-            <Text>Proyecto 3 Mision</Text>
-          </View>
-        </View>
+        {metas.map((m)=>{
+          return(
+            <Link href={`/Metas/show/${m.id}`} key={m.id} asChild>
+            <Pressable>
+              <View style={{justifyContent:'center',alignItems:'center'}}>
+                <Image source={{uri:m.imagen}} style={styles.imagenCarrusel}></Image>
+                <View style={styles.TextCarrusel}>
+                  <Text>{m.titulo}</Text>
+                </View>
+            </View>
+            </Pressable>
+            </Link>
+          )
+        })}        
       </PagerView>      
     </View>
     <View style={styles.vista_acti}>
@@ -557,12 +559,13 @@ const styles=StyleSheet.create({
         alignSelf:'flex-start',
         display:'flex',
         justifyContent:'center',     
-        height:150,
-        width:250,        
+        height:250,
+        width:250,
+                
         
     },
     TextCarrusel:{
-      width:180,
+      width:200,      
       padding:10,
       borderWidth:2,
       borderStyle:'solid',
@@ -575,8 +578,8 @@ const styles=StyleSheet.create({
     },
     imagenCarrusel:{
         borderColor:'white',        
-        width:180,
-        height:100,
+        width:200,
+        height:180,
         borderTopLeftRadius:10,
         borderTopRightRadius:10,
         borderWidth:1,
