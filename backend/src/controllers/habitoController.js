@@ -40,13 +40,28 @@ const InsertHabitos=async(req,res)=>{
         fecha_inicio:new Date(),
         usuario_id,
     })
-    await publicaciones.create({
-        usuario_id,
+    //await publicaciones.create({
+    //    usuario_id,
+    //    contenido_id:modelo.id,
+    //    tipo:"Habitos",
+    //    creacion:new Date()
+    //})
+    res.status(200).json({message:"Se creo el habito correctamente"})
+}
+const CrearPublicacionHabitos=async(req,res)=>{
+    try{
+        const {id,userID}=req.params
+        const modelo=await habitos.findByPk(id)
+        await publicaciones.create({
+        usuario_id:userID,
         contenido_id:modelo.id,
         tipo:"Habitos",
         creacion:new Date()
     })
-    res.status(200).json({message:"Se creo el habito correctamente"})
+        res.status(200).json("See creo la publicacion habitos")
+    }catch(err){
+        console.error(err.message)
+    }
 }
 const UpdateHabito=async(req,res)=>{
     const {id}=req.params
@@ -98,4 +113,4 @@ const DeleteHabito=async(req,res)=>{
         console.error("Hubo un error",err.message)
     }
 }
-module.exports={GetHabitos,InsertHabitos,UpdateHabito,Showhabito,DeleteHabito,GetHabitosAll}
+module.exports={GetHabitos,InsertHabitos,UpdateHabito,Showhabito,DeleteHabito,GetHabitosAll,CrearPublicacionHabitos}
