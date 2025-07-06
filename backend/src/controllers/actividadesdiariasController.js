@@ -39,13 +39,7 @@ const InsetActividades=async(req,res)=>{
             titulo,
             descripcion,
             fecha:new Date()
-        })
-        await publicaciones.create({
-            usuario_id:usuario_id,
-            contenido_id:modelo.id,
-            tipo:"Actividades",
-            creacion:new Date()
-        })
+        })        
         res.status(200).json(modelo)
     }catch(err){
         console.error("Hubo un error",err.message)
@@ -90,6 +84,22 @@ const UpdateActividades=async(req,res)=>{
         console.error(err.message)
     }
 }
+const CreatePublicacionActividades=async(req,res)=>{
+    try{
+        const {id,userID}=req.params
+        //const {usuario_id}=req.body
+        const modelo=await ActividadesDiarias.findByPk(id)
+        await publicaciones.create({
+            usuario_id:userID,
+            contenido_id:modelo.id,
+            tipo:"Actividades",
+            creacion:new Date()
+        })
+        res.status(200).json({message:"creado"})
+    }catch(err){
+        console.error(err.message)
+    }
+}
 const DestroyActividaes=async(req,res)=>{
     try{
         const {id}=req.params
@@ -102,4 +112,4 @@ const DestroyActividaes=async(req,res)=>{
         console.error(err.message)
     }    
 }
-module.exports={getActividades,InsetActividades,ShowActividaes,UpdateActividades,DestroyActividaes,getAllActivites}
+module.exports={getActividades,InsetActividades,ShowActividaes,UpdateActividades,DestroyActividaes,getAllActivites,CreatePublicacionActividades}
