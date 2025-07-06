@@ -81,7 +81,9 @@ export default function DetalleMetas() {
        <View className='m-4'>
             <View>
                 <Text className='font-black text-lg'>Imagen: </Text>
-                <Image style={{width:200,alignSelf:'center',height:300,borderRadius:10}} source={{uri:FormDataMetas.imagen}}></Image>
+              {FormDataMetas.imagen&&
+              (  <Image style={{width:200,alignSelf:'center',height:300,borderRadius:10}} source={{uri:FormDataMetas.imagen}}></Image>)
+              }
                 <Button onPress={OpenImage} title='seleccionar imagen'></Button>
             </View>
            <View>
