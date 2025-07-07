@@ -1,6 +1,7 @@
 const actividades_diarias = require("../../models/actividades_diarias");
 const habitos = require("../../models/habitos");
 const LikesPub=require("../../models/likes_publicacion");
+const noti = require("../../models/noti");
 const publicaciones = require("../../models/publicaciones");
 const usuario = require("../../models/usuario");
 const GetLikesUsuario = async (req, res) => {
@@ -37,6 +38,15 @@ const InsertLove=async(req,res)=>{
         tipo_reaccion:"me encanta",
         publicacion_id:pubID,
         fecha:new Date()
+    })
+    //esto verificar
+    //el megusta debe ser solo para la persona que sigo no para mis segudiores
+    await noti.create({
+      icon:"me gusta",
+      titulo:"",
+      descripcion:"",
+      hora:new Date().toLocaleDateString(),
+      usuario_id:userID
     })
     res.status(200).json(modelo)
 }
