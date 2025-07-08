@@ -21,10 +21,11 @@ const sequelize=require("../src/config/database")
         primaryKey: true,
         type: DataTypes.BIGINT
       },
-    icon: DataTypes.STRING,
-    titulo: DataTypes.STRING,
-    descripcion: DataTypes.STRING,
-    hora: DataTypes.DATE,
+    tipo: DataTypes.STRING,
+    contenido_id:DataTypes.STRING,    
+    mensaje:DataTypes.STRING,
+    hora: DataTypes.DATE,    
+    emisor_id:DataTypes.BIGINT,
     usuario_id:{
      type:DataTypes.BIGINT,
            allowNull:false,
