@@ -1,4 +1,7 @@
+const actividades_diarias = require("../../models/actividades_diarias")
+const habitos = require("../../models/habitos")
 const notificaciores=require("../../models/noti")
+const publicaciones = require("../../models/publicaciones")
 const Seguidores = require("../../models/seguidores")
 const usuario = require("../../models/usuario")
 const getAllNotificaciones=async()=>{
@@ -22,9 +25,35 @@ const getAllNotificacionXUser=async(req,res)=>{
        const notiexpandida=await Promise.all(
         notificacioes.map(async(n)=>{
             let creador=await usuario.findByPk(n.usuario_id)
+            let post=""
+            let tipo=""
+            
+            if(n.tipo=="Post_Actividad"){
+                post=await actividades_diarias.findByPk(n.contenido_id)
+                }
+            else if(n.tipo=="likes"){
+              
+                datapub = await publicaciones.findByPk(n.contenido_id) 
+                tipo=datapub.tipo 
+                if(tipo=="Actividades"){
+                      post=await actividades_diarias.findByPk(datapub.contenido_id)
+                }
+                else{
+                    post =await habitos.findByPk(datapub.contenido_id)
+                }
+                //ya se arreglo el bug el tener aqui abajo
+                //esto tipo=datapub.tipo hacio que no agarre el usuario correctoa
+                //post=datapub.contenido_id  
+                
+            }
+            else if(n.tipo=="Post_habito"){
+                post =await habitos.findByPk(n.contenido_id)
+            }    
             return{
                 noti:n,
-                creador
+                creador,
+                post,
+                tipo
             }
         })
        )
