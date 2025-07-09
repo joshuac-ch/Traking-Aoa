@@ -1,5 +1,6 @@
 const habitos = require("../../models/habitos")
 const Habitos=require("../../models/habitos")
+const noti = require("../../models/noti")
 const publicaciones = require("../../models/publicaciones")
 const GetHabitosAll=async(req,res)=>{
     try{
@@ -39,6 +40,14 @@ const InsertHabitos=async(req,res)=>{
         activo:1,
         fecha_inicio:new Date(),
         usuario_id,
+    })
+    await noti.create({
+        tipo:"Post_habito",
+        contenido_id:modelo.id,
+        mensaje:"creo un nuevo post",
+        hora:new Date().toLocaleDateString(),
+        usuario_id:usuario_id,
+        emisor_id:0
     })
     //await publicaciones.create({
     //    usuario_id,
