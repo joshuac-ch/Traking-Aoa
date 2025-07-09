@@ -1,5 +1,6 @@
 const ActividadesDiarias=require("../../models/actividades_diarias")
 const publicaciones = require("../../models/publicaciones")
+const notificaciones=require("../../models/noti")
 const getAllActivites=async(req,res)=>{
     try{
         const modelo=await ActividadesDiarias.findAll()
@@ -40,11 +41,22 @@ const InsetActividades=async(req,res)=>{
             descripcion,
             fecha:new Date()
         })        
+        await notificaciones.create({
+            tipo:"Post_Actividad",
+            contenido_id:modelo.id,
+            mensaje:`creo un nuevo post`,
+            hora:new Date().toLocaleDateString(),
+            usuario_id:usuario_id,
+            emisor_id:0
+        
+        })  
+
         res.status(200).json(modelo)
     }catch(err){
         console.error("Hubo un error",err.message)
     }
 }
+
 const ShowActividaes=async(req,res)=>{
     try{
         const {id}=req.params
