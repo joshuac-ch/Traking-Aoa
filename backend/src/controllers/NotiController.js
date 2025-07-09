@@ -1,5 +1,6 @@
 const actividades_diarias = require("../../models/actividades_diarias")
 const habitos = require("../../models/habitos")
+const likes_publicacion = require("../../models/likes_publicacion")
 const notificaciores=require("../../models/noti")
 const publicaciones = require("../../models/publicaciones")
 const Seguidores = require("../../models/seguidores")
@@ -31,24 +32,9 @@ const getAllNotificacionXUser=async(req,res)=>{
             if(n.tipo=="Post_Actividad"){
                 post=await actividades_diarias.findByPk(n.contenido_id)
                 }
-            else if(n.tipo=="likes"){
-              
-                datapub = await publicaciones.findByPk(n.contenido_id) 
-                tipo=datapub.tipo 
-                if(tipo=="Actividades"){
-                      post=await actividades_diarias.findByPk(datapub.contenido_id)
-                }
-                else{
-                    post =await habitos.findByPk(datapub.contenido_id)
-                }
-                //ya se arreglo el bug el tener aqui abajo
-                //esto tipo=datapub.tipo hacio que no agarre el usuario correctoa
-                //post=datapub.contenido_id  
-                
-            }
             else if(n.tipo=="Post_habito"){
                 post =await habitos.findByPk(n.contenido_id)
-            }    
+            }
             return{
                 noti:n,
                 creador,
@@ -63,6 +49,39 @@ const getAllNotificacionXUser=async(req,res)=>{
         console.error(err.message)
     }   
 }
+const getAllNotisLikes=async(req,res)=>{
+    try{
+        const {userID}=req.params
+        const notificaciones=await notificaciores.findAll({where:{tipo:"likes",usuario_id:userID}})
+        const modeloExpandido=await Promise.all(
+            notificaciones.map(async(n)=>{
+                let creador=""
+                let tipo=""
+                let contenido=""
+                let pub=""
+                pub=await publicaciones.findByPk(n.contenido_id)
+                if(pub.tipo=="Habitos"){
+                    contenido=await habitos.findByPk(pub.contenido_id)
+                }
+                else{
+                    contenido=await actividades_diarias.findByPk(pub.contenido_id)
+                }                
+                creador=await usuario.findByPk(n.emisor_id)
+                tipo=pub.tipo
+                return{
+                    noti:n,
+                    tipo,
+                    creador,
+                    contenido    
+                } 
+            })   
+        )
+        res.status(200).json(modeloExpandido)    
+            
+    }catch(err){
+        console.error(err.message)
+    }
+}
 
 
-module.exports={getAllNotificacionXUser,getAllNotificaciones}
+module.exports={getAllNotificacionXUser,getAllNotificaciones,getAllNotisLikes}
