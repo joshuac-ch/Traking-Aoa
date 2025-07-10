@@ -205,6 +205,7 @@ export default function Panel() {
             <Text >{miuser.nombre} {miuser.apellido}</Text>
             <Text style={{fontWeight:'bold'}}>{miuser.correo}</Text>
         </View>
+       
         </View>
         <View>
             <Link href={"/configuracion"} asChild>
@@ -221,7 +222,7 @@ export default function Panel() {
         
     </View>
     <View style={{marginLeft:35}}>
-              <Text>Metas para este {new Date().getFullYear()} crear el ultimo model</Text>
+       <Text>Metas para este {new Date().getFullYear()} crear el ultimo model</Text>
     </View>   
    <View style={styles.contenedorCarrusel}>
       <PagerView style={{ flex: 1 }} initialPage={0}>
