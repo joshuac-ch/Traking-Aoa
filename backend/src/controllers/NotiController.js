@@ -82,6 +82,25 @@ const getAllNotisLikes=async(req,res)=>{
         console.error(err.message)
     }
 }
+const getAllNotisFollow=async(req,res)=>{
+    try{
+        const {segID}=req.params
+        const modelo=await notificaciores.findAll({where:{tipo:"follow",emisor_id:segID}})
+        const modeloexpandido=await Promise.all(
+            modelo.map(async(m)=>{
+                let user=await usuario.findByPk(m.usuario_id)
+                return{
+                    follow:m,
+                    user
+                }
+            })
+           
+        )
+         res.status(200).json(modeloexpandido)
+    }catch(err){
+        console.error(err.message)
+    }
+}
 
 
-module.exports={getAllNotificacionXUser,getAllNotificaciones,getAllNotisLikes}
+module.exports={getAllNotificacionXUser,getAllNotificaciones,getAllNotisLikes,getAllNotisFollow}
