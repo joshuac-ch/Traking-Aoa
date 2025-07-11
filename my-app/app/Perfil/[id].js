@@ -72,7 +72,10 @@ export default function DetalleUser() {
         <Text className='font-black text-xl'>Actualizar Perfil </Text>
     </View>
     <View>
-     <Image style={styles.img_form} source={{uri:formUsuarios.imagen}}></Image>
+      {formUsuarios.imagen&&
+      <Image style={styles.img_form} source={{uri:formUsuarios.imagen}}></Image> 
+      }
+     
     </View>
     <View>
       <Button onPress={pickImage} title='Seleccionar Imagen'></Button>
