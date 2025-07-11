@@ -1,8 +1,9 @@
 import React from 'react'
-import AppPrincipal from '../components/app'
+import AppPrincipal from '../app/Login/app'
 import { StatusBar, StyleSheet, View } from 'react-native'
 
-export default function index() {
+export default function Index() {
+  //SE CONSIDERA ELIMINAR ESTE 
   return (
     <>
     <View style={styles.container}>
