@@ -68,3 +68,6 @@ export const IconHeartActive=({color="black"})=>{
 export const IconReply=()=>{
     return <Entypo name="reply" size={24} color="black" />
 }
+export const IconSettings=()=>{
+    return <AntDesign name="setting" size={24} color="black" />
+}
