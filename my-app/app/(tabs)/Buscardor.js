@@ -121,7 +121,7 @@ export default function Buscardor() {
                     </Pressable>
                     </Link>
                     :        
-                    <Link key={i} href={`/${h.tipo}/${h.id}`} asChild>
+                    <Link key={i} href={`/${h.tipo}/show/${h.id}`} asChild>
                     <Pressable>
                         <View style={styles.contendor_buscador} key={i}>
                             <View style={styles.box}>
