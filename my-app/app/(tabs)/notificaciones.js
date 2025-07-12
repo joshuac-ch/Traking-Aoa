@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { View,Text, StyleSheet, Image, ScrollView } from 'react-native'
-import { IconElipsis, IconHome, IconLeft, IconSeach, IconUser } from '../../assets/Icons'
-import { Stack, useFocusEffect } from 'expo-router'
+import { View,Text, StyleSheet, Image, ScrollView, Pressable } from 'react-native'
+import { IconElipsis, IconHome, IconLeft, IconSeach, IconSettings, IconUser } from '../../assets/Icons'
+import { Link, Stack, useFocusEffect } from 'expo-router'
 import axios from 'axios'
 import constantes from "expo-constants" 
 import { useUser } from '../../components/UserContext'
@@ -58,7 +58,18 @@ export default function notificaciones() {
       }   
     },[likesuser,notiUser,notifollow])
   )
-  
+  const [creador, setcreador] = useState([])
+  const Getuser=async()=>{
+    const {data}=await axios.get(`http://${host}:4000/usuarios/s/${user.id}`)
+    setcreador(data)
+  }
+  useFocusEffect(
+    useCallback(()=>{
+      if(user.id){
+        Getuser()
+      }
+    },[user.id])
+  )
   //Se creo por ahora que se vena las notificaciones si seguimos al usuarios
   //crear en el post (listo)
   //crear en el me gusta
@@ -71,8 +82,25 @@ export default function notificaciones() {
     <View >
      
     <View>
-          <View>
-            <Text>Bandeja de entrada</Text>
+          <View style={{flexDirection:"row",justifyContent:"space-between",margin:10,alignItems:"center"}}>
+            <View style={{flexDirection:"row",alignItems:"center"}}>
+              <Image source={{uri:creador.imagen}} style={{width:50,height:50,borderRadius:50}}></Image>
+              <Text style={{marginLeft:10,fontSize:18,fontWeight:"bold"}}>Notificaciones</Text>
+            </View>
+            <View>
+              <IconSettings></IconSettings>
+            </View>
+          </View>
+          <View style={{flexDirection:"row",justifyContent:"space-around",alignItems:"center",margin:10}}>
+            <View>
+              <Text style={{fontWeight:"bold"}}>Todas</Text>
+            </View>
+            <View>
+              <Text>Verificado</Text>
+            </View>
+            <View>
+              <Text>Menciones</Text>
+            </View>
           </View>
           <View>
             {likesuser.length>0 || 
@@ -85,7 +113,9 @@ export default function notificaciones() {
             notificaciontotal.notispost.map((n,i)=>{
             return(
               n.noti.tipo=="Post_Actividad" || n.noti.tipo=="Post_habito"?
-              <View key={i} style={styles.contenedorpost}>
+             <Link href={`/${n.tipo}/show/${n.post.id}`} key={i} asChild>
+              <Pressable>
+                 <View style={styles.contenedorpost}>
                 <View style={{flexDirection:"row"}}>
                   <View>                  
                     <Image source={{uri:n.creador.imagen}} style={{height:50,width:50,borderRadius:50,marginRight:10}}></Image>
@@ -102,6 +132,8 @@ export default function notificaciones() {
                 </View>
                 
               </View>
+              </Pressable>
+             </Link>
               :null                           
             )
           }) 
@@ -171,17 +203,21 @@ const styles=StyleSheet.create({
   },
   contenedorpost:{
     paddingTop:10,
+    paddingLeft:15,
+    paddingRight:15,
     paddingBottom:10,
     flexDirection:'row',    
     borderColor:"black",
     borderStyle:"solid",
     borderTopWidth:2,
     justifyContent:"space-between",
-    alignItems:"center"
+    alignItems:"flex-start"
   },
   contendorlikes:{
     flexDirection:"row",
     borderColor:"black",
+    paddingLeft:15,
+    paddingRight:15,
     borderStyle:"solid",
     borderTopWidth:2,
     paddingTop:10,
@@ -191,6 +227,8 @@ const styles=StyleSheet.create({
   contendorfollow:{
     flexDirection:"row",
     borderColor:"black",
+    paddingLeft:15,
+    paddingRight:15,
     borderStyle:"solid",
     borderTopWidth:2,    
     paddingTop:10,
