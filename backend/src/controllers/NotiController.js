@@ -30,9 +30,11 @@ const getAllNotificacionXUser=async(req,res)=>{
             let tipo=""
             
             if(n.tipo=="Post_Actividad"){
+                tipo="Actividades"
                 post=await actividades_diarias.findByPk(n.contenido_id)
                 }
             else if(n.tipo=="Post_habito"){
+                tipo="Habitos"    
                 post =await habitos.findByPk(n.contenido_id)
             }
             return{
@@ -61,13 +63,15 @@ const getAllNotisLikes=async(req,res)=>{
                 let pub=""
                 pub=await publicaciones.findByPk(n.contenido_id)
                 if(pub.tipo=="Habitos"){
+                    tipo="Habitos"
                     contenido=await habitos.findByPk(pub.contenido_id)
                 }
                 else{
+                    tipo="Actividades"
                     contenido=await actividades_diarias.findByPk(pub.contenido_id)
                 }                
                 creador=await usuario.findByPk(n.emisor_id)
-                tipo=pub.tipo
+                
                 return{
                     noti:n,
                     tipo,
@@ -82,7 +86,7 @@ const getAllNotisLikes=async(req,res)=>{
         console.error(err.message)
     }
 }
-const getAllNotisFollow=async(req,res)=>{
+const getAllNotisFollow=async(req,res)=>{//aqui agregar si sigue o no al usuario
     try{
         const {segID}=req.params
         const modelo=await notificaciores.findAll({where:{tipo:"follow",emisor_id:segID}})
