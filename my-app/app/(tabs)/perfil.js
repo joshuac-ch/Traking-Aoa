@@ -42,6 +42,7 @@ export default function Perfil() {
             setdataMetas(metas.map((a)=>({...a,type:'Metas'})))
         }
     },[metas])
+//crear el eliminar publicacion
 
     useEffect(()=>{       
             if(metas.length>0 && habitos.length>0 && actividades.length>0){
@@ -181,8 +182,8 @@ export default function Perfil() {
     <View>
         {vistaActiva=="actividad"?
         <View>
-    <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
-                {alldata!=null?
+    <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap',justifyContent:"center"}}>
+                {alldata.length>0?
                alldata.map((a,i)=>{
                     return(
                       <Link key={i} href={`/${a.type}/${a.id}`} asChild>
@@ -192,10 +193,10 @@ export default function Perfil() {
                             <View style={{display:'flex',justifyContent:'space-between'}}>
                                
                                {a.imagen&&(
-                                 <Image source={{uri:a.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                 <Image source={{uri:a.imagen}} style={{width:133,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                )}
                                <View style={styles.div_c_body}>
-                                    <Text>{a.titulo.length>15?a.titulo.slice(0,12)+"...":a.titulo}</Text>
+                                    <Text style={{paddingLeft:5}}>{a.titulo.length>15?a.titulo.slice(0,12)+"...":a.titulo}</Text>
                                 </View>
                             </View>
                        </View> 
@@ -203,7 +204,7 @@ export default function Perfil() {
                       </Link>
                     )
                 })
-                :<Text>No hay datos</Text>}
+                :<Text>No hay publicaciones disponibles</Text>}
                     
               </View>
        
@@ -212,7 +213,7 @@ export default function Perfil() {
             <Text style={styles.proyecto_title}>Actividades</Text>
         </View>
          <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap',justifyContent:'center'}}>
-                {dataActividades!=null?
+                {dataActividades.length>0?
                dataActividades.map((a,i)=>{
                     return(
                       <Link key={i} href={`/${a.type}/${a.id}`} asChild>
@@ -220,9 +221,12 @@ export default function Perfil() {
                          <View style={styles.proyecto_c}>
                             
                             <View style={{display:'flex',justifyContent:'space-between'}}>
-                               <Image source={{uri:a.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                               {a.imagen&&(
+                                <Image source={{uri:a.imagen}} style={{width:133,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                               
+                            )}
                                 <View style={styles.div_c_body}>
-                                    <Text>{a.titulo.length>15?a.titulo.slice(0,12)+"...":a.titulo}</Text>
+                                    <Text style={{paddingLeft:5}}>{a.titulo.length>15?a.titulo.slice(0,12)+"...":a.titulo}</Text>
                                 </View>
                             </View>
                        </View> 
@@ -230,14 +234,14 @@ export default function Perfil() {
                       </Link>
                     )
                 })
-                :<Text>No hay datos</Text>}
+                :<Text>-</Text>}
                     
               </View>
             <View >
                 <Text style={styles.proyecto_title}>Habitos</Text>
             </View>
          <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap',justifyContent:'center'}}>
-                {dataHabitos!=null?
+                {dataHabitos.length>0?
                dataHabitos.map((a,i)=>{
                     return(
                       <Link key={i} href={`/${a.type}/${a.id}`} asChild>
@@ -245,9 +249,11 @@ export default function Perfil() {
                          <View style={styles.proyecto_c}>
                             
                             <View style={{display:'flex',justifyContent:'space-between'}}>
-                              <Image source={{uri:a.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
-                                <View style={styles.div_c_body}>
-                                    <Text>{a.titulo.length>15?a.titulo.slice(0,12)+"...":a.titulo}</Text>
+                              {a.imagen&&(
+                                <Image source={{uri:a.imagen}} style={{width:133,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                              )}
+                              <View style={styles.div_c_body}>
+                                    <Text style={{paddingLeft:5}}>{a.titulo.length>15?a.titulo.slice(0,12)+"...":a.titulo}</Text>
                                 </View>
                             </View>
                        </View> 
@@ -255,7 +261,7 @@ export default function Perfil() {
                       </Link>
                     )
                 })
-                :<Text>No hay datos</Text>}
+                :<Text>-</Text>}
                     
               </View>
 
@@ -263,7 +269,7 @@ export default function Perfil() {
                 <Text style={styles.proyecto_title}>Metas</Text>
             </View>
          <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap',justifyContent:'center'}}>
-                {dataMetas!=null?
+                {dataMetas.length>0?
                dataMetas.map((a,i)=>{
                     return(
                       <Link key={i} href={`/${a.type}/${a.id}`} asChild>
@@ -271,9 +277,12 @@ export default function Perfil() {
                          <View style={styles.proyecto_c}>
                             
                             <View style={{display:'flex',justifyContent:'space-between'}}>
-                               <Image source={{uri:a.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
-                                <View style={styles.div_c_body}>
-                                    <Text>{a.titulo.length>15?a.titulo.slice(0,13)+"...":a.titulo}</Text>
+                               {a.imagen &&(
+                                <Image source={{uri:a.imagen}} style={{width:133,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                
+                               )}
+                               <View style={styles.div_c_body}>
+                                    <Text style={{paddingLeft:5}}>{a.titulo.length>15?a.titulo.slice(0,13)+"...":a.titulo}</Text>
                                 </View>
                             </View>
                        </View> 
@@ -281,7 +290,7 @@ export default function Perfil() {
                       </Link>
                     )
                 })
-                :<Text>No hay datos</Text>}
+                :<Text>-</Text>}
                     
               </View>      
        
@@ -307,14 +316,14 @@ const styles=StyleSheet.create({
         justifyContent:'center'       
     },
     proyecto_c:{
-        
+        boxShadow:"0px 0px 2px 1px black",
         flexDirection:'row',
         borderWidth:1,
         borderColor:'black',
         borderStyle:'solid',
         borderRadius:5,
-        width:135,
-        height:165,
+        width:135,       
+        height:180,
         marginTop:8,
         marginRight:0.8,
         marginLeft:0.8,
@@ -325,9 +334,10 @@ const styles=StyleSheet.create({
         alignItems:'flex-end',
     },
     div_c_body:{        
+        boxShadow:"0px 0px 8px 1px black",
         backgroundColor:'transparent',
-        alignItems:'flex-start',      
-        padding:10,
+        alignItems:'flex-start',   
+        paddingTop:8,       
         borderBottomLeftRadius:5,
         borderBottomRightRadius:5
     },
