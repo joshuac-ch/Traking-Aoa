@@ -12,10 +12,7 @@ export default function notificaciones() {
   const notificaciones=async()=>{
     const {data}=await axios.get(`http://${host}:4000/notificaciones/xuser/${user.id}`)
     setnotiUser(data)
-    //LO PRIMERA ARREGLAR LA TABLA EN EL BACKEND//
-    //CREAR PRIMEROS LOS POST EN EL BACKEND //
-    //CREAR LOS ME GUSTA ''//
-    //EL SEGUIDOR '' Falta este 
+    
   }
   const [likesuser, setlikesuser] = useState([])
   const notificacionesLikes=async()=>{
@@ -53,7 +50,7 @@ export default function notificaciones() {
   } 
    useFocusEffect(
     useCallback(()=>{
-      if(likesuser.length>0 && notiUser.length>0 && notifollow.length>0){
+      if(likesuser.length>0 || notiUser.length>0 || notifollow.length>0){//Esto se modifico para que se vea notificacion por notificacion
        ObtenerAllNotificaciones()
       }   
     },[likesuser,notiUser,notifollow])
@@ -118,13 +115,17 @@ export default function notificaciones() {
                  <View style={styles.contenedorpost}>
                 <View style={{flexDirection:"row"}}>
                   <View>                  
-                    <Image source={{uri:n.creador.imagen}} style={{height:50,width:50,borderRadius:50,marginRight:10}}></Image>
+                    {n.creador.imagen &&(
+                      <Image source={{uri:n.creador.imagen}} style={{height:50,width:50,borderRadius:50,marginRight:10}}></Image>
+                    )}
                   </View>
                   <View>
                     <Text>{n.creador.nombre } {n.noti.mensaje}</Text>
                     <Text>{n.post.titulo}</Text>
                     <Text>{n.post.descripcion}</Text>
-                    <Image style={{width:100,height:100,borderRadius:20}} source={{uri:n.post.imagen}}></Image>
+                    {n.post.imagen&&(
+                      <Image style={{width:100,height:100,borderRadius:20}} source={{uri:n.post.imagen}}></Image>
+                    )}
                   </View>
                 </View>
                 <View>
@@ -142,19 +143,29 @@ export default function notificaciones() {
           {notificaciontotal?.notislikes?.length>0?          
             notificaciontotal.notislikes.map((n,i)=>{
               return(               
-                <View key={i} style={styles.contendorlikes}>
-                   <View style={{flexDirection:"row"}}>
-                  <View>                  
-                    <Image source={{uri:n.creador.imagen}} style={{height:50,width:50,borderRadius:50,marginRight:10}}></Image>
+               <Link asChild href={`/${n.tipo}/show/${n.contenido.id}`}>
+                <Pressable>
+                  <View key={i} style={styles.contendorlikes}>
+                  <View style={{flexDirection:"row"}}>
+                    <View>                  
+                      {
+                        n.creador.imagen&&(
+                          <Image source={{uri:n.creador.imagen}} style={{height:50,width:50,borderRadius:50,marginRight:10}}></Image>
+                        )
+                      }
+                    </View>
+                    <View>
+                      <Text>{n.noti.mensaje} a {n.creador.nombre}</Text>
+                      <Text>{n.contenido.titulo}</Text>
+                      {n.contenido.imagen&&(
+                        <Image source={{uri:n.contenido.imagen}} style={{width:100,height:150,borderRadius:10}}></Image>
+                      )}
+                    </View>
                   </View>
-                  <View>
-                    <Text>{n.noti.mensaje} a {n.creador.nombre}</Text>
-                    <Text>{n.contenido.titulo}</Text>
-                    <Image source={{uri:n.contenido.imagen}} style={{width:100,height:150,borderRadius:10}}></Image>
+                  <View><IconElipsis></IconElipsis></View>
                   </View>
-                </View>
-                 <View><IconElipsis></IconElipsis></View>
-                </View>
+                </Pressable>
+               </Link>
                 
               )
             })        
@@ -164,10 +175,14 @@ export default function notificaciones() {
         { notificaciontotal?.notisfollow?.length>0?
           notificaciontotal?.notisfollow.map((n,i)=>{
             return(
-              <View key={i} style={styles.contendorfollow}>
+             <Link href={`/Perfil/users/${n.user.id}`} asChild>
+              <Pressable>
+                 <View key={i} style={styles.contendorfollow}>
                   <View style={{flexDirection:"row"}}>
                   <View>                  
-                    <Image source={{uri:n.user.imagen}} style={{height:50,width:50,borderRadius:50,marginRight:10}}></Image>
+                    {n.user.imagen&&
+                      (<Image source={{uri:n.user.imagen}} style={{height:50,width:50,borderRadius:50,marginRight:10}}></Image>)
+                    }
                   </View>
                   <View>
                     <Text>{n.follow.mensaje} {n.user.nombre}</Text>
@@ -176,13 +191,18 @@ export default function notificaciones() {
                 </View>
                  <View><IconElipsis></IconElipsis></View>
               </View>
+              </Pressable>
+             </Link>
             )
           })
           :null
         }
             </View>
             )
-        :<Text>No hay notificaciones actualmente</Text>}
+        :
+        <View style={{alignSelf:"center",marginTop:20}}>
+            <Text style={{fontWeight:"bold"}}>No hay notificaciones actualmente</Text>
+        </View>}
 
         </View>
       </View>        
