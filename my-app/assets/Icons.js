@@ -71,3 +71,6 @@ export const IconReply=()=>{
 export const IconSettings=()=>{
     return <AntDesign name="setting" size={24} color="black" />
 }
+export const IconAddPerson=()=>{
+    return <AntDesign name="adduser" size={24} color="black" />
+}
