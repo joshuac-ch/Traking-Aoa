@@ -102,34 +102,7 @@ export default function Panel() {
     const LovePublicacion=async(user,pub)=>{
       await axios.post(`http://${host}:4000/publicacion/likes/i/${user}/${pub}`) 
       ToastAndroid.show("Me encanta esta publicacion",ToastAndroid.BOTTOM) 
-    }
-    
-    
-    /*
-   
-    const [dataSeguidorHabitos, setdataSeguidorHabitos] = useState([])
-    const ShowHabitosFollow=async()=>{
-      const {data}=await axios.get(`http://${host}:4000/seguidores/habitosFollow/${user.id}`)
-      const PublicacionHabitos=await Promise.all(
-        data.map(async(h)=>{
-          const res=await axios.get(`http://${host}:4000/usuarios/s/${h.usuario_id}`)
-          return{
-            ...h,
-            creador:res.data,
-            type:"Habito"
-          }
-        })
-      )
-      setdataSeguidorHabitos(PublicacionHabitos)  
-    }
-    useFocusEffect(
-      useCallback(()=>{
-        if(user.id){
-          ShowHabitosFollow()
-        }
-      },[user.id])
-    )
-    */
+    } 
    const {FectMetas,metas}=Metas()
     useFocusEffect(
       useCallback(()=>{
@@ -171,7 +144,9 @@ export default function Panel() {
     
   }
   
-  //ver esto aumentarle el contador ver si debe ser si o si el meEncanta 
+  // si deja de seguir eliminar el post listo al pero falta el el like  
+  // eliminar el seguir de notis en caso ya no lo sigue se guarda al parecer  
+  //al quitar el like tambien eliminar en la noti si esque se pueda
     const cargarLikes = async () => {
     const { data } = await axios.get(`http://${host}:4000/publicacion/likes/getLove/${user.id}`)
     const likesMap = {}
