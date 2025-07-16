@@ -45,7 +45,7 @@ const InsertHabitos=async(req,res)=>{
         tipo:"Post_habito",
         contenido_id:modelo.id,
         mensaje:"creo un nuevo post",
-        hora:new Date().toLocaleDateString(),
+        hora:new Date(),
         usuario_id:usuario_id,
         emisor_id:0
     })
