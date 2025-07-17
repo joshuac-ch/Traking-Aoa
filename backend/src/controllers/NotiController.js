@@ -16,7 +16,8 @@ const getAllNotificaciones=async()=>{
         console.error(err.message)
     }
 }
-
+//hacer todo tipo de pruebas en notificaciones 
+//all eliminar la actividad tambien eliminar la notificaicon para que no salga error
 const getAllNotificacionXUser=async(req,res)=>{
     try{
         const {userID}=req.params
