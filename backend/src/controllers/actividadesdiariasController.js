@@ -41,15 +41,7 @@ const InsetActividades=async(req,res)=>{
             descripcion,
             fecha:new Date()
         })        
-        await notificaciones.create({
-            tipo:"Post_Actividad",
-            contenido_id:modelo.id,
-            mensaje:`creo un nuevo post`,
-            hora:new Date(),
-            usuario_id:usuario_id,
-            emisor_id:0
         
-        })  
 
         res.status(200).json(modelo)
     }catch(err){
@@ -101,12 +93,26 @@ const CreatePublicacionActividades=async(req,res)=>{
         const {id,userID}=req.params
         //const {usuario_id}=req.body
         const modelo=await ActividadesDiarias.findByPk(id)
+        const pub=await publicaciones.findOne({where:{contenido_id:id}})
+        if(!pub){
         await publicaciones.create({
             usuario_id:userID,
             contenido_id:modelo.id,
             tipo:"Actividades",
             creacion:new Date()
         })
+        //solo Si publica tambien notificara al creador
+        await notificaciones.create({
+            tipo:"Post_Actividad",
+            contenido_id:modelo.id,
+            mensaje:`creo un nuevo post`,
+            hora:new Date(),
+            usuario_id:userID,
+            emisor_id:0
+        
+        })  
+    }
+
         res.status(200).json({message:"creado"})
     }catch(err){
         console.error(err.message)
