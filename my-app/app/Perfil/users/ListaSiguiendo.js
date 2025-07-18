@@ -29,7 +29,7 @@ export default function ListaSiguiendo() {
   ) 
   return (
     <>    
-    <ListaFollos user={DataUser} lista={misSeguidores}></ListaFollos>
+    <ListaFollos user={DataUser} lista={misSeguidores} info={"Siguiendo"}></ListaFollos>
     </>    
     
   )
