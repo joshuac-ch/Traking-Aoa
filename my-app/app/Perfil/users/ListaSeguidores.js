@@ -31,7 +31,7 @@ export default function ListaSeguidores() {
     
   return (
     <>
-    <ListaFollos user={DataUser} lista={dataSeguidores}></ListaFollos>
+    <ListaFollos user={DataUser} lista={dataSeguidores} info={"Amigos"}></ListaFollos>
     </> 
     
   )
