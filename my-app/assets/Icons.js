@@ -4,7 +4,8 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Feather from '@expo/vector-icons/Feather';
-
+import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
+import EvilIcons from '@expo/vector-icons/EvilIcons';
 export const IconDate=()=>{
     return <Fontisto name="date" size={24} color="black" />
 }
@@ -73,4 +74,16 @@ export const IconSettings=()=>{
 }
 export const IconAddPerson=()=>{
     return <AntDesign name="adduser" size={24} color="black" />
+}
+export const IconDown=()=>{
+    return <AntDesign name="caretdown" size={20} color="black" />
+}
+export const IconDislike=()=>{
+    return <SimpleLineIcons name="dislike" size={16} color="black" />
+}
+export const IconHeartComent=({color="black"})=>{
+    return <AntDesign name="hearto" size={16} color={color} />
+}
+export const IconComment=()=>{
+    return <EvilIcons name="comment" size={24} color="black" />
 }
