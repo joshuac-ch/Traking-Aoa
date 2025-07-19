@@ -11,11 +11,12 @@ export default function ShowActividadUser() {
     const [dataCreator, setdataCreator] = useState([])
     const {show}=useLocalSearchParams()
     const [dataActividaes, setdataActividaes] = useState([]) 
+    const {publi}=useLocalSearchParams()
     const showActividades=async()=>{
         const {data}=await axios.get(`http://${host}:4000/actividades/s/${show}`)
         setdataActividaes(data)
         setcreatorUser(data.usuario_id)
-    }
+    }    
     
     const ShowUserCreator=async()=>{
         const {data}=await axios.get(`http://${host}:4000/usuarios/s/${creatorUser}`)
@@ -30,9 +31,10 @@ export default function ShowActividadUser() {
             ShowUserCreator()
         }
     },[creatorUser])
+
     return (
     <>
-    <PublicacionComponent datosUser={dataCreator} datasRutina={dataActividaes}></PublicacionComponent>
+    <PublicacionComponent datosUser={dataCreator} datasRutina={dataActividaes}  publicacionID={publi}></PublicacionComponent>
     </>
   )
 }
