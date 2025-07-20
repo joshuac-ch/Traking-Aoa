@@ -1,15 +1,16 @@
-import React, { use, useCallback, useEffect, useState } from 'react'
-import { Button, Image, Modal, Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
+import React, { use, useCallback, useEffect, useRef, useState } from 'react'
+import { Animated, Button, Image, LayoutAnimation, Modal, Platform, Pressable, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, UIManager, View } from 'react-native'
 import { useUser } from '../../components/UserContext'
 
 import PagerView from 'react-native-pager-view'
 import { Link, Stack, Tabs, useFocusEffect, useRouter } from 'expo-router'
-import { IconAdd, IconElipsis, IconHeart, IconHeartActive, IconLeft, IconReply } from '../../assets/Icons'
+import { IconAdd, IconComment, IconElipsis, IconHeart, IconHeartActive, IconLeft, IconReply } from '../../assets/Icons'
 import constantes from 'expo-constants'
 import axios from 'axios'
 import { useHistoryial } from '../../components/HistorialProvider'
 import { ToastAndroid } from 'react-native'
 import Metas from '../../hooks/Metas'
+import Comentario from '../../components/Comentario'
 
 export default function Panel() {
     const {user}=useUser()
@@ -52,10 +53,7 @@ export default function Panel() {
       {emo:5,des:"Feliz"},
 
     ]
-    //IMPORTANTE
-    //crear una tabla seguidores en esta tabla cada queu hagamos click see agreagara a nosotros como seguidor nuestro y aparezca
-    // en el principal solo el crear el mostrar y el delete
-    //al elimint osea clickear en el boton dejar de seguir se elimina de nuestra lista esto para que se guarde en la base de datos 
+
     const [dataSeguidor, setdataSeguidor] = useState([])
     
     const {seguidor,setseguidor,usuarioFollowID}=useHistoryial()
@@ -143,7 +141,10 @@ export default function Panel() {
   await CountIlove(pub)
     
   }
-  
+  //IMPORTANTE         
+  //solo se muestra los comentarios en corazon de perfil de cualquier usuario y en feed    
+    //hacer el cambio en perfiler ajenos se vea los comentarios
+    //tambien en notificaciones que se vea los comentarios
   // si deja de seguir eliminar el post listo al pero falta el el like  
   // eliminar el seguir de notis en caso ya no lo sigue se guarda al parecer  
   //al quitar el like tambien eliminar en la noti si esque se pueda
@@ -164,10 +165,30 @@ export default function Panel() {
       }
     },[user.id])
   )
-  
-  
-
-  
+  //boton para mostra y ocultar comentarios
+ const [estadopublicacion, setestadopublicacion] = useState(true)
+ const anims=useRef({}).current
+ const getAnim=(pubID)=>{
+  if(!anims[pubID]){
+    anims[pubID]=new Animated.Value(1)
+  }
+  return anims[pubID]
+ }
+ const OcultarComentarios=(pubID)=>{
+  try{
+    const anim=getAnim(pubID)
+    const isvisible=estadopublicacion==pubID
+    Animated.timing(anim,{
+      toValue:isvisible?0:1,
+      duration:300,
+      useNativeDriver:false
+    }).start()
+    setestadopublicacion(isvisible?null:pubID)
+  }catch(err){
+    console.error(err.message)
+  }
+ }
+ 
   return (
       <ScrollView>
         
@@ -285,9 +306,17 @@ export default function Panel() {
       <View>
         {
        dataPublicacionFollow.length>0?
-        dataPublicacionFollow.map((d,i)=>{
+        dataPublicacionFollow.map((d,i)=>{          
+           const anim=getAnim(d.id)
+           const escala=anim.interpolate({
+            inputRange:[0,1],
+            outputRange:[0,1]
+           })
+           const opacity=anim.interpolate({            
+              inputRange: [0, 1],
+              outputRange: [0, 1],
             
-          
+           })
           return(
                      
            <View  key={i} style={styles.modelo_pub}>
@@ -335,16 +364,24 @@ export default function Panel() {
               </View>
              
               <View style={{flexDirection:'row'}}>
-                <IconReply></IconReply>
-                <Text style={{marginLeft:10}}>Compartir</Text>
+               <Pressable onPress={()=>OcultarComentarios(d.id)} style={{flexDirection:"row"}} >
+                 <IconComment></IconComment>
+                <Text style={{marginLeft:10}}>Comentarios</Text>
+               </Pressable>
               </View>
-              </View>  
+              </View>
+             {estadopublicacion==d.id&&(
+               <Animated.View style={{transform:[{scaleY:escala}],opacity:opacity,overflow:"hidden"}}>
+                 <Comentario pubID={d.id}></Comentario>
+              </Animated.View>
+             )}
+             
           </View>
          
         
           )
         })
-       :<Text>No esta suscrito a ningun canal</Text>
+       :<Text>No hay publicaciones actualmente</Text>
         }
       </View>
       {/*
