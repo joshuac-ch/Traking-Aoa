@@ -40,14 +40,28 @@ const InsertLove=async(req,res)=>{
         fecha:new Date()
     })
     //esto verificar
+    //reestructurar la tabla como muestra
     //el megusta debe ser solo para la persona que sigo no para mis segudiores
-    await noti.create({
-      icon:"me gusta",
-      titulo:"",
-      descripcion:"",
-      hora:new Date().toLocaleDateString(),
-      usuario_id:userID
+    let userCreador=await publicaciones.findByPk(pubID)
+    const megustaexiste=await noti.findOne({
+      where:{
+        tipo:"likes",
+        contenido_id:modelo.publicacion_id,
+        emisor_id:modelo.usuario_id,
+        usuario_id:userCreador.usuario_id 
+      }
     })
+   
+    if(!megustaexiste){    
+    await noti.create({
+      tipo:"likes",
+      contenido_id:modelo.publicacion_id,
+      mensaje:"Le gusta tu publicacion",
+      hora:new Date(),
+      usuario_id:userCreador.usuario_id,
+      emisor_id:modelo.usuario_id //quien dio like
+    })
+  }
     res.status(200).json(modelo)
 }
 const ConteoLikes=async(req,res)=>{
@@ -78,6 +92,7 @@ const ShowLoves=async(req,res)=>{
         id:d.id,
         tipo:publicacion.tipo,
         valor,
+        publicacion_id:publicacion.id,
         creador
       }       
     })
