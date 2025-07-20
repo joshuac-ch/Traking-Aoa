@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { Pressable, Text, View } from 'react-native'
-import { IconBack } from '../../../assets/Icons'
+import { IconAddPerson, IconBack } from '../../../assets/Icons'
 import { useUser } from '../../../components/UserContext'
 import ListaSeguidores from './ListaSeguidores'
 import ListaSiguiendo from './ListaSiguiendo'
@@ -26,12 +26,15 @@ export default function ListaPrincipal(){
     )
     return(
     <>    
-    <View style={{flexDirection:"row",justifyContent:"center"}}>
+    <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center",margin:10}}>
         <View>
             <IconBack></IconBack>
         </View>
         <View>
             <Text>{dataUser.correo}</Text>
+        </View>
+        <View>
+            <IconAddPerson></IconAddPerson>
         </View>
     </View>
     <View style={{flexDirection:"row",justifyContent:"space-around",marginTop:10}}>
