@@ -6,6 +6,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Feather from '@expo/vector-icons/Feather';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
+
 export const IconDate=()=>{
     return <Fontisto name="date" size={24} color="black" />
 }
@@ -86,4 +87,7 @@ export const IconHeartComent=({color="black"})=>{
 }
 export const IconComment=()=>{
     return <EvilIcons name="comment" size={24} color="black" />
+}
+export const IconEditPerfil=()=>{
+    return <Feather name="edit" size={24} color="black" />
 }
