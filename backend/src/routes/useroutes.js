@@ -6,8 +6,10 @@ const { GetMetas, InsertMetas, ShowMetas, UpdateMetas, DeleteMetas, GetMetasAll 
 const { getActividades, InsetActividades, ShowActividaes, UpdateActividades, DestroyActividaes, getAllActivites, CreatePublicacionActividades } = require('../controllers/actividadesdiariasController')
 const { getEmociones, InsertEmociones } = require('../controllers/emocionesController')
 const { GetSeguidor, CreateSeguidor, GetActividadesSeguidor, DeleteActividadSeguidor, showUserFollow, EstatusFollow, GetHabitosSeguidor, ContadorSeguidores, ContadorSiguiendo, ListaSeguidores, ListaSiguiendo } = require('../controllers/seguidorController')
-const { getAllpublicaciones, getPublicacionFollow } = require('../controllers/publicacionController')
+const { getAllpublicaciones, getPublicacionFollow, GetPublicacionActividadXuser, GetPublicacionHabitosUser } = require('../controllers/publicacionController')
 const { InsertLove, ConteoLikes, RemoveLove, GetLikesUsuario, ShowLoves, ShowLovesCount } = require('../controllers/likesController')
+const { getAllNotificacionXUser, getAllNotificaciones, getAllNotisLikes, getAllNotisFollow } = require('../controllers/NotiController')
+const { CreateComentario, GetComentarioPublicacion } = require('../controllers/comentarioController')
 module.exports=router=express()
 
 router.get("/usuarios",GetUser)
@@ -59,7 +61,9 @@ router.get("/seguidores/habitosFollow/:seguidor_id",GetHabitosSeguidor)
 
 router.get("/publicaciones/pub/all",getAllpublicaciones)
 router.get("/publicaciones/feed/:userID",getPublicacionFollow)
-
+//--------------------------------------------------------------------------
+router.get("/publicacion/actividades/:userID",GetPublicacionActividadXuser)
+router.get("/publicacion/habitos/:userID",GetPublicacionHabitosUser)
 //--------------------------------------------------------------------------
 
 router.post("/publicacion/likes/i/:userID/:pubID",InsertLove)
@@ -77,3 +81,15 @@ router.get("/seguidores/count/:seguidor_id",ContadorSiguiendo)
 
 router.get("/listaseguidores/usuario/:userID",ListaSeguidores)
 router.get("/listasiguiendo/usuario/:userID",ListaSiguiendo)
+
+//Notificaciones
+
+router.get("/notificaciones/xuser/:userID",getAllNotificacionXUser)
+router.get("/notificaciones/allnotificaciones",getAllNotificaciones)
+router.get("/notificaciones/user/likes/:userID",getAllNotisLikes)
+router.get("/notificaciones/user/follow/:segID",getAllNotisFollow)
+
+//Comentarios
+
+router.post("/comentarios/publicaciones",CreateComentario)
+router.get("/comentarios/publicaciones/:pubID",GetComentarioPublicacion)
