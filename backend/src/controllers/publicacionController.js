@@ -39,5 +39,40 @@ const getPublicacionFollow=async(req,res)=>{
     )
     res.status(200).json(publicacionExpandida) 
 }
+const GetPublicacionActividadXuser=async(req,res)=>{
+    const {userID}=req.params
+    const modelo=await publicaciones.findAll({where:{usuario_id:userID,tipo:"Actividades"}})
+    const modeloExpandido=await Promise.all(
+        modelo.map(async(m)=>{
+            let rutina=""
+            if(m.tipo=="Actividades"){
+                rutina= await actividades_diarias.findByPk(m.contenido_id) 
+            }            
+            return{
+                pub:m,
+                rutina
+            }
+        })
+    )
+    return res.status(200).json(modeloExpandido)
+}
+const GetPublicacionHabitosUser=async(req,res)=>{
+    const {userID}=req.params
+    const modelo=await publicaciones.findAll({where:{usuario_id:userID,tipo:"Habitos"}})
+    const modeloExpandido=await Promise.all(
+        modelo.map(async(m)=>{
+            let rutina=""
+            if(m.tipo=="Habitos"){
+                rutina=await habitos.findByPk(m.contenido_id)
+            } 
+            return{
+                pub:m,
+                rutina
+            }
+        })
+    )
+    res.status(200).json(modeloExpandido)
+}
+
 //Crear aqui el pos publicacion y enviarselo a actividaes y habitos 
-module.exports={getAllpublicaciones,getPublicacionFollow}
+module.exports={getAllpublicaciones,getPublicacionFollow,GetPublicacionActividadXuser,GetPublicacionHabitosUser}
