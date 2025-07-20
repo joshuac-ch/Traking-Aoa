@@ -1,8 +1,9 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { IconElipsis, IconHeart, IconReply } from '../assets/Icons'
+import Comentario from './Comentario'
 
-export default function PublicacionComponent({datosUser,datasRutina}) {
+export default function PublicacionComponent({datosUser,datasRutina,publicacionID}) {
   return (
     <View style={styles.contenedor_principal}>
         <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',margin:10}}>
@@ -43,7 +44,9 @@ export default function PublicacionComponent({datosUser,datasRutina}) {
             </View>
 
         </View>
-       
+       <View>
+        <Comentario pubID={publicacionID}></Comentario>
+       </View>
        </View>
     </View>
   )
