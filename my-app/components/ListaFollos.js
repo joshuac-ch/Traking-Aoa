@@ -1,10 +1,10 @@
 import React from 'react'
-import { Image, Pressable, Text, View } from 'react-native'
-import { IconBack } from '../assets/Icons'
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
+import { IconBack, IconElipsis } from '../assets/Icons'
 import { Link } from 'expo-router'
 
 
-export default function ListaFollos({user,lista}) {
+export default function ListaFollos({user,lista,info}) {
   return (
     <>
         <View style={{margin:10}}>
@@ -14,14 +14,22 @@ export default function ListaFollos({user,lista}) {
                     return(
                        <Link key={i} href={`/Perfil/users/${m.creador.id}`} asChild>
                         <Pressable>
-                          <View style={{flexDirection:"row",marginTop:5,marginBottom:5}}>
-                             <View>
+                          <View style={{flexDirection:"row",alignItems:"center",justifyContent:"space-between",marginTop:5,marginBottom:5}}>
+                            <View style={{flexDirection:"row"}}>
+                                <View>
                                  <Image source={{uri:m.creador.imagen}} style={{height:50,width:50,borderRadius:50,marginRight:10}}></Image>    
-                             </View>                        
-                             <View>
-                                 <Text>{m.creador.nombre}</Text>
-                                 <Text>{m.creador.correo}</Text>
-                             </View>
+                                </View>                        
+                                <View>
+                                    <Text>{m.creador.nombre}</Text>
+                                    <Text>{m.creador.correo}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.boton_info}>
+                                <Text style={{fontWeight:"bold"}}>{info}</Text>
+                            </View>                            
+                            <View>
+                                <IconElipsis></IconElipsis>
+                            </View>                             
                          </View>
                         </Pressable>
                        </Link>
@@ -33,3 +41,15 @@ export default function ListaFollos({user,lista}) {
     </>
   )
 }
+const styles=StyleSheet.create({
+    boton_info:{
+        borderRadius:50,
+        borderWidth:2,
+        borderColor:"transparend",
+        backgroundColor:"#fff",
+        paddingTop:5,
+        paddingBottom:5,
+        paddingLeft:10,
+        paddingRight:10
+    }
+})
