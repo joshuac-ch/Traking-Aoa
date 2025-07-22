@@ -6,6 +6,7 @@ import axios from 'axios'
 import { IconFrecuencia, IconText, IconTitle } from '../../assets/Icons'
 import { Picker } from '@react-native-picker/picker'
 import * as ImagePicker from 'expo-image-picker'
+import { useUser } from '../../components/UserContext'
 
 export default function DetalleHabito() {
   const {id}=useLocalSearchParams()
@@ -54,13 +55,18 @@ export default function DetalleHabito() {
     let result=await ImagePicker.launchImageLibraryAsync({
         mediaTypes:['images','videos'],
         allowsEditing:true,
-        aspect:[4,3],
+        aspect:[4,6],
         quality:1
     })
     if(!result.canceled){
         setFormDataHabitos({...FormDataHabitos,imagen:result.assets[0].uri})
     }
-    
+     
+  } 
+  const {user}=useUser()
+      const Publicacion=async()=>{
+    await axios.post(`http://${host}:4000/publicacion/habitos/${id}/${user.id}`)
+    alert("Se creo el habito")
   }     
     return (
     <>
@@ -68,9 +74,14 @@ export default function DetalleHabito() {
     <View>
        {FormDataHabitos!=null?
        <View style={styles.contenedorP}>
+         <Pressable onPress={Publicacion}  style={{position:"absolute",zIndex:1,top:0,alignSelf:'flex-end',borderRadius:10,padding:10,backgroundColor:"purple",boxShadow:"0px 0px 7px 1px purple"}}>
+                        <View>
+                            <Text style={{color:"white"}}>Publicar</Text>
+                        </View>
+                    </Pressable>
             <View>
                 {FormDataHabitos.imagen&&(
-                     <Image source={{uri:FormDataHabitos.imagen}} style={{width:370,height:350,borderRadius:20}}></Image>
+                     <Image source={{uri:FormDataHabitos.imagen}} style={{width:200,height:300,borderRadius:20}}></Image>
                 )}
                 
                 <Button onPress={pickImage} title='Seleccionar imagen'></Button>
