@@ -1,5 +1,6 @@
 const actividades_diarias = require("../../models/actividades_diarias")
 const habitos = require("../../models/habitos")
+const noti = require("../../models/noti")
 const Seguidor=require("../../models/seguidores")
 const usuario = require("../../models/usuario")
 const GetSeguidor=async(req,res)=>{
@@ -69,9 +70,15 @@ const DeleteActividadSeguidor=async(req,res)=>{
             }}
                       
         ) 
+        //router.delete("/seguidores/actidadesfollow/delete/:seguidor_id/:userID",DeleteActividadSeguidor)
+        //await axios.delete(`http://${host}:4000/seguidores/actidadesfollow/delete/${user.id}/${id}`,NewSeguidorForm) 
+        await noti.destroy({
+            where:{tipo:"follow",emisor_id:userID,usuario_id:seguidor_id}
+        })
         if(!modeloSeguidor){
             return res.status(404).json({message:"No sigue ese usuario"})
         }
+       
        
         
         res.status(200).json("Se elimino correectamente el seguidor")
@@ -110,13 +117,27 @@ const CreateSeguidor=async(req,res)=>{
         const existe=await Seguidor.findOne({
             where:{seguidor_id,seguido_id}
         })
+        const notiexiste=await noti.findOne({
+            where:{tipo:"follow",emisor_id:seguido_id,usuario_id:seguidor_id}
+        })
+        if(!notiexiste){
+        await noti.create({
+            tipo:"follow",
+            contenido_id:"",
+            mensaje:"Comenzo a seguirte",
+            hora:new Date(),
+            emisor_id:seguido_id, //a el avisamos a al que seguimos seguido
+             usuario_id:seguidor_id,
+        }) 
+    }
         if(existe){
             const model=await Seguidor.update({
                 fecha:new Date(),
                 estado:true  
             },{where:{seguidor_id,seguido_id}})
             return res.json(model)
-        } 
+        }
+        
        const modelo=await Seguidor.create({
             seguidor_id,
             seguido_id,
@@ -143,8 +164,7 @@ const ListaSiguiendo=async(req,res)=>{
     const modelo=await Seguidor.findAll({where:{seguidor_id:userID,estado:true}})
     const userExpandido=await Promise.all(
         modelo.map(async(m)=>{           
-            let creador= await usuario.findByPk(m.seguido_id)//aca ponemos que nos debuleva los seguidos esto es una funcion para ver nuestros seguidos
-                                //mñana probar con aqui poner seguidorID seria para Lista seguidores??
+            let creador= await usuario.findByPk(m.seguido_id)
             return{                
                 creador
             }
