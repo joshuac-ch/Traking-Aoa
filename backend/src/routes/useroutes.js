@@ -1,9 +1,9 @@
 const express=require('express')
 const { GetUser, InsertUser, ShowUser, DeleteUser, UpdateUser } = require('../controllers/userController')
-const { GetHabitos, InsertHabitos, UpdateHabito, Showhabito, DeleteHabito, GetHabitosAll, CrearPublicacionHabitos } = require('../controllers/habitoController')
+const { GetHabitos, InsertHabitos, UpdateHabito, Showhabito, DeleteHabito, GetHabitosAll, CrearPublicacionHabitos, GetAllPublicacionesHabitos } = require('../controllers/habitoController')
 const { Get_registros, Insert_registros } = require('../controllers/registro_habitosController')
 const { GetMetas, InsertMetas, ShowMetas, UpdateMetas, DeleteMetas, GetMetasAll } = require('../controllers/metasController')
-const { getActividades, InsetActividades, ShowActividaes, UpdateActividades, DestroyActividaes, getAllActivites, CreatePublicacionActividades } = require('../controllers/actividadesdiariasController')
+const { getActividades, InsetActividades, ShowActividaes, UpdateActividades, DestroyActividaes, getAllActivites, CreatePublicacionActividades, GetAllPublicacionesActividades } = require('../controllers/actividadesdiariasController')
 const { getEmociones, InsertEmociones } = require('../controllers/emocionesController')
 const { GetSeguidor, CreateSeguidor, GetActividadesSeguidor, DeleteActividadSeguidor, showUserFollow, EstatusFollow, GetHabitosSeguidor, ContadorSeguidores, ContadorSiguiendo, ListaSeguidores, ListaSiguiendo } = require('../controllers/seguidorController')
 const { getAllpublicaciones, getPublicacionFollow, GetPublicacionActividadXuser, GetPublicacionHabitosUser } = require('../controllers/publicacionController')
@@ -26,6 +26,8 @@ router.get("/habitos/s/:id",Showhabito)
 router.delete("/habitos/d/:id",DeleteHabito)
 router.post("/publicacion/habitos/:id/:userID",CrearPublicacionHabitos)
 
+router.get("/publicaciones/habitos/all",GetAllPublicacionesHabitos)
+
 //-----------------------------------------
 router.get('/registros/',Get_registros)
 router.post("/registros/c",Insert_registros)
@@ -44,7 +46,10 @@ router.get("/actividades/s/:id",ShowActividaes)
 router.put("/actividades/u/:id",UpdateActividades)
 router.delete("/actividades/d/:id",DestroyActividaes)
 router.post("/publicacion/actividad/:id/:userID",CreatePublicacionActividades)
+
+router.get("/publicaciones/actividades/all",GetAllPublicacionesActividades)
 //----------------------------------------------------
+
 router.get("/emociones",getEmociones)
 router.post("/emociones/i",InsertEmociones)
 //----------------------------------------------------
