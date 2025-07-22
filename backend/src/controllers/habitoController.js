@@ -41,14 +41,7 @@ const InsertHabitos=async(req,res)=>{
         fecha_inicio:new Date(),
         usuario_id,
     })
-    await noti.create({
-        tipo:"Post_habito",
-        contenido_id:modelo.id,
-        mensaje:"creo un nuevo post",
-        hora:new Date(),
-        usuario_id:usuario_id,
-        emisor_id:0
-    })
+    
     //await publicaciones.create({
     //    usuario_id,
     //    contenido_id:modelo.id,
@@ -57,17 +50,55 @@ const InsertHabitos=async(req,res)=>{
     //})
     res.status(200).json({message:"Se creo el habito correctamente"})
 }
+//const GetAllPublicacionesActividades=async(req,res)=>{
+//    try{
+//        const modeloActividades=await 
+//    }catch(err){
+//        console.error(err.message)
+//    }
+//}
 const CrearPublicacionHabitos=async(req,res)=>{
     try{
         const {id,userID}=req.params
         const modelo=await habitos.findByPk(id)
-        await publicaciones.create({
-        usuario_id:userID,
-        contenido_id:modelo.id,
-        tipo:"Habitos",
-        creacion:new Date()
-    })
+        const pub=await publicaciones.findOne({where:{contenido_id:id}})
+        if(!pub){
+            await publicaciones.create({
+            usuario_id:userID,
+            contenido_id:modelo.id,
+            tipo:"Habitos",
+            creacion:new Date()
+        })        
+            await noti.create({
+            tipo:"Post_habito",
+            contenido_id:modelo.id,
+            mensaje:"creo un nuevo post",
+            hora:new Date(),
+            usuario_id:usuario_id,
+            emisor_id:0
+        })    
+    }
         res.status(200).json("See creo la publicacion habitos")
+    }catch(err){
+        console.error(err.message)
+    }
+}
+const GetAllPublicacionesHabitos=async(req,res)=>{
+    try{
+        const modelopub=await publicaciones.findAll({where:{tipo:"Habitos"}})
+        const modeloexpandido=await Promise.all(
+            modelopub.map(async(p)=>{
+                let rutina=null
+                if(p.tipo=="Habitos"){
+                    rutina= await habitos.findByPk(p.contenido_id)
+                }
+                return{
+                    pub:p,
+                    rutina                    
+                }
+            })
+        )        
+        res.status(200).json(modeloexpandido) 
     }catch(err){
         console.error(err.message)
     }
@@ -122,4 +153,4 @@ const DeleteHabito=async(req,res)=>{
         console.error("Hubo un error",err.message)
     }
 }
-module.exports={GetHabitos,InsertHabitos,UpdateHabito,Showhabito,DeleteHabito,GetHabitosAll,CrearPublicacionHabitos}
+module.exports={GetHabitos,InsertHabitos,UpdateHabito,Showhabito,DeleteHabito,GetHabitosAll,CrearPublicacionHabitos,GetAllPublicacionesHabitos}
