@@ -48,7 +48,27 @@ const InsetActividades=async(req,res)=>{
         console.error("Hubo un error",err.message)
     }
 }
-
+const GetAllPublicacionesActividades=async(req,res)=>{
+    try{
+       
+        const modeloPublicaciones=await publicaciones.findAll({where:{tipo:"Actividades"}})
+        const modeloExpandido=await Promise.all(
+            modeloPublicaciones.map(async(p)=>{
+                let rutina=""
+                if(p.tipo=="Actividades"){
+                    rutina= await ActividadesDiarias.findByPk(p.contenido_id)
+                }
+                return{
+                    pub:p,
+                    rutina
+                }
+            })
+        )
+        res.status(200).json(modeloExpandido) 
+    }catch(err){
+        console.error(err.message)
+    }
+}
 const ShowActividaes=async(req,res)=>{
     try{
         const {id}=req.params
@@ -130,4 +150,4 @@ const DestroyActividaes=async(req,res)=>{
         console.error(err.message)
     }    
 }
-module.exports={getActividades,InsetActividades,ShowActividaes,UpdateActividades,DestroyActividaes,getAllActivites,CreatePublicacionActividades}
+module.exports={getActividades,InsetActividades,ShowActividaes,UpdateActividades,DestroyActividaes,getAllActivites,CreatePublicacionActividades,GetAllPublicacionesActividades}
