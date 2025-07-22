@@ -143,8 +143,8 @@ export default function Panel() {
   }
   //IMPORTANTE         
   //solo se muestra los comentarios en corazon de perfil de cualquier usuario y en feed    
-    //hacer el cambio en perfiler ajenos se vea los comentarios
-    //tambien en notificaciones que se vea los comentarios
+  //hacer el cambio en perfiler ajenos se vea los comentarios
+  //tambien en notificaciones que se vea los comentarios
   // si deja de seguir eliminar el post listo al pero falta el el like  
   // eliminar el seguir de notis en caso ya no lo sigue se guarda al parecer  
   //al quitar el like tambien eliminar en la noti si esque se pueda
