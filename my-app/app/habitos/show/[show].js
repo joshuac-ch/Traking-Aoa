@@ -10,6 +10,8 @@ export default function ShowHabitosUser() {
     const [dataCreator, setdataCreator] = useState([])
     const {show}=useLocalSearchParams()
     const host=constantes.expoConfig.extra.host
+    const {publi}=useLocalSearchParams()
+    
     const showHabito=async()=>{
         const {data}=await axios.get(`http://${host}:4000/habitos/s/${show}`)
         
@@ -33,7 +35,7 @@ export default function ShowHabitosUser() {
     
     return (
    <>
-    <PublicacionComponent datasRutina={dataHabito} datosUser={dataCreator}></PublicacionComponent>
+    <PublicacionComponent datasRutina={dataHabito} datosUser={dataCreator} publicacionID={publi}></PublicacionComponent>
    </>
   )
 }
