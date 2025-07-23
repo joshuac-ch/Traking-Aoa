@@ -6,6 +6,8 @@ import constantes from "expo-constants"
 import Actividades from '../../../hooks/Actividades'
 import { useHistoryial } from '../../../components/HistorialProvider'
 import { useUser } from '../../../components/UserContext'
+import { IconActivity, IconHeart } from '../../../assets/Icons'
+import LoveUser from "./LoveUser.js"
 
 export default function UserDiferent() {
     const [UserDiferent, setUserDiferent] = useState([])
@@ -24,27 +26,38 @@ export default function UserDiferent() {
     },[])
     //-----------------------------------------------------------------------------
     const [dataActividadesOtherUser, setdataActividadesOtherUser] = useState([])
-    useEffect(()=>{
-        if(id!=null){
-           const ShowActividadUser=async()=>{
-            const {data}=await axios.get(`http://${host}:4000/actividades/${id}`)
-            setdataActividadesOtherUser(data)
-            
-        }
-        ShowActividadUser()       
-        }
-    },[id])    
-    const [dataHabitosAnother, setdataHabitosAnother] = useState([])
-    useEffect(()=>{
-        if(id!=null){
-            const showHabitosUser=async()=>{
-                const {data}=await axios.get(`http://${host}:4000/habitos/${id}`)
-                setdataHabitosAnother(data)
+    //useEffect(()=>{
+    //  
+    //     const ShowActividadUser=async()=>{
+    //      const {data}=await axios.get(`http://${host}:4000/actividades/${id}`)
+    //      setdataActividadesOtherUser(data)
+    //      
+    //  
+    //  ShowActividadUser()       
+    //  }
+    //},[id])
+    const MostratActividadesPubOther=async()=>{
+        const {data} =await axios.get(`http://${host}:4000/publicacion/actividades/${id}`)
+        setdataActividadesOtherUser(data)
+    }
+    useFocusEffect(
+        useCallback(()=>{
+            if(id){
+                MostratActividadesPubOther()
             }
+        },[id])
+    )    
+    //aqui quedamos falta mejorar habitos y ber que funcione los comnetarios al buscar un perfil
+    const [dataHabitosAnother, setdataHabitosAnother] = useState([])
+    const showHabitosUser=async()=>{
+                const {data}=await axios.get(`http://${host}:4000/publicacion/habitos/${id}`)
+                setdataHabitosAnother(data)
+    }
+    useFocusEffect(useCallback(()=>{
+        if(id){          
         showHabitosUser()
         }
-
-    },[id])
+    },[id]))
 
     const [dataMetasAnother, setdataMetasAnother] = useState([])
     useEffect(()=>{
@@ -72,11 +85,10 @@ export default function UserDiferent() {
                  
     }
     
-    useFocusEffect(
+  useFocusEffect(
   useCallback(() => {
     if (user.id && id) {
-      GetFollow()
-                
+      GetFollow()                
     }
   }, [user.id, id])
 )
@@ -136,6 +148,7 @@ export default function UserDiferent() {
             }
         },[id])
     )
+    const [estadouser, setestadouser] = useState("actividades")
     
     return (    
     <>
@@ -183,11 +196,27 @@ export default function UserDiferent() {
                 <Text>Compartir Perfil</Text>
             </Pressable>
         </View>      
-        
+
+       
     </View>
-   
+               
    </View>
+    <View style={{flexDirection:'row',justifyContent:"space-around",margin:10}}>
+        <Pressable onPress={()=>setestadouser("actividades")}>
+            <View>
+                <IconActivity></IconActivity>
+            </View>
+        </Pressable>
+        <Pressable onPress={()=>setestadouser("loves")}>
+            <View>
+                <IconHeart></IconHeart>
+            </View>
+        </Pressable>
+    </View> 
    {/*No quedamos aqui revisar que corra bien  */}
+   {estadouser=="actividades"?
+   <View>
+   
     <View>
         <Text style={{textAlign:'center'}}>Actividades</Text>
      </View>
@@ -196,18 +225,18 @@ export default function UserDiferent() {
     {dataActividadesOtherUser.length>0?
     dataActividadesOtherUser.map((a,i)=>{
         return(
-            <Link key={i} href={`/Actividades/show/${a.id}`} asChild>
+            <Link key={i} href={{pathname:`/Actividades/show/${a.rutina.id}`,params:{publi:a.pub.id}}} asChild>
                                   <Pressable>
                                      <View style={styles.proyecto_c}>
                                         
                                         <View style={{display:'flex',justifyContent:'space-between'}}>
                                            
-                                           {a.imagen&&(
-                                            <Image source={{uri:a.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                           {a.rutina.imagen&&(
+                                            <Image source={{uri:a.rutina.imagen}} style={{width:133,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                             )}
                                            <View style={styles.div_c_body}>
                                                
-                                                <Text>{a.titulo.length>15?a.titulo.slice(0,12)+"...":a.titulo}</Text>
+                                                <Text style={{paddingLeft:5}}>{a.rutina.titulo.length>15?a.rutina.titulo.slice(0,12)+"...":a.rutina.titulo}</Text>
                                             </View>
                                              
                                         </View>
@@ -216,24 +245,24 @@ export default function UserDiferent() {
                                   </Link>
         )
     })
-    :<Text style={{fontWeight:'bold',fontSize:15}}>No hay datos de actividades Actualmente </Text>}
+    :<Text style={{fontWeight:'bold',fontSize:15}}>No hay publicaciones de actividades Actualmente </Text>}
    </View>
    <View>
         <Text style={{textAlign:'center'}}>Habitos</Text>
    </View>
    <View style={{display:'flex',justifyContent:'center',flexDirection:'row',flexWrap:'wrap'}}>
         {dataHabitosAnother.length>0?
-        dataHabitosAnother.map((h,i)=>{
+        dataHabitosAnother.map((h)=>{
             return(
-                <Link href={`/Habitos/show/${h.id}`} asChild key={i}>
+                <Link href={{pathname:`/Habitos/show/${h.rutina.id}`,params:{publi:h.pub.id}}} asChild key={h.pub.id}>
                     <Pressable>
                         <View style={styles.proyecto_c}>
                             <View style={{display:'flex',justifyContent:'space-between'}}>
-                                {h.imagen&&(
-                                    <Image source={{uri:h.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                {h.rutina.imagen&&(
+                                    <Image source={{uri:h.rutina.imagen}} style={{width:133,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                 )}
                                 <View style={styles.div_c_body}>
-                                    <Text>{h.titulo.length>15?h.titulo.slice(0,12)+"...":h.titulo}</Text>
+                                    <Text style={{paddingLeft:5}}>{h.rutina.titulo.length>15?h.rutina.titulo.slice(0,12)+"...":h.rutina.titulo}</Text>
                                 </View>
                             </View>
                         </View>    
@@ -256,10 +285,10 @@ export default function UserDiferent() {
                         <View style={styles.proyecto_c}>
                             <View style={{display:'flex',justifyContent:'space-between'}}>
                                 {m.imagen&&(
-                                    <Image source={{uri:m.imagen}} style={{width:133,height:124,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                    <Image source={{uri:m.imagen}} style={{width:133,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                 )}
                                 <View style={styles.div_c_body}>
-                                    <Text>{m.titulo.length>15?m.titulo.slice(0,12)+"...":m.titulo}</Text>
+                                    <Text style={{paddingLeft:5}}>{m.titulo.length>15?m.titulo.slice(0,12)+"...":m.titulo}</Text>
                                 </View>
                             </View>
                         </View>
@@ -271,6 +300,11 @@ export default function UserDiferent() {
             <Text style={{fontWeight:'bold',fontSize:15}}>No hay datos de Metas Actualmente</Text>
          }
    </View>
+
+   </View>
+   :
+   <LoveUser></LoveUser>
+   }
  {/*
  <View>
     <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
@@ -391,14 +425,14 @@ const styles=StyleSheet.create({
         justifyContent:'center'       
     },
     proyecto_c:{
-        
+        boxShadow:"0px 0px 2px 1px black",
         flexDirection:'row',
         borderWidth:1,
         borderColor:'black',
         borderStyle:'solid',
         borderRadius:5,
         width:135,
-        height:165,
+        height:180,
         marginTop:8,
         marginRight:0.8,
         marginLeft:0.8,
@@ -409,9 +443,10 @@ const styles=StyleSheet.create({
         alignItems:'flex-end',
     },
     div_c_body:{        
+        boxShadow:"0px 0px 8px 1px black",
         backgroundColor:'transparent',
-        alignItems:'flex-start',      
-        padding:10,
+        alignItems:'flex-start',   
+        paddingTop:8,       
         borderBottomLeftRadius:5,
         borderBottomRightRadius:5
     },
