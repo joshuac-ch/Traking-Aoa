@@ -7,7 +7,7 @@ import axios from 'axios'
 import Metas from '../../hooks/Metas'
 import Actividades from '../../hooks/Actividades'
 import Habitos from '../../hooks/Habitos'
-import { IconActivity, IconHeart } from '../../assets/Icons'
+import { IconActivity, IconEditPerfil, IconHeart } from '../../assets/Icons'
 import Love from "../Perfil/Love.js"
 export default function Perfil() {
     const {user}=useUser()
@@ -20,22 +20,33 @@ export default function Perfil() {
     const [dataMetas, setdataMetas] = useState([])
     const [dataHabitos, setdataHabitos] = useState([])
     const [dataActividades, setdataActividades] = useState([])
+    const host=constantes.expoConfig.extra.host
     //useEffect(()=>{
     //    FectMetas(),
     //    FecthHabitos(),
     //    FetchActividades()
     //},[])
-    useEffect(()=>{
-       if(actividades.length>0){
-        setdataActividades(actividades.map((a)=>({...a,type:"Actividades"})))
-       } 
-    },[actividades])
+    const FectDatosPubActividad=async()=>{
+        const {data}=await axios.get(`http://${host}:4000/publicacion/actividades/${user.id}`)
+        setdataActividades(data)
+    } 
     
-    useEffect(()=>{
-        if(habitos.length>0){
-            setdataHabitos(habitos.map((a)=>({...a,type:"Habitos"})))
-        }
-    },[habitos])
+    const FecthDatosPubHabitos=async()=>{
+        const {data}=await axios.get(`http://${host}:4000/publicacion/habitos/${user.id}`)
+        setdataHabitos(data)
+    }
+    useFocusEffect(
+        useCallback(()=>{
+            if(user.id){
+                FectDatosPubActividad(),
+                FecthDatosPubHabitos()
+            }},[user.id])    
+    )
+    //useEffect(()=>{
+    //    if(habitos.length>0){
+    //        setdataHabitos(habitos.map((a)=>({...a,type:"Habitos"})))
+    //    }
+    //},[habitos])
 
     useEffect(()=>{
         if(metas.length>0){
@@ -43,7 +54,7 @@ export default function Perfil() {
         }
     },[metas])
 //crear el eliminar publicacion
-
+//TENER EN CUNETA LO SIGUIENTE SI CREAS CUALQUIER TIPO DE RUTINA TIENES QUE SI O SI que muestre en el perfil las pubicaciones no actividades  
     useEffect(()=>{       
             if(metas.length>0 && habitos.length>0 && actividades.length>0){
                 const tododata=[
@@ -58,7 +69,7 @@ export default function Perfil() {
                 
             }     
     },[metas,actividades,habitos])
-    const host=constantes.expoConfig.extra.host
+    
     const FectUserSpecific=async()=>{
         try{
             const {data}=await axios.get(`http://${host}:4000/usuarios/s/${user.id}`)
@@ -122,6 +133,7 @@ export default function Perfil() {
         params:{estado:"siguiendo"}
     })
    }
+
   return (
    <>
    <ScrollView>
@@ -182,6 +194,9 @@ export default function Perfil() {
     <View>
         {vistaActiva=="actividad"?
         <View>
+   {/*
+   Pensar si lo nesesitamos
+   lo que hace es motrar todas las pubulicaciones siempre y cuando rengamos una de cada una
     <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap',justifyContent:"center"}}>
                 {alldata.length>0?
                alldata.map((a,i)=>{
@@ -207,6 +222,7 @@ export default function Perfil() {
                 :<Text>No hay publicaciones disponibles</Text>}
                     
               </View>
+   */}
        
              
         <View >
@@ -214,24 +230,33 @@ export default function Perfil() {
         </View>
          <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap',justifyContent:'center'}}>
                 {dataActividades.length>0?
-               dataActividades.map((a,i)=>{
+               dataActividades.map((a)=>{
                     return(
-                      <Link key={i} href={`/${a.type}/${a.id}`} asChild>
-                      <Pressable>
-                         <View style={styles.proyecto_c}>
-                            
-                            <View style={{display:'flex',justifyContent:'space-between'}}>
-                               {a.imagen&&(
-                                <Image source={{uri:a.imagen}} style={{width:133,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
-                               
-                            )}
-                                <View style={styles.div_c_body}>
-                                    <Text style={{paddingLeft:5}}>{a.titulo.length>15?a.titulo.slice(0,12)+"...":a.titulo}</Text>
+                        
+                        <View key={a.pub.id} style={{flexDirection:"row",justifyContent:"flex-end",alignItems:"flex-start"}} >
+                            <Link style={{zIndex:1,marginTop:10,position:"absolute"}} asChild href={`/${a.pub.tipo}/${a.rutina.id}`}>
+                            <Pressable>
+                                <IconEditPerfil></IconEditPerfil>
+                            </Pressable>
+                            </Link>
+                            <Link href={{pathname:`/${a.pub.tipo}/show/${a.rutina.id}`,params:{publi:a.pub.id}}} asChild>
+                            <Pressable>
+                            <View style={styles.proyecto_c}>
+
+                                <View style={{display:'flex',justifyContent:'space-between'}}>
+                                {a.rutina.imagen&&(
+                                    <Image source={{uri:a.rutina.imagen}} style={{width:133,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                
+                                )}
+                                    <View style={styles.div_c_body}>
+                                        <Text style={{paddingLeft:5}}>{a.rutina.titulo.length>15?a.rutina.titulo.slice(0,12)+"...":a.rutina.titulo}</Text>
+                                    </View>
                                 </View>
-                            </View>
-                       </View> 
-                      </Pressable>
-                      </Link>
+                            </View> 
+                            </Pressable>
+                            </Link>
+                        </View>
+                      
                     )
                 })
                 :<Text>-</Text>}
@@ -244,21 +269,28 @@ export default function Perfil() {
                 {dataHabitos.length>0?
                dataHabitos.map((a,i)=>{
                     return(
-                      <Link key={i} href={`/${a.type}/${a.id}`} asChild>
+                      <View style={{flexDirection:"row",justifyContent:"flex-end"}} key={a.pub.id}>
+                        <Link style={{position:"absolute",marginTop:10,zIndex:1}} asChild href={`/${a.pub.tipo}/${a.rutina.id}`}>
+                            <Pressable>
+                                <IconEditPerfil></IconEditPerfil>
+                            </Pressable>
+                        </Link>
+                        <Link href={{pathname:`/${a.pub.tipo}/show/${a.rutina.id}`,params:{publi:a.pub.id}}} asChild>
                       <Pressable>
                          <View style={styles.proyecto_c}>
                             
                             <View style={{display:'flex',justifyContent:'space-between'}}>
-                              {a.imagen&&(
-                                <Image source={{uri:a.imagen}} style={{width:133,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                              {a.rutina.imagen&&(
+                                <Image source={{uri:a.rutina.imagen}} style={{width:133,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                               )}
                               <View style={styles.div_c_body}>
-                                    <Text style={{paddingLeft:5}}>{a.titulo.length>15?a.titulo.slice(0,12)+"...":a.titulo}</Text>
+                                    <Text style={{paddingLeft:5}}>{a.rutina.titulo.length>15?a.rutina.titulo.slice(0,12)+"...":a.rutina.titulo}</Text>
                                 </View>
                             </View>
                        </View> 
                       </Pressable>
                       </Link>
+                      </View>
                     )
                 })
                 :<Text>-</Text>}
