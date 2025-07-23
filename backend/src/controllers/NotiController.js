@@ -5,7 +5,7 @@ const notificaciores=require("../../models/noti")
 const publicaciones = require("../../models/publicaciones")
 const Seguidores = require("../../models/seguidores")
 const usuario = require("../../models/usuario")
-const getAllNotificaciones=async()=>{
+const getAllNotificaciones=async(req,res)=>{
     try{
        const modelo=await notificaciores.findAll()
        if(!modelo){
@@ -29,21 +29,28 @@ const getAllNotificacionXUser=async(req,res)=>{
             let creador=await usuario.findByPk(n.usuario_id)
             let post=""
             let tipo=""
+            let pub=""
+            let pubID=""
             
             if(n.tipo=="Post_Actividad"){
                 tipo="Actividades"
                 post=await actividades_diarias.findByPk(n.contenido_id)
+                pub=await publicaciones.findOne({where:{tipo:"Actividades",contenido_id:n.contenido_id}})
+                pubID=pub?pub.id:0
                 }
             else if(n.tipo=="Post_habito"){
                 tipo="Habitos"    
                 post =await habitos.findByPk(n.contenido_id)
-            }
+                pub=await publicaciones.findOne({where:{tipo:"Habitos",contenido_id:n.contenido_id}})
+                pubID=pub?pub.id:0
+            }            
             return{
                 noti:n,
                 creador,
                 post,
-                tipo
-            }
+                tipo,
+                pubID
+                        }
         })
        )
        return res.status(200).json(notiexpandida)
