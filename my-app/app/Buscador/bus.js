@@ -28,7 +28,7 @@ export default function BusSearch() {
       const host=constantes.expoConfig.extra.host
       const [actividadesAll, setactividadesAll] = useState([])
       const ShowMetasOtherUsers=async()=>{
-        const {data}=await axios.get(`http://${host}:4000/actividades/a`)
+        const {data}=await axios.get(`http://${host}:4000/publicaciones/actividades/all`)
         setactividadesAll(data)
       }  
       useEffect(()=>{       
@@ -52,7 +52,7 @@ export default function BusSearch() {
         },[])
     const [HabitosAll, setHabitosAll] = useState([])
     const ShowHabitosAll=async()=>{
-        const {data}=await axios.get(`http://${host}:4000/habitos/a`)
+        const {data}=await axios.get(`http://${host}:4000/publicaciones/habitos/all`)
         setHabitosAll(data)
     }   
     useEffect(()=>{
@@ -63,48 +63,45 @@ export default function BusSearch() {
     useEffect(()=>{
             if(datosbuscados.trim()!=""){
                 
-                const filtradoMetas=metasAll.filter((m)=>
-                    m.titulo.toLowerCase().includes(datosbuscados.toLowerCase()))
+                //const filtradoMetas=metasAll.filter((m)=>
+                //    m.titulo.toLowerCase().includes(datosbuscados.toLowerCase()))
                 const filterActividad=actividadesAll.filter((a)=>
-                    a.titulo.toLowerCase().includes(datosbuscados.toLowerCase()))
+                    a.rutina.titulo?.includes(datosbuscados.toLowerCase()))
                 const filterhabitos=HabitosAll.filter((h)=>
-                    h.titulo.toLowerCase().includes(datosbuscados.toLowerCase()))
+                    h.rutina.titulo?.toLowerCase().includes(datosbuscados.toLowerCase()))
                 const filtarUsers=dataUser.filter((u)=>
                     u.nombre!=user.nombre && u.nombre.includes(datosbuscados.toLowerCase())
                 )
                 const resultadosActuales=[
                   ...filtarUsers.map(a=>({...a,tipo:"Usuario"})),  
-                  ...filtradoMetas.map(item=>({...item,tipo:'Metas'})),
+                  //...filtradoMetas.map(item=>({...item,tipo:'Metas'})),
                   ...filterActividad.map(item=>({...item,tipo:'Actividades'})),
                   ...filterhabitos.map(item=>({...item,tipo:'Habitos'}))
                 
                 ]
                 setresultado(resultadosActuales)
-    
-                //if(palanca){
-                //    sethistorial(resultadosActuales)
-                //    setpalanca(false)
-                //}
+                
             }else{
                 setresultado('')
             }  
               
         },[datosbuscados,metasAll,actividadesAll,HabitosAll])
      const {historialC, sethistorialC}=useHistoryial()  
-        const guardarbusqueda=(id,titulo,tipo,descripcion)=>{
+        const guardarbusqueda=(id,titulo,tipo,descripcion,pubID)=>{
         //setpalanca(true)
         sethistorialC(prev=>{
             const existe=prev.some(item=>
                 item.tipo===tipo&&
                 item.titulo===titulo &&
-                item.descripcion===descripcion
+                item.descripcion===descripcion &&
+                item.pubID==pubID
             )
             if(existe){
                 return prev
             }
             //const nueva = { id, tipo, titulo, descripcion };
             //setbusquedaNueva(nueva)
-            return [...prev,{id,tipo,titulo,descripcion}]           
+            return [...prev,{id,tipo,titulo,descripcion,pubID}]           
     })}
     
           //ESTO CAMBIARLO POR UN HISTORY CONTEXT crear un contexto para traer los datos
@@ -157,15 +154,15 @@ export default function BusSearch() {
                     </Pressable>
                 </Link>
                 :
-                <Link  key={i} href={`/${m.tipo}/show/${m.id}`} asChild>
-                    <Pressable onPress={()=>guardarbusqueda(m.id,m.titulo,m.tipo,m.descripcion)}>
+                <Link  key={i} href={{pathname:`/${m.tipo}/show/${m.rutina.id}`,params:{publi:m.pub.id}}} asChild>
+                    <Pressable onPress={()=>guardarbusqueda(m.rutina.id,m.rutina.titulo,m.tipo,m.rutina.descripcion,m.pub.id)}>
                         <View style={styles.contenedor_mostrar}>
                             <View style={{marginLeft:10,marginRight:10}}>
                                 <IconActivity></IconActivity>
                             </View>
                             <View>
                                  <Text>{m.tipo}</Text>
-                                 <Text>{m.titulo}</Text>
+                                 <Text>{m.rutina.titulo}</Text>
                             </View>                            
                         </View>
                     </Pressable>
@@ -174,7 +171,9 @@ export default function BusSearch() {
         })
         :historial.length>0?
             historial.map((h,i)=>{
-                
+                //IMPORTANTE ESTA LINEA AHORA GUARDAR EL HISTORIAL Y VER SI FUNCIONA CORRECTAMENTE 
+                //ver la eliminacion de publicacion y si se permite eliminar los comentarios junto con ella 
+                //eL BUSCADOR SOLO BUSCAR SIEMPRE Y CUANDO ESTE PUBLICADO ? SI
                 //el buscardor de ahora sera global y buscarda los show ya no los nuestros 
                 // si quieres buscar los tuyos podras buscarlos en cada categoria correspondiente
                 //para mas adelante
@@ -205,7 +204,7 @@ export default function BusSearch() {
                     </Pressable>
                     </Link>
                     :        
-                    <Link key={i} href={`/${h.tipo}/${h.id}`} asChild>
+                    <Link key={i} href={{pathname:`/${h.tipo}/${h.id}`,params:{publi:h.id}}} asChild>
                     <Pressable>
                         <View style={styles.contendor_buscador} key={i}>
                             <View style={styles.box}>
