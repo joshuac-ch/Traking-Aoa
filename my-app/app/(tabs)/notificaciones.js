@@ -67,10 +67,7 @@ export default function notificaciones() {
       }
     },[user.id])
   )
-  //Se creo por ahora que se vena las notificaciones si seguimos al usuarios
-  //crear en el post (listo)
-  //crear en el me gusta
-  //crear en el me sigue
+
   return ( 
     <>
     <ScrollView>
@@ -110,11 +107,12 @@ export default function notificaciones() {
             notificaciontotal.notispost.map((n,i)=>{
             return(
               n.noti.tipo=="Post_Actividad" || n.noti.tipo=="Post_habito"?
-             <Link href={`/${n.tipo}/show/${n.post.id}`} key={i} asChild>
+             <Link href={{pathname:`/${n.tipo}/show/${n.post.id}`,params:{publi:n.pubID}}} key={i} asChild>
               <Pressable>
                  <View style={styles.contenedorpost}>
                 <View style={{flexDirection:"row"}}>
-                  <View>                  
+                  <View>      
+                                
                     {n.creador.imagen &&(
                       <Image source={{uri:n.creador.imagen}} style={{height:50,width:50,borderRadius:50,marginRight:10}}></Image>
                     )}
@@ -143,7 +141,7 @@ export default function notificaciones() {
           {notificaciontotal?.notislikes?.length>0?          
             notificaciontotal.notislikes.map((n,i)=>{
               return(               
-               <Link asChild href={`/${n.tipo}/show/${n.contenido.id}`}>
+               <Link key={i} asChild href={`/${n.tipo}/show/${n.contenido.id}`}>
                 <Pressable>
                   <View key={i} style={styles.contendorlikes}>
                   <View style={{flexDirection:"row"}}>
@@ -175,7 +173,7 @@ export default function notificaciones() {
         { notificaciontotal?.notisfollow?.length>0?
           notificaciontotal?.notisfollow.map((n,i)=>{
             return(
-             <Link href={`/Perfil/users/${n.user.id}`} asChild>
+             <Link key={i} href={`/Perfil/users/${n.user.id}`} asChild>
               <Pressable>
                  <View key={i} style={styles.contendorfollow}>
                   <View style={{flexDirection:"row"}}>
