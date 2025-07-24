@@ -42,7 +42,9 @@ export default function create() {
     <View className='m-4'>
         <View>
             <Text>Foto: </Text>
-            <Image style={styles.image} source={{uri:userDataForm.imagen}}></Image>
+            {userDataForm.imagen&&(
+                <Image style={styles.image} source={{uri:userDataForm.imagen}}></Image>
+            )}
             
 
         </View>
