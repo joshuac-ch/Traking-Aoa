@@ -188,7 +188,37 @@ export default function Panel() {
     console.error(err.message)
   }
  }
+ const btnActi=useRef(new Animated.Value(0)).current
+ const Presionar=()=>{
+  Animated.timing(btnActi,{
+    toValue:1,
+    duration:300,
+    useNativeDriver:false
+  }).start(()=>{
+    btnActi.setValue(0)
+  })
+  
+}
+ const backgroundColor=btnActi.interpolate({
+  inputRange:[0,1],
+  outputRange:["transparent","#6a6b6a"]
+ })
  
+
+ const btnHabitos=useRef(new Animated.Value(1)).current
+ const PresionarHabitos=()=>{
+  Animated.timing(btnHabitos,{
+    toValue:1,
+    duration:300,
+    useNativeDriver:false
+  }).start(()=>{
+    btnHabitos.setValue(0)
+  })
+ }
+ const backhabito=btnHabitos.interpolate({
+  inputRange:[0,1],
+  outputRange:["transparent","#6a6b6a"]
+ })
   return (
       <ScrollView>
         
@@ -238,28 +268,37 @@ export default function Panel() {
         })}        
       </PagerView>      
     </View>
+    
     <View style={styles.vista_acti}>
+      <View style={styles.contendorRutina}>
+        <Animated.View style={{backgroundColor:backgroundColor,borderRadius:20,}}>
       <View style={styles.contenedorpresabe}>
-        <Link href={"Actividades/ActividadesDiarias"} asChild>
-          <Pressable >
-            <View style={styles.btn_router}>
-              <IconLeft></IconLeft>
-              <Text style={{marginLeft:10}}>Ir a actividades</Text>
-            </View>
-            
-          </Pressable>
-        </Link>
-        <Link href={"/Actividades/Create"} asChild>
-          <Pressable>
-            <View>
-              <IconAdd></IconAdd>
-            </View>
-          </Pressable>
-        </Link>
+          
+          
+          <Link href={"Actividades/ActividadesDiarias"} asChild>
+            <Pressable onPress={Presionar}>
+              <View style={styles.btn_router}>
+                <IconLeft></IconLeft>
+                <Text style={{marginLeft:10}}>Ir a actividades</Text>
+              </View>
+            </Pressable>
+          </Link>
+       
+          <Link href={"/Actividades/Create"} asChild>
+            <Pressable>
+              <View>
+                <IconAdd></IconAdd>
+              </View>
+            </Pressable>
+          </Link>
+          
+       
       </View>
-     <View  style={styles.contenedorpresabe}>
+        </Animated.View>
+    <Animated.View style={{backgroundColor:backhabito,borderRadius:20}}>
+       <View  style={styles.contenedorpresabe}>
        <Link href={"/Habitos"} asChild>
-          <Pressable>
+          <Pressable onPress={PresionarHabitos} >
             <View style={styles.btn_router}>
                <IconLeft></IconLeft>
                <Text style={{marginLeft:10}}>Ir a habitos</Text>
@@ -275,6 +314,7 @@ export default function Panel() {
         </Pressable>
       </Link>
      </View>
+    </Animated.View>
 
       <View style={styles.contenedorpresabe}>
         <Link href={"/Metas/"} asChild>
@@ -303,6 +343,7 @@ export default function Panel() {
       </View>
       </Pressable>
       </Link>
+      </View>
       <View>
         {
        dataPublicacionFollow.length>0?
@@ -494,6 +535,11 @@ export default function Panel() {
   )
 }
 const styles=StyleSheet.create({
+  contendorRutina:{
+    display:"flex",
+    justifyContent:"space-between",
+    height:180,
+  },
   modelo_pub:{
     backgroundColor:"white",
     borderRadius:20,
@@ -538,7 +584,7 @@ const styles=StyleSheet.create({
     justifyContent:'space-between',
     alignItems:'center',
     borderRadius:20,
-    margin:10,
+    
     paddingRight:10,
     boxShadow:'0px 0px 8px 1px black',
   },
@@ -564,6 +610,7 @@ const styles=StyleSheet.create({
     }
     ,
     vista_acti:{
+      
       paddingTop:15,      
       margin:20,
       padding:10
