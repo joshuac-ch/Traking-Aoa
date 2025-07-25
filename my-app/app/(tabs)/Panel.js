@@ -1,9 +1,9 @@
 import React, { use, useCallback, useEffect, useRef, useState } from 'react'
-import { Animated, Button, Image, LayoutAnimation, Modal, Platform, Pressable, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, UIManager, View } from 'react-native'
+import { Animated, Button, Easing, Image, LayoutAnimation, Modal, Platform, Pressable, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, UIManager, View } from 'react-native'
 import { useUser } from '../../components/UserContext'
 
 import PagerView from 'react-native-pager-view'
-import { Link, Stack, Tabs, useFocusEffect, useRouter } from 'expo-router'
+import { Link, router, Stack, Tabs, useFocusEffect, useRouter } from 'expo-router'
 import { IconAdd, IconComment, IconElipsis, IconHeart, IconHeartActive, IconLeft, IconReply } from '../../assets/Icons'
 import constantes from 'expo-constants'
 import axios from 'axios'
@@ -180,7 +180,7 @@ export default function Panel() {
     const isvisible=estadopublicacion==pubID
     Animated.timing(anim,{
       toValue:isvisible?0:1,
-      duration:300,
+      duration:200,
       useNativeDriver:false
     }).start()
     setestadopublicacion(isvisible?null:pubID)
@@ -188,65 +188,98 @@ export default function Panel() {
     console.error(err.message)
   }
  }
- const btnActi=useRef(new Animated.Value(0)).current
- const Presionar=()=>{
-  Animated.timing(btnActi,{
-    toValue:1,
-    duration:300,
-    useNativeDriver:false
-  }).start(()=>{
-    btnActi.setValue(0)
-  })
-  
-}
- const backgroundColor=btnActi.interpolate({
-  inputRange:[0,1],
-  outputRange:["transparent","#6a6b6a"]
- })
- 
 
- const btnHabitos=useRef(new Animated.Value(1)).current
- const PresionarHabitos=()=>{
-  Animated.timing(btnHabitos,{
+ const animaciones=useRef({}).current 
+ const RenderBoton=(key,label,ruta_principal,create)=>{
+   if(!animaciones[key]){
+      animaciones[key]=new Animated.Value(0)
+  }
+  const anim=animaciones[key]
+  
+  const backgroundColor=anim.interpolate({
+    inputRange:[0,1],
+    outputRange:["transparent","#a3a3a3"]
+  }) 
+  const navegar=(ruta)=>{
+  Animated.timing(anim,{
     toValue:1,
-    duration:300,
+    duration:200,
     useNativeDriver:false
   }).start(()=>{
-    btnHabitos.setValue(0)
+    anim.setValue(0)
+    router.push(ruta)
   })
  }
- const backhabito=btnHabitos.interpolate({
+ return(
+    <Animated.View style={{backgroundColor:backgroundColor,borderRadius:20}}>      
+      <View style={styles.contenedorpresabe}>
+      <Pressable onPress={() => navegar(ruta_principal)}>
+        <View style={styles.btn_router}>
+          <IconLeft />         
+            <Text style={{marginLeft: 10}}>Ir a {label}</Text>
+          </View>
+      </Pressable>
+
+      <Pressable onPress={() => navegar(create)} >
+        <View>
+          <IconAdd />
+        </View>
+      </Pressable>
+      </View>
+    </Animated.View>
+  )
+ }
+ const animacionCirbleBtn=useRef(new Animated.Value(0)).current
+ const AnimacionCirle=(ruta)=>{
+    Animated.timing(animacionCirbleBtn,{
+      toValue:1,
+      //easing:Easing.back(),
+      useNativeDriver:false,
+      duration:300
+    }).start(()=>{
+      animacionCirbleBtn.setValue(0)
+      router.push(ruta)
+    })
+}
+const paddingbtn=animacionCirbleBtn.interpolate({
   inputRange:[0,1],
-  outputRange:["transparent","#6a6b6a"]
- })
+  outputRange:[0,8]
+})
+const border=animacionCirbleBtn.interpolate({
+  inputRange:[0,1],
+  outputRange:[0,50]
+})
+const backgroud=animacionCirbleBtn.interpolate({
+  inputRange:[0,1],
+  outputRange:["transparent","#a3a3a3"]
+})
+
   return (
       <ScrollView>
         
        
      <Stack.Screen options={{headerShown:false}}></Stack.Screen>
+     {/*Ver el problema aqui de porque se mueve por un lado se piende que es por el contenedor perfil*/}
         <View key={miuser.id}  style={styles.contenedor_perfil}>
         <View style={{flexDirection:'row'}}>
           <Image style={styles.image} source={{uri:miuser.imagen}}></Image>
         <View style={{flexDirection:'column',justifyContent:"flex-start",marginTop:10,height:20}}>{/*Verficar esto */}
             <Text >{miuser.nombre} {miuser.apellido}</Text>
             <Text style={{fontWeight:'bold'}}>{miuser.correo}</Text>
+        </View>       
         </View>
-       
-        </View>
-        <View>
-            <Link href={"/configuracion"} asChild>
-              <Pressable style={({pressed})=>[
-                {
-                  backgroundColor:pressed?'#fff':"red",
-                  borderRadius:50,padding:10
-                }
-              ]} >
-                <IconElipsis></IconElipsis>
+
+        <View>  
+          <Animated.View style={{padding:paddingbtn,borderRadius:border,backgroundColor:backgroud}}>            
+              <Pressable onPress={()=>AnimacionCirle("/configuracion")} >
+                               
+                   <IconElipsis></IconElipsis>
+               
               </Pressable>
-            </Link>
+           </Animated.View>                
         </View>
         
-    </View>
+        </View>
     <View style={{marginLeft:35}}>
        <Text>Metas para este {new Date().getFullYear()} crear el ultimo model</Text>
     </View>   
@@ -271,70 +304,12 @@ export default function Panel() {
     
     <View style={styles.vista_acti}>
       <View style={styles.contendorRutina}>
-        <Animated.View style={{backgroundColor:backgroundColor,borderRadius:20,}}>
-      <View style={styles.contenedorpresabe}>
-          
-          
-          <Link href={"Actividades/ActividadesDiarias"} asChild>
-            <Pressable onPress={Presionar}>
-              <View style={styles.btn_router}>
-                <IconLeft></IconLeft>
-                <Text style={{marginLeft:10}}>Ir a actividades</Text>
-              </View>
-            </Pressable>
-          </Link>
        
-          <Link href={"/Actividades/Create"} asChild>
-            <Pressable>
-              <View>
-                <IconAdd></IconAdd>
-              </View>
-            </Pressable>
-          </Link>
-          
-       
-      </View>
-        </Animated.View>
-    <Animated.View style={{backgroundColor:backhabito,borderRadius:20}}>
-       <View  style={styles.contenedorpresabe}>
-       <Link href={"/Habitos"} asChild>
-          <Pressable onPress={PresionarHabitos} >
-            <View style={styles.btn_router}>
-               <IconLeft></IconLeft>
-               <Text style={{marginLeft:10}}>Ir a habitos</Text>
-            </View>
-            
-          </Pressable>
-       </Link>
-        <Link href={"/Habitos/create"} asChild>
-        <Pressable>
-          <View>
-            <IconAdd></IconAdd>
-          </View>
-        </Pressable>
-      </Link>
-     </View>
-    </Animated.View>
-
-      <View style={styles.contenedorpresabe}>
-        <Link href={"/Metas/"} asChild>
-        <Pressable >
-             <View  style={styles.btn_router}>
-                <IconLeft ></IconLeft>
-                <Text style={{marginLeft:10}}>Ir a metas</Text>
-            </View>
-            
-        </Pressable>
-      </Link>
-      <Link href={"/Metas/create"} asChild>
-        <Pressable>
-          <View>
-            <IconAdd></IconAdd>
-          </View>
-        </Pressable>
-      </Link>
-      </View>
-
+    
+      {RenderBoton("actividad","Actividades","/Actividades/ActividadesDiarias","/Actividades/Create")}
+      {RenderBoton("habitos","Habitos","/Habitos","/Habitos/create")}
+      {RenderBoton("metas","Metas","/Metas","/Metas/create")}
+     
       
       <Link href={"/centro"} asChild>
       <Pressable>
