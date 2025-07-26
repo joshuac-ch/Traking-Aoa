@@ -241,10 +241,6 @@ export default function Panel() {
       router.push(ruta)
     })
 }
-const paddingbtn=animacionCirbleBtn.interpolate({
-  inputRange:[0,1],
-  outputRange:[0,8]
-})
 const border=animacionCirbleBtn.interpolate({
   inputRange:[0,1],
   outputRange:[0,50]
@@ -259,7 +255,7 @@ const backgroud=animacionCirbleBtn.interpolate({
         
        
      <Stack.Screen options={{headerShown:false}}></Stack.Screen>
-     {/*Ver el problema aqui de porque se mueve por un lado se piende que es por el contenedor perfil*/}
+     
         <View key={miuser.id}  style={styles.contenedor_perfil}>
         <View style={{flexDirection:'row'}}>
           <Image style={styles.image} source={{uri:miuser.imagen}}></Image>
@@ -270,8 +266,8 @@ const backgroud=animacionCirbleBtn.interpolate({
         </View>
 
         <View>  
-          <Animated.View style={{padding:paddingbtn,borderRadius:border,backgroundColor:backgroud}}>            
-              <Pressable onPress={()=>AnimacionCirle("/configuracion")} >
+          <Animated.View style={{borderRadius:border,backgroundColor:backgroud}}>            
+              <Pressable style={{padding:5}} onPress={()=>AnimacionCirle("/configuracion")} >
                                
                    <IconElipsis></IconElipsis>
                
