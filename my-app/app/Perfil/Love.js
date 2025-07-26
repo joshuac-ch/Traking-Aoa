@@ -28,7 +28,9 @@ export default function Love() {
   return (
     <>
     <View>
-        
+        <View>
+            <Text style={styles.tiulo_love}>My loves</Text>
+        </View>
         {dataLove.length>0?
         <View style={{flexDirection:'row',justifyContent:'center',flexWrap:'wrap'}}>
         {dataLove.map((p)=>{
@@ -57,6 +59,13 @@ export default function Love() {
   )
 }
 const styles=StyleSheet.create({
+    tiulo_love:{
+        padding:10,
+        fontWeight:"bold",
+        textAlign:"center",
+        textDecorationLine:"underline",
+        textDecorationColor:"black"
+    },
     contenedor_imagen:{
         height:210,
         width:133,
