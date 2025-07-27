@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import constatnes from "expo-constants"
 import { useLocalSearchParams } from 'expo-router'
 import PublicacionComponent from '../../../components/PublicacionComponent'
+import ComponenteMetas from './ComponenteMetas'
 export default function ShowMetasOther() {
   const host=constatnes.expoConfig.extra.host 
   const {show}=useLocalSearchParams()
@@ -33,7 +34,8 @@ export default function ShowMetasOther() {
   },[userCreator])
   return (
   <>
-    <PublicacionComponent datasRutina={dataMetas} datosUser={dataCreator}></PublicacionComponent>
+  <ComponenteMetas datasRutina={dataMetas} datosUser={dataCreator} ></ComponenteMetas>
+   
   </>
   )
 }
