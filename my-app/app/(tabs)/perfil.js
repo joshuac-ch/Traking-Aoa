@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { Image, ImageBackground, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { Animated, Image, ImageBackground, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { useUser } from '../../components/UserContext'
 import { Link, Stack, useFocusEffect, useRouter } from 'expo-router'
 import constantes from 'expo-constants' 
@@ -133,7 +133,41 @@ export default function Perfil() {
         params:{estado:"siguiendo"}
     })
    }
-
+   const estadobtn=useRef({}).current
+   const RendenBoton=({boton,label,Icono})=>{
+    if(!estadobtn[boton]){
+        estadobtn[boton]=new Animated.Value(0)
+    }
+    const anim=estadobtn[boton]
+    const backcolor=anim.interpolate({
+    inputRange:[0,1],
+    outputRange:["transparent","#a3a3a3"]
+   }) 
+   const borderRad=anim.interpolate({
+    inputRange:[0,1],
+    outputRange:[0,50]
+   })
+    const handlerpress=()=>{
+        Animated.timing(anim,{
+        toValue:1,
+        duration:200,
+        useNativeDriver:false
+    }).start(()=>{
+        anim.setValue(0)
+        setvistaActiva(label)
+    })
+    }
+    return(
+         <Pressable onPress={handlerpress}>
+                <Animated.View style={{backgroundColor:backcolor,borderRadius:borderRad}}>
+                    <View style={{padding:10}}>                    
+                        <Icono/>
+                    </View>
+                </Animated.View>                
+        </Pressable>
+    )
+   }
+   
   return (
    <>
    <ScrollView>
@@ -179,17 +213,13 @@ export default function Perfil() {
     </View>
    
    </View>
-   <View style={{flexDirection:'row',justifyContent:'space-around',margin:15,alignItems:"center"}}>
-             <View>
-                <Pressable onPress={()=>setvistaActiva("actividad")}>                    
-                    <IconActivity></IconActivity>
-                </Pressable>                
-              </View>
-              <View>
-                <Pressable onPress={()=>setvistaActiva("love")}>
-                    <IconHeart></IconHeart>    
-                </Pressable>           
-              </View>    
+   <View style={{flexDirection:'row',justifyContent:'space-around',margin:10,alignItems:"center"}}>
+            <View>
+                <RendenBoton boton={"rutina"} label={"actividad"} Icono={IconActivity}></RendenBoton>
+            </View>
+            <View>
+                 <RendenBoton boton={"loves"} label={"loves"} Icono={IconHeart}></RendenBoton>                          
+            </View>    
         </View>  
     <View>
         {vistaActiva=="actividad"?
@@ -341,7 +371,7 @@ const styles=StyleSheet.create({
         fontWeight:'bold',
         textDecorationLine:"underline",
        
-        padding:20,
+        padding:10,
     },
     proyecto:{
         flexDirection:'column',
