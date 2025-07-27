@@ -4,7 +4,7 @@ import { useUser } from '../../components/UserContext'
 
 import PagerView from 'react-native-pager-view'
 import { Link, router, Stack, Tabs, useFocusEffect, useRouter } from 'expo-router'
-import { IconAdd, IconComment, IconElipsis, IconHeart, IconHeartActive, IconLeft, IconReply } from '../../assets/Icons'
+import { IconAdd, IconClose, IconComment, IconElipsis, IconHeart, IconHeartActive, IconLeft, IconReply, IconText } from '../../assets/Icons'
 import constantes from 'expo-constants'
 import axios from 'axios'
 import { useHistoryial } from '../../components/HistorialProvider'
@@ -249,7 +249,7 @@ const backgroud=animacionCirbleBtn.interpolate({
   inputRange:[0,1],
   outputRange:["transparent","#a3a3a3"]
 })
-
+const [imagenSeleccionada, setimagenSeleccionada] = useState(null)
   return (
       <ScrollView>
         
@@ -354,7 +354,30 @@ const backgroud=animacionCirbleBtn.interpolate({
               <Text>{d.contendo.titulo}</Text>
               <Text>{d.contendo.descripcion}</Text>
             </View>
-              <Image style={{width:200,height:250,borderRadius:20,alignSelf:'center'}} source={{uri:d.contendo.imagen}}></Image>
+              <Pressable onPress={()=>setimagenSeleccionada(d.contendo.imagen)}>
+                <Image style={{width:200,height:250,borderRadius:20,alignSelf:'center'}} source={{uri:d.contendo.imagen}}></Image>
+              </Pressable>
+              <Modal visible={!!imagenSeleccionada} transparent={true} animationType='fade'>
+                <View style={{flex:1,backgroundColor:"black"}}>
+                 <Pressable
+                  onPress={() => setimagenSeleccionada(null)}
+                  style={{
+                    position: 'absolute',
+                    top: 40,
+                    right: 20,
+                    zIndex: 10,
+                    backgroundColor: 'rgba(255,255,255,0.2)',
+                    padding: 5,
+                    borderRadius: 50
+                  }}
+                >
+                  <IconClose></IconClose>
+                </Pressable>
+                  <Pressable onPress={()=>setimagenSeleccionada(null)}>
+                    <Image style={{width:"100%",height:"100%",resizeMode:"contain",alignSelf:'center'}} source={{uri:imagenSeleccionada}}></Image>
+                  </Pressable>
+                </View>
+              </Modal>
               <View style={{flexDirection:'row',justifyContent:'space-around',alignItems:'center'}}>
               
                 <View style={{flexDirection:'row',alignItems:'center',marginTop:10,marginBottom:10}}>
