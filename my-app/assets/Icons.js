@@ -91,3 +91,6 @@ export const IconComment=()=>{
 export const IconEditPerfil=()=>{
     return <Feather name="edit" size={24} color="black" />
 }
+export const IconClose=()=>{
+    return <AntDesign name="closecircleo" size={30} color="white" />
+}
