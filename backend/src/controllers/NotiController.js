@@ -40,7 +40,7 @@ const getAllNotificacionXUser=async(req,res)=>{
                 }
             else if(n.tipo=="Post_habito"){
                 tipo="Habitos"    
-                post =await habitos.findByPk(n.contenido_id)
+                post =await habitos.findByPk(n.contenido_id) 
                 pub=await publicaciones.findOne({where:{tipo:"Habitos",contenido_id:n.contenido_id}})
                 pubID=pub?pub.id:0
             }            
