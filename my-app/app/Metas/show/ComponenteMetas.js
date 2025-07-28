@@ -4,6 +4,12 @@ import { IconElipsis, IconHeart, IconReply } from '../../../assets/Icons'
 
 export default function ComponenteMetas({datasRutina,datosUser}) {
   const [imagenExpandida, setimagenExpandida] = useState(false)    
+  const fecha_inicio=new Date(datasRutina.fecha_inicio)
+  const fecha_final=new Date(datasRutina.fecha_limite)
+  const hoy=new Date()
+  const tiempo_total=fecha_final-fecha_inicio
+  const tiempo_Acumulado=hoy-fecha_inicio
+  const progreso=Math.min(tiempo_Acumulado/tiempo_total,1)
   //hacer un tipo recordatorio en aqui el componente meta que no sea publicacion sino algo como un logro 
   return (
     <ScrollView>
@@ -26,12 +32,18 @@ export default function ComponenteMetas({datasRutina,datosUser}) {
                     <IconElipsis></IconElipsis>
                 </View>
             </View>
+            <View style={{padding:10}}>
+                <View>
+                    <Text style={{fontSize:15,fontWeight:"bold"}}>Meta Actual: </Text>
+                    <Text >{datasRutina.titulo}</Text>
+                </View>
+                 <View >                    
+                    <Text>{datasRutina.descripcion}</Text>
+                </View> 
+            </View>
     
             <View >
-                <View style={{padding:10}}>
-                    <Text>{datasRutina.titulo}</Text>
-                    <Text>{datasRutina.descripcion}</Text>
-                </View>        
+                      
                 <View>
                     <Pressable onPress={()=>setimagenExpandida(true)}>
                          <Image style={styles.imagen} source={{ uri: datasRutina.imagen }} />
@@ -42,9 +54,32 @@ export default function ComponenteMetas({datasRutina,datosUser}) {
                              <Image style={styles.imagen_expandida} source={{ uri: datasRutina.imagen }} />
                         </Pressable>
                         </View>                    
-                    </Modal>             
-                
-               
+                    </Modal>        
+                </View>
+                <View style={{padding:10}}>
+                    <View style={{backgroundColor:"white",width:"100%",height:10,borderRadius:20}}>
+                        <View style={{backgroundColor:`${progreso<1?"purple":"black"}`,borderRadius:20,width:`${progreso*100}%`,height:10}}></View>
+                    </View>
+                    <View style={{flexDirection:"row",justifyContent:"space-between"}}>
+                        <Text>{Math.round(0)}%</Text>
+                        <Text>{Math.round(progreso*100)}%</Text>
+                    </View>
+                </View>
+                <View >
+                    <View style={{alignSelf:"center"}}>
+                        <Text style={{paddingBottom:10,fontSize:15}}>Lo cumples en <Text style={{fontWeight:"bold"}}>{new Date(tiempo_total).getDate()}</Text> dias</Text>
+                    </View>
+                    <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center"}}>
+                        <View style={styles.fecha_propuesta}>
+                            <Text style={{fontSize:25}}>{fecha_final.getDate()}</Text>
+                        </View>
+                        <View style={styles.fecha_propuesta}>
+                            <Text style={{fontSize:25}}>{fecha_final.getMonth()}</Text>
+                        </View>                        
+                        <View style={styles.fecha_propuesta}>
+                            <Text style={{fontSize:25}}>{fecha_final.getFullYear()}</Text>
+                        </View>
+                    </View>
                 </View>
                 {/*
                 <View style={{flexDirection:"row",justifyContent:'space-around',alignItems:'center'}}>
@@ -65,8 +100,20 @@ export default function ComponenteMetas({datasRutina,datosUser}) {
   )
 }
 const styles=StyleSheet.create({
+    fecha_propuesta:{
+        justifyContent:"center",
+        alignItems:"center",
+        textAlignVertical:"center",
+        borderRadius:20,
+        marginLeft:5,
+        marginRight:5,
+        backgroundColor:"gray",
+        width:100,
+        height:60             
+    },
     contenedor_principal:{
         margin:20,
+        paddingBottom:10,
         
         backgroundColor:"white",
         borderRadius:20,
