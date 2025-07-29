@@ -15,7 +15,7 @@ export default function ListaFollos({user,lista,info}) {
                        <Link key={i} href={`/Perfil/users/${m.creador.id}`} asChild>
                         <Pressable>
                           <View style={{flexDirection:"row",alignItems:"center",justifyContent:"space-between",marginTop:5,marginBottom:5}}>
-                            <View style={{flexDirection:"row"}}>
+                            <View style={{flexDirection:"row",maxWidth:220,width:220}}>
                                 <View>
                                  <Image source={{uri:m.creador.imagen}} style={{height:50,width:50,borderRadius:50,marginRight:10}}></Image>    
                                 </View>                        
