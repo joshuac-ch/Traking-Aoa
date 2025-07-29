@@ -11,7 +11,9 @@ import { useHistoryial } from '../../components/HistorialProvider'
 import { ToastAndroid } from 'react-native'
 import Metas from '../../hooks/Metas'
 import Comentario from '../../components/Comentario'
-
+//crear rutas en el feed
+//mejororar diseño
+//crear el diseño par ael login
 export default function Panel() {
     const {user}=useUser()
     const  host=constantes.expoConfig.extra.host
