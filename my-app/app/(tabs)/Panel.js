@@ -370,7 +370,7 @@ const [imagenSeleccionada, setimagenSeleccionada] = useState(null)
                     right: 20,
                     zIndex: 10,
                     backgroundColor: 'rgba(255,255,255,0.2)',
-                    padding: 5,
+                    
                     borderRadius: 50
                   }}
                 >
