@@ -1,5 +1,5 @@
 import React, { use, useCallback, useEffect, useRef, useState } from 'react'
-import { Animated, Button, Easing, Image, LayoutAnimation, Modal, Platform, Pressable, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, UIManager, View } from 'react-native'
+import { Animated, Button, Dimensions, Easing, Image, LayoutAnimation, Modal, Platform, Pressable, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, UIManager, View } from 'react-native'
 import { useUser } from '../../components/UserContext'
 
 import PagerView from 'react-native-pager-view'
@@ -250,6 +250,7 @@ const backgroud=animacionCirbleBtn.interpolate({
   outputRange:["transparent","#a3a3a3"]
 })
 const [imagenSeleccionada, setimagenSeleccionada] = useState(null)
+
   return (
       <ScrollView>
         
@@ -276,11 +277,12 @@ const [imagenSeleccionada, setimagenSeleccionada] = useState(null)
         </View>
         
         </View>
-    <View style={{marginLeft:35}}>
-       <Text>Metas para este {new Date().getFullYear()} crear el ultimo model</Text>
+    <View style={{marginLeft:30,marginBottom:10}}>
+       <Text style={{fontSize:13}}>Metas para este {new Date().getFullYear()}</Text>
     </View>   
-   <View style={styles.contenedorCarrusel}>
-      <PagerView style={{ flex: 1 }} initialPage={0}>
+   <ScrollView  horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{paddingHorizontal:30,alignItems:"center"}}>
+    <View style={styles.contenedorCarrusel}>
+      
         {metas.map((m)=>{
           return(
             <Link href={`/Metas/show/${m.id}`} key={m.id} asChild>
@@ -295,8 +297,9 @@ const [imagenSeleccionada, setimagenSeleccionada] = useState(null)
             </Link>
           )
         })}        
-      </PagerView>      
+          
     </View>
+   </ScrollView>
     
     <View style={styles.vista_acti}>
       <View style={styles.contendorRutina}>
@@ -610,11 +613,14 @@ const styles=StyleSheet.create({
       padding:10
     },
     contenedorCarrusel:{
-        alignSelf:'flex-start',
+        
         display:'flex',
+        flexDirection:"row",
+         overflow:"hidden",
         justifyContent:'center',     
-        height:250,
-        width:250,
+        
+        
+        
                 
         
     },
@@ -633,7 +639,7 @@ const styles=StyleSheet.create({
     imagenCarrusel:{
         borderColor:'white',        
         width:200,
-        height:180,
+        height:250,
         borderTopLeftRadius:10,
         borderTopRightRadius:10,
         borderWidth:1,
