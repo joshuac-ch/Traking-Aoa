@@ -7,7 +7,7 @@ import axios from 'axios'
 import Metas from '../../hooks/Metas'
 import Actividades from '../../hooks/Actividades'
 import Habitos from '../../hooks/Habitos'
-import { IconActivity, IconEditPerfil, IconHeart } from '../../assets/Icons'
+import { IconActivity, IconEditPerfil, IconHeart, IconLock } from '../../assets/Icons'
 import Love from "../Perfil/Love.js"
 export default function Perfil() {
     const {user}=useUser()
@@ -327,8 +327,9 @@ export default function Perfil() {
                     
               </View>
 
-            <View >
+            <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center"}}>
                 <Text style={styles.proyecto_title}>Metas</Text>
+                <IconLock></IconLock>
             </View>
          <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap',justifyContent:'center'}}>
                 {dataMetas.length>0?
