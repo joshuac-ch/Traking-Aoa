@@ -94,3 +94,6 @@ export const IconEditPerfil=()=>{
 export const IconClose=()=>{
     return <AntDesign name="closecircleo" size={30} color="white" />
 }
+export const IconLock=()=>{
+    return <AntDesign name="lock" size={20} color="black" />
+} 
