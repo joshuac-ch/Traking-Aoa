@@ -25,8 +25,54 @@ export default function AppPrincipal() {
             navegar.push("/Login")
         }
     }
+    const Nube=({top,left,size=80,ancho=80,color="pink"})=>(
+        <View style={{
+        position:"absolute",
+        top:top,
+        left:left,
+        height:size,
+        width:ancho,
+        backgroundColor:color,
+        borderRadius:99  
+        }}>
+            
+        </View>
+    )
+    const Flor=({ancho,top,lef,size=100,color="pink"})=>{
+        <View style={{
+            top:top,
+            left:lef,
+            height:size,
+            backgroundColor:color,
+            width:ancho,
+            borderRadius:20
+        }}>
+
+        </View>
+    }
   return (
    <>
+  <View style={{position:"absolute",top:30,left:-20}}>
+     <Nube top={50} size={80} left={150}></Nube>
+     <Nube top={20} size={110} left={100}></Nube>
+     <Nube top={50} size={80} left={50}></Nube>
+  </View>
+  <View style={{position:"absolute",bottom:250,left:160}}>
+     <Nube top={50} size={30} ancho={40} left={120}></Nube>
+     <Nube top={30} size={50} ancho={40} left={100}></Nube>
+     <Nube top={50} size={30} ancho={40} left={80}></Nube>
+  </View>
+  <View style={{
+    width:20,
+    height:100,
+    backgroundColor:"red",
+    position:"absolute",
+    bottom:280,
+    left:50,
+    borderRadius:20
+  }}>
+    
+  </View>
     <Stack.Screen options={{headerShown:false}}></Stack.Screen>
     <View style={styles.contenedor}>
         <Text className="text-4xl text-center font-black">Login</Text>
@@ -54,5 +100,33 @@ const styles=StyleSheet.create({
         flex:1,
         justifyContent:'center',
         alignContent:'center'
+    },
+    estilos_nubes1:{
+        position:"absolute",
+        top:50,
+        left:150,
+        height:80,
+        width:80,
+        backgroundColor:"pink",
+        borderRadius:99        
+    },
+    estilos_nubes2:{
+        position:"absolute",
+        top:20,
+        left:100,
+        height:110,
+        width:80,
+        backgroundColor:"pink",
+        borderRadius:99        
+    },
+    estilos_nubes3:{
+        position:"absolute",
+        top:50,
+        left:50,
+        height:80,
+        width:80,
+        backgroundColor:"pink",
+        borderRadius:99        
     }
+    
 })
