@@ -292,7 +292,7 @@ const [imagenSeleccionada, setimagenSeleccionada] = useState(null)
               <View style={{justifyContent:'center',alignItems:'center'}}>
                 <Image source={{uri:m.imagen}} style={styles.imagenCarrusel}></Image>
                 <View style={styles.TextCarrusel}>
-                  <Text>{m.titulo}</Text>
+                  <Text>{m.titulo.length>13?m.titulo.slice(0,13)+"...":m.titulo}</Text>
                 </View>
             </View>
             </Pressable>
@@ -341,9 +341,13 @@ const [imagenSeleccionada, setimagenSeleccionada] = useState(null)
             <View style={{margin:10}}>
              <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
                <View style={{flexDirection:'row',justifyContent:'flex-start',alignItems:'center'}}>
-                <View>
+               <Link href={`/Perfil/users/${d.creador.id}`} asChild>
+               <Pressable>
+                 <View>
                   <Image source={{uri:d.creador.imagen}} style={{width:50,height:50,borderRadius:50,marginRight:15}}></Image>
                 </View>
+               </Pressable>
+               </Link>
                 <View>
                   <View style={{flexDirection:'row'}}>
                     <Text style={{marginRight:20}}>{d.creador.nombre}</Text>
@@ -627,8 +631,8 @@ const styles=StyleSheet.create({
         
     },
     TextCarrusel:{
-      width:200,      
-      padding:10,
+      width:110,      
+      padding:5,
       borderWidth:2,
       borderStyle:'solid',
       backgroundColor:'white',
@@ -640,7 +644,7 @@ const styles=StyleSheet.create({
     },
     imagenCarrusel:{
         borderColor:'white',        
-        width:200,
+        width:110,
         height:250,
         borderTopLeftRadius:10,
         borderTopRightRadius:10,
