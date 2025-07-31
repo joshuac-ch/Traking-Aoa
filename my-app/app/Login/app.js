@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import {Pressable, StatusBar, StyleSheet, Text, TextInput, View } from 'react-native'
+import {Image, Pressable, StatusBar, StyleSheet, Text, TextInput, View } from 'react-native'
 import usuarios from '../../hooks/usuarios'
 import { Link, Stack, useFocusEffect, useRouter } from 'expo-router'
 import { useUser } from '../../components/UserContext'
+import portada from "../../assets/portada1.png"
+import imagen_principal from "../../assets/imagen1.png"
 export default function AppPrincipal() {
     const {setUser}=useUser()
   const {FectUsuarios,dataUser}=usuarios()
@@ -38,18 +40,19 @@ export default function AppPrincipal() {
             
         </View>
     )
-    const Flor=({ancho,top,lef,size=100,color="pink"})=>{
-        <View style={{
-            top:top,
+    const LadyFlor=({abajo,lef,arriba="",isq=""})=>{
+       return(
+         <View style={{position:"absolute",
+            bottom:abajo,
             left:lef,
-            height:size,
-            backgroundColor:color,
-            width:ancho,
-            borderRadius:20
+            top:arriba,
+            right:isq
         }}>
-
+            <Image source={portada} alt='nose encuentra' style={{width:100,height:100}}></Image>
         </View>
+       )
     }
+    
   return (
    <>
   <View style={{position:"absolute",top:30,left:-20}}>
@@ -62,16 +65,11 @@ export default function AppPrincipal() {
      <Nube top={30} size={50} ancho={40} left={100}></Nube>
      <Nube top={50} size={30} ancho={40} left={80}></Nube>
   </View>
-  <View style={{
-    width:20,
-    height:100,
-    backgroundColor:"red",
-    position:"absolute",
-    bottom:280,
-    left:50,
-    borderRadius:20
-  }}>
-    
+ <LadyFlor abajo={0} lef={10}></LadyFlor>
+ <LadyFlor abajo={0} isq={0} arriba={0}></LadyFlor>
+  <View style={{position:"absolute",top:170,
+        left:155}}>
+    <Image source={imagen_principal} style={{width:100,height:100,borderRadius:20}}></Image>
   </View>
     <Stack.Screen options={{headerShown:false}}></Stack.Screen>
     <View style={styles.contenedor}>
