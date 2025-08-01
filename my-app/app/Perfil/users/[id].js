@@ -149,7 +149,7 @@ export default function UserDiferent() {
         },[id])
     )
     const [estadouser, setestadouser] = useState("actividades")
-    
+    const [mostrarMetas, setmostrarMetas] = useState(false)
     return (    
     <>
         
@@ -274,32 +274,39 @@ export default function UserDiferent() {
         :<Text style={{fontWeight:'bold',fontSize:15}}>No hay datos de habitos Actualmente</Text>}
    </View>
    <View>
-        <Text style={{textAlign:'center'}}>Metas</Text>
-   </View>
-   <View  style={{display:'flex',flexDirection:'row',justifyContent:'center',flexWrap:'wrap'}}>
-        {dataMetasAnother.length>0?
-        dataMetasAnother.map((m,i)=>{
-            return(
-                <Link asChild href={`/Metas/show/${m.id}`} key={i}>
-                    <Pressable>
-                        <View style={styles.proyecto_c}>
-                            <View style={{display:'flex',justifyContent:'space-between'}}>
-                                {m.imagen&&(
-                                    <Image source={{uri:m.imagen}} style={{width:133,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
-                                )}
-                                <View style={styles.div_c_body}>
-                                    <Text style={{paddingLeft:5}}>{m.titulo.length>15?m.titulo.slice(0,12)+"...":m.titulo}</Text>
+    {mostrarMetas?
+    <View>
+        <View>
+            <Text style={{textAlign:'center'}}>Metas</Text>
+        </View>
+        <View  style={{display:'flex',flexDirection:'row',justifyContent:'center',flexWrap:'wrap'}}>
+                {dataMetasAnother.length>0?
+                dataMetasAnother.map((m,i)=>{
+                    return(
+                        <Link asChild href={`/Metas/show/${m.id}`} key={i}>
+                            <Pressable>
+                                <View style={styles.proyecto_c}>
+                                    <View style={{display:'flex',justifyContent:'space-between'}}>
+                                        {m.imagen&&(
+                                            <Image source={{uri:m.imagen}} style={{width:133,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                        )}
+                                        <View style={styles.div_c_body}>
+                                            <Text style={{paddingLeft:5}}>{m.titulo.length>15?m.titulo.slice(0,12)+"...":m.titulo}</Text>
+                                        </View>
+                                    </View>
                                 </View>
-                            </View>
-                        </View>
-                    </Pressable>
-                </Link>
-            )
-        })
-        :
-            <Text style={{fontWeight:'bold',fontSize:15}}>No hay datos de Metas Actualmente</Text>
-         }
+                            </Pressable>
+                        </Link>
+                    )
+                })
+                :
+                    <Text style={{fontWeight:'bold',fontSize:15}}>No hay datos de Metas Actualmente</Text>
+                }
+        </View>
+    </View>
+    :""}
    </View>
+   
 
    </View>
    :
