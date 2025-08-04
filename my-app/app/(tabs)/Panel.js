@@ -252,7 +252,8 @@ const backgroud=animacionCirbleBtn.interpolate({
   outputRange:["transparent","#a3a3a3"]
 })
 const [imagenSeleccionada, setimagenSeleccionada] = useState(null)
-
+const anchoPantalla=Dimensions.get('window').width
+const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.length
   return (
       <ScrollView>
         
@@ -282,17 +283,17 @@ const [imagenSeleccionada, setimagenSeleccionada] = useState(null)
     <View style={{marginLeft:30,marginBottom:10}}>
        <Text style={{fontSize:13}}>Metas para este {new Date().getFullYear()}</Text>
     </View>   
-   <ScrollView  horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{paddingHorizontal:30,alignItems:"center"}}>
-    <View style={styles.contenedorCarrusel}>
+   <ScrollView  horizontal showsHorizontalScrollIndicator={false} scrollEnabled={metas.length>=5} contentContainerStyle={{paddingHorizontal:30,alignItems:"center"}}>
+    <View style={[styles.contenedorCarrusel]}>
       
         {metas.map((m)=>{
           return(
             <Link href={`/Metas/show/${m.id}`} key={m.id} asChild>
             <Pressable>
               <View style={{justifyContent:'center',alignItems:'center'}}>
-                <Image source={{uri:m.imagen}} style={styles.imagenCarrusel}></Image>
-                <View style={styles.TextCarrusel}>
-                  <Text>{m.titulo.length>13?m.titulo.slice(0,13)+"...":m.titulo}</Text>
+                <Image source={{uri:m.imagen}} style={[styles.imagenCarrusel,{width:metas.length>=5?110:anchoImagen}]}></Image>
+                <View style={[styles.TextCarrusel,{width:metas.length>=5?110:anchoImagen}]}>
+                  <Text numberOfLines={1}>{m.titulo}</Text>
                 </View>
             </View>
             </Pressable>
@@ -623,15 +624,16 @@ const styles=StyleSheet.create({
         display:'flex',
         flexDirection:"row",
          overflow:"hidden",
-        justifyContent:'center',     
-        
+        justifyContent:'center',
+        alignItems: 'center',
         
         
                 
         
     },
     TextCarrusel:{
-      width:110,      
+      
+            
       padding:5,
       borderWidth:2,
       borderStyle:'solid',
@@ -644,7 +646,7 @@ const styles=StyleSheet.create({
     },
     imagenCarrusel:{
         borderColor:'white',        
-        width:110,
+        
         height:250,
         borderTopLeftRadius:10,
         borderTopRightRadius:10,
