@@ -96,4 +96,7 @@ export const IconClose=()=>{
 }
 export const IconLock=()=>{
     return <AntDesign name="lock" size={20} color="black" />
+}
+export const IconEntrada=()=>{
+    return <AntDesign name="rightcircle" size={24} color="black" />
 } 
