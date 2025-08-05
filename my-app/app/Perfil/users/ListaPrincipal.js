@@ -9,21 +9,20 @@ import axios from 'axios'
 import constantes from "expo-constants"
 export default function ListaPrincipal(){
     const host=constantes.expoConfig.extra.host
-    const {estado}=useLocalSearchParams()    
+    const {estado,usuario}=useLocalSearchParams()    
     const [estadofollow, setestadofollow] = useState(estado)   
     const {user}=useUser()
     const [dataUser, setdataUser] = useState([])
+    const vistaUsuario=usuario||user.id
     const ShowUserPrincipal=async()=>{
-        const {data}=await axios.get(`http://${host}:4000/usuarios/s/${user.id}`)
+        const {data}=await axios.get(`http://${host}:4000/usuarios/s/${vistaUsuario}`)
         setdataUser(data)
-    }
+    }    
     useFocusEffect(
-        useCallback(()=>{
-            if(user.id){
-                ShowUserPrincipal()
-            }
-        },[user.id])
-    )
+        useCallback(()=>{           
+                ShowUserPrincipal()            
+        },[vistaUsuario])
+    )    
     return(
     <>    
     <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center",margin:10}}>
@@ -52,9 +51,9 @@ export default function ListaPrincipal(){
     </View>
     <View>
         {estadofollow=="siguiendo"?
-        <ListaSiguiendo></ListaSiguiendo>
+        <ListaSiguiendo usuario={vistaUsuario}></ListaSiguiendo>
         :
-        <ListaSeguidores></ListaSeguidores>
+        <ListaSeguidores usuario={vistaUsuario}></ListaSeguidores>
         }
     </View>
     
