@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Link, Stack, useFocusEffect, useLocalSearchParams } from 'expo-router'
+import { Link, Stack, useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Image, Pressable, ScrollView, StyleSheet, Text, ToastAndroid, View } from 'react-native'
 import constantes from "expo-constants"
@@ -150,6 +150,20 @@ export default function UserDiferent() {
     )
     const [estadouser, setestadouser] = useState("actividades")
     const [mostrarMetas, setmostrarMetas] = useState(false)
+    const navegar=useRouter()
+    const navegarListaSiguiendo=()=>{
+    navegar.push({
+        pathname:"Perfil/users/ListaPrincipal",
+        params:{estado:"siguiendo",usuario:id}
+    })
+   }
+   
+   const navegarListaFollow=()=>{
+    navegar.push({
+        pathname:"Perfil/users/ListaPrincipal",
+        params:{estado:"seguidor",usuario:id}
+    })
+   }
     return (    
     <>
         
@@ -164,15 +178,19 @@ export default function UserDiferent() {
         <Text >{UserDiferent.correo}</Text>
     </View>
     <View style={styles.contenedor_sub}>
-        <View style={styles.box}>
-            <Text>{myfollows}</Text>
-            
-            <Text>Siguiendo </Text>
-        </View>
-        <View style={styles.box}>
-            <Text>{countSeguidores}</Text>
-            <Text>Seguidores</Text>
-        </View>
+        <Pressable onPress={()=>navegarListaSiguiendo()}>
+            <View style={styles.box}>
+                <Text>{myfollows}</Text>
+
+                <Text>Siguiendo</Text>
+            </View>
+        </Pressable>
+        <Pressable onPress={()=>navegarListaFollow()}>
+            <View style={styles.box}>
+                <Text>{countSeguidores}</Text>
+                <Text>Seguidores</Text>
+            </View>
+        </Pressable>
         <View style={styles.box}>
             <Text>{countLovePub}</Text>
             <Text>Me gusta</Text>
