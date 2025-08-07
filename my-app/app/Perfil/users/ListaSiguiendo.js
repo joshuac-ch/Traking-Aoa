@@ -7,17 +7,18 @@ import { useFocusEffect } from 'expo-router'
 import constantes from "expo-constants" 
 import ListaFollos from '../../../components/ListaFollos'
 
-export default function ListaSiguiendo() {
+export default function ListaSiguiendo({usuario}) {
     const {user}=useUser()
     const host=constantes.expoConfig.extra.host
     const [DataUser, setDataUser] = useState([])
+    
     const ShowUser=async()=>{
-    const {data}=await axios.get(`http://${host}:4000/usuarios/s/${user.id}`)
+    const {data}=await axios.get(`http://${host}:4000/usuarios/s/${usuario}`)
     setDataUser(data)
   }
   const [misSeguidores, setmisSeguidores] = useState([])  
   const ShowSeguidores=async()=>{
-        const {data}=await axios.get(`http://${host}:4000/listasiguiendo/usuario/${user.id}`)
+        const {data}=await axios.get(`http://${host}:4000/listasiguiendo/usuario/${usuario}`)
         setmisSeguidores(data)
     }
   useFocusEffect(
