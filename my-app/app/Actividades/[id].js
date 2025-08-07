@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useLocalSearchParams} from 'expo-router/build/hooks'
 import React, { useEffect, useState } from 'react'
-import { View,Text, StyleSheet, Image,TextInput, Pressable, Button  } from 'react-native'
+import { View,Text, StyleSheet, Image,TextInput, Pressable, Button, ScrollView  } from 'react-native'
 import Constantes from "expo-constants"
 import { useUser } from '../../components/UserContext'
 import { Stack, useRouter } from 'expo-router'
@@ -38,7 +38,26 @@ export default function DetalleActividad() {
     }
     const UpdateActividad=async()=>{
         try{
-            await axios.put(`http://${local}:4000/actividades/u/${id}`,Formdata)
+            let imagenURL=""
+            if(Formdata.imagen.startsWith("file://")){
+                const newData=new FormData()
+                newData.append("imagen",{
+                    uri:Formdata.imagen,
+                    name:"update-actividad.jpg",
+                    type:"image/jpeg"
+                })
+            
+            const response=await axios.post(`http://${local}:4000/upload`,newData,{
+                headers:{
+                    "Content-Type":"multipart/form-data"
+                }
+            })
+            imagenURL=response.data.url
+        }else{
+            imagenURL=Formdata.imagen
+        }
+    
+            await axios.put(`http://${local}:4000/actividades/u/${id}`,{...Formdata,imagen:imagenURL})
             alert("Se actualizaron los datos")
             //navegar.push("/Panel")
         }catch(err){
@@ -51,6 +70,7 @@ export default function DetalleActividad() {
        }
     },[id])
     const pickImage=async()=>{
+       
        let result=await ImagePicker.launchImageLibraryAsync({
            mediaTypes:['images','videos'],
            allowsEditing:true,
@@ -67,6 +87,7 @@ export default function DetalleActividad() {
     return (
    <>
    <Stack.Screen options={{title:`Actividad N°${id}`}}></Stack.Screen>
+    <ScrollView>
     <View>        
         {detalleactividad!=null?
         <View style={styles.contenedor}>
@@ -110,6 +131,7 @@ export default function DetalleActividad() {
         </View>
         :<Text>No hay datos</Text>}
     </View>
+    </ScrollView>
    </>
   )
 }
