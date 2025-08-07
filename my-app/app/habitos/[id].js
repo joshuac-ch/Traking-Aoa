@@ -1,6 +1,6 @@
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router'
 import React, { useEffect, useState } from 'react'
-import { View,Text, TextInput, Image, StyleSheet, Pressable, Switch, Button, ToastAndroid } from 'react-native'
+import { View,Text, TextInput, Image, StyleSheet, Pressable, Switch, Button, ToastAndroid, ScrollView } from 'react-native'
 import constantes from "expo-constants"
 import axios from 'axios'
 import { IconFrecuencia, IconText, IconTitle } from '../../assets/Icons'
@@ -39,9 +39,28 @@ export default function DetalleHabito() {
   }
   const UpdateHabitos=async()=>{
     try{
-        await axios.put(`http://${host}:4000/habitos/u/${id}`,FormDataHabitos)
-        ToastAndroid.show("Se actualizaron los datos",ToastAndroid.SHORT)
-        navegar.push("/Panel")
+        let ImageUrl=""
+        if(FormDataHabitos.imagen.startsWith("file://")){
+            const newData2=new FormData()
+            newData2.append("imagen",{
+                uri:FormDataHabitos.imagen,
+                name:"update-habitos.jpg",
+                type:"image/jpeg"
+            })
+        
+        const response=await axios.post(`http://${host}:4000/upload`,newData2,{
+            headers:{
+                "Content-Type":"multipart/form-data"
+            }
+        })
+        ImageUrl=response.data.url
+        }else{
+            ImageUrl=FormDataHabitos.imagen
+        }
+        await axios.put(`http://${host}:4000/habitos/u/${id}`,{...FormDataHabitos,imagen:ImageUrl})
+        alert("se realizo el registro")
+        //ToastAndroid.show("Se actualizaron los datos",ToastAndroid.SHORT)
+        //navegar.push("/Panel")
     }catch(err){
         alert(err.message)
     }
@@ -71,6 +90,7 @@ export default function DetalleHabito() {
     return (
     <>
     <Stack.Screen options={{title:`Habito N°${id}`}}></Stack.Screen>
+    <ScrollView>
     <View>
        {FormDataHabitos!=null?
        <View style={styles.contenedorP}>
@@ -131,6 +151,7 @@ export default function DetalleHabito() {
        </View>
        :<Text>No hay datos</Text>}
     </View>
+    </ScrollView>
     </>
   )
 }
