@@ -39,8 +39,8 @@ export default function index() {
                 </Pressable>
             </Link>
        </View>
-       {habitos!=null?
-       <View>
+       {habitos.length>0?
+       <View >
         {habitos.map((h)=>{
             return(
                 <Link key={h.id} href={`/Habitos/${h.id}`} asChild>
@@ -86,8 +86,11 @@ const styles=StyleSheet.create({
         justifyContent:'space-between',
         alignContent:'center',
         boxShadow:'0px 0px 8px 1px black',
-        margin:10,
-        padding:10,
+        padding:5,
+        marginLeft:10,
+        marginRight:10,
+        marginTop:7,
+        marginBottom:7,
         borderRadius:20        
     },
     contenedorHeader:{
