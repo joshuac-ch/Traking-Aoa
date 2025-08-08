@@ -10,6 +10,8 @@ const { getAllpublicaciones, getPublicacionFollow, GetPublicacionActividadXuser,
 const { InsertLove, ConteoLikes, RemoveLove, GetLikesUsuario, ShowLoves, ShowLovesCount } = require('../controllers/likesController')
 const { getAllNotificacionXUser, getAllNotificaciones, getAllNotisLikes, getAllNotisFollow } = require('../controllers/NotiController')
 const { CreateComentario, GetComentarioPublicacion } = require('../controllers/comentarioController')
+const path=require('path')
+const multer=require('multer')
 module.exports=router=express()
 
 router.get("/usuarios",GetUser)
@@ -98,3 +100,23 @@ router.get("/notificaciones/user/follow/:segID",getAllNotisFollow)
 
 router.post("/comentarios/publicaciones",CreateComentario)
 router.get("/comentarios/publicaciones/:pubID",GetComentarioPublicacion)
+//subir fotos
+// Configurar almacenamiento con multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, '../../uploads')); // Asegúrate que esta carpeta exista
+  },
+  filename: (req, file, cb) => {
+    const uniqueName = Date.now() + '-' + file.originalname;
+    cb(null, uniqueName);
+  }
+});
+const upload = multer({ storage });
+// ✅ Ruta para subir imagen
+router.post("/upload", upload.single('imagen'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No se subió ninguna imagen.' });
+  }
+  const imageUrl = `http://192.168.18.28:4000/uploads/${req.file.filename}`;
+  res.status(200).json({ url: imageUrl });
+});
