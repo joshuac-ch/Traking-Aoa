@@ -44,9 +44,27 @@ export default function DetalleUser() {
   //Crear la funcion Update
     const updatePofile=async()=>{      
       try{
-        await axios.put(`http://${host}:4000/usuarios/u/${id}`,formUsuarios)
+        let imageUrl=""
+        if(formUsuarios.imagen.startsWith("file://")){
+          const newData=new FormData()
+          newData.append("imagen",{
+            
+            uri:formUsuarios.imagen,
+            name:"update-perfil.jpg",
+            type:"image/jpeg"
+          })
+        const response=await axios.post(`http://${host}:4000/upload`,newData,{
+          headers:{
+            "Content-Type":"multipart/form-data"
+          }
+        })
+        imageUrl=response.data.url  
+        }else{
+          imageUrl=formUsuarios.imagen
+        }
+        await axios.put(`http://${host}:4000/usuarios/u/${id}`,{...formUsuarios,imagen:imageUrl})
         alert("Se actualizaron los datos")
-        navegar.push("/Panel")
+        //navegar.push("/Panel")
       }catch(err){
         alert("Hubo un error: "+err.message)
       }
