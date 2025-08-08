@@ -36,10 +36,24 @@ export default function DetalleMetas() {
     }    
 }
     const UpdateMeta=async()=>{
+        let imageUrl=""
+        if(FormDataMetas.imagen.startsWith("file://")){
+            const newDataMeta=new FormData()
+            newDataMeta.append("imagen",{
+                uri:FormDataMetas.imagen,
+                name:"update-metas",
+                type:"image/jpeg"
+            })
+            const response=await axios.post(`http://${host}:4000/upload`,newDataMeta,{headers:{"Content-Type":"multipart/form-data"}})
+            imageUrl=response.data.url
+        }else{
+            imageUrl=FormDataMetas.imagen
+        }
         try{
             await axios.put(`http://${host}:4000/metas/u/${id}`,{
                 ...FormDataMetas,               
-                meta_total:parseInt(FormDataMetas.meta_total)
+                meta_total:parseInt(FormDataMetas.meta_total),
+                imagen:imageUrl
             })
             alert("Se actualizaron los datos exitosamente")
             //navegar.push("/Panel")    
