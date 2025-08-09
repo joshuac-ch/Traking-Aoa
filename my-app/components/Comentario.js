@@ -79,7 +79,7 @@ export default function Comentario({pubID}) {
               <View>
                 <Image source={{uri:c.creador.imagen}} style={{margin:5,width:50,height:50,borderRadius:50}}></Image>
               </View>
-              <View style={{backgroundColor:"#c9c9c9",padding:5,marginLeft:5,width:270,borderRadius:10}}>
+              <View style={{backgroundColor:"#c9c9c9",padding:5,marginLeft:5,marginRight:5,flex:1,borderRadius:10}}>
                 <Text style={{fontWeight:"bold"}}>{c.creador.nombre}{c.creador.apellido}</Text>
                 <Text>{c.comentario.comentario}</Text>
                 <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
