@@ -218,12 +218,12 @@ export default function Panel() {
       <Pressable onPress={() => navegar(ruta_principal)}>
         <View style={styles.btn_router}>
           <IconLeft />         
-            <Text style={{marginLeft: 10}}>Ir a {label}</Text>
+            <Text style={{paddingLeft: 10,textAlignVertical:"center"}}>Ir a {label}</Text>
           </View>
       </Pressable>
 
       <Pressable onPress={() => navegar(create)} >
-        <View>
+        <View style={{paddingRight:5}}>
           <IconAdd />
         </View>
       </Pressable>
@@ -585,11 +585,12 @@ const styles=StyleSheet.create({
   },
   contenedorpresabe:{
     flexDirection:'row',
-    justifyContent:'space-between',
+    justifyContent:"center",
     alignItems:'center',
     borderRadius:20,
-    
-    paddingRight:10,
+    paddingLeft:5,
+    paddingRight:5,
+      
     boxShadow:'0px 0px 8px 1px black',
   },
     contenedor_perfil:{
