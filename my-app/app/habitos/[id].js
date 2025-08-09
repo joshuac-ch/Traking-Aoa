@@ -41,14 +41,14 @@ export default function DetalleHabito() {
     try{
         let ImageUrl=""
         if(FormDataHabitos.imagen.startsWith("file://")){
-            const newData2=new FormData()
-            newData2.append("imagen",{
+            const newDataPerfil=new FormData()
+            newDataPerfil.append("imagen",{
                 uri:FormDataHabitos.imagen,
                 name:"update-habitos.jpg",
                 type:"image/jpeg"
             })
         
-        const response=await axios.post(`http://${host}:4000/upload`,newData2,{
+        const response=await axios.post(`http://${host}:4000/upload`,newDataPerfil,{
             headers:{
                 "Content-Type":"multipart/form-data"
             }
