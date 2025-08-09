@@ -46,7 +46,7 @@ export default function Buscardor() {
    <ScrollView>
     
      <Stack.Screen options={{headerShown:false}}></Stack.Screen>
-     <View style={{flexDirection:"row",alignItems:"center",justifyContent:"center",marginTop:60}}>
+     <View style={{flexDirection:"row",alignItems:"center",justifyContent:"center",marginTop:60,}}>
         <View>
             <Image source={{uri:creador.imagen}} style={{width:50,borderRadius:50,height:50}}></Image>
         </View>
@@ -159,7 +159,7 @@ const styles=StyleSheet.create({
         padding:3,  
         borderStyle:'solid',
         borderWidth:2,
-        width:300,
+        width:290,
         borderColor:'black',
         borderRadius:50,        
     }
@@ -192,7 +192,7 @@ const styles=StyleSheet.create({
         borderStyle:'solid',
         borderColor:'black',
         borderRadius:10,
-        width:350,
+        width:340,
         height:70,
         margin:10,
         padding:10,
