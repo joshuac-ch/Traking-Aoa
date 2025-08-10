@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Habitos from '../../hooks/Habitos'
 import Actividades from '../../hooks/Actividades'
 import { Link, Stack, useLocalSearchParams, useRouter } from 'expo-router'
-import { Button, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { ActivityIndicator, Button, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import usuarios from '../../hooks/usuarios'
 import Metas from '../../hooks/Metas'
 import { useUser } from '../../components/UserContext'
@@ -118,7 +118,7 @@ export default function BusSearch() {
         <IconBack></IconBack>
     </Pressable>
     </Link>
-    <TextInput onChangeText={text=>setdatosbuscados(text)} value={datosbuscados}  placeholder='buscar...'></TextInput>
+    <TextInput style={{width:250}} onChangeText={text=>setdatosbuscados(text)} value={datosbuscados}  placeholder='buscar...'></TextInput>
     
     <IconSeach style={styles.icon_Search}></IconSeach>
    </View>
@@ -231,8 +231,8 @@ export default function BusSearch() {
                 )
             })
         :
-        <View style={styles.contenedor_no_datos}>
-            <Text style={styles.no_datos}>no ha datos</Text>
+        <View style={styles.contenedor_no_datos}>            
+            <ActivityIndicator size="large" color={"purple"}></ActivityIndicator>
         </View>}
     </View>
    </View>
@@ -258,8 +258,7 @@ const styles=StyleSheet.create({
         alignContent:'center'
         
     },
-    contenedor_no_datos:{
-       
+    contenedor_no_datos:{        
         margin:20,
         height:400,
         width:350,
