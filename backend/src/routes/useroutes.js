@@ -117,6 +117,6 @@ router.post("/upload", upload.single('imagen'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: 'No se subió ninguna imagen.' });
   }
-  const imageUrl = `http://192.168.18.28:4000/uploads/${req.file.filename}`;
+  const imageUrl = `http://192.168.18.20:4000/uploads/${req.file.filename}`;
   res.status(200).json({ url: imageUrl });
 });
