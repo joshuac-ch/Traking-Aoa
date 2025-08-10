@@ -51,7 +51,7 @@ export default function Buscardor() {
             <Image source={{uri:creador.imagen}} style={{width:50,borderRadius:50,height:50}}></Image>
         </View>
         <View style={styles.buscar}>
-            <TextInput onChangeText={text=>setdatosbuscados(text)} value={datosbuscados}  placeholder='buscar...'></TextInput>
+            <TextInput style={{padding:10,width:240,borderRadius:20}} onChangeText={text=>setdatosbuscados(text)} value={datosbuscados}  placeholder='buscar...'></TextInput>
             <Pressable onPress={(EnviarSearch)}>
                 <IconSeach style={styles.icon_Search}></IconSeach>
             </Pressable>
