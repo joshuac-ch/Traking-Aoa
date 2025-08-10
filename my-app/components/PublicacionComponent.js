@@ -66,8 +66,10 @@ export default function PublicacionComponent({datosUser,datasRutina,publicacionI
 }
 const styles=StyleSheet.create({
     contenedor_principal:{
-        margin:20,
-        
+        marginLeft:20,
+        marginRight:20,
+        marginTop:20,
+        marginBottom:40,
         backgroundColor:"white",
         borderRadius:20,
         borderWidth:2,
