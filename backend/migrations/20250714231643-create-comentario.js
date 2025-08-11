@@ -11,9 +11,10 @@ module.exports = {
       },
       publicacion_id:{
             type:Sequelize.BIGINT,
+            onDelete:"CASCADE",
             references:{
             model:"publicaciones",
-            key:"id"
+            key:"id",
       }
       },
       usuario_id:{

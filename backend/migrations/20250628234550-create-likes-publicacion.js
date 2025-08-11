@@ -23,6 +23,7 @@ module.exports = {
       publicacion_id: {
         type: Sequelize.BIGINT,
         allowNull:false,
+        onDelete:"CASCADE",
         references:{
           model:"publicaciones",
           key:"id"
