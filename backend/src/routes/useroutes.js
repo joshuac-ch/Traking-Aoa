@@ -6,7 +6,7 @@ const { GetMetas, InsertMetas, ShowMetas, UpdateMetas, DeleteMetas, GetMetasAll 
 const { getActividades, InsetActividades, ShowActividaes, UpdateActividades, DestroyActividaes, getAllActivites, CreatePublicacionActividades, GetAllPublicacionesActividades } = require('../controllers/actividadesdiariasController')
 const { getEmociones, InsertEmociones } = require('../controllers/emocionesController')
 const { GetSeguidor, CreateSeguidor, GetActividadesSeguidor, DeleteActividadSeguidor, showUserFollow, EstatusFollow, GetHabitosSeguidor, ContadorSeguidores, ContadorSiguiendo, ListaSeguidores, ListaSiguiendo } = require('../controllers/seguidorController')
-const { getAllpublicaciones, getPublicacionFollow, GetPublicacionActividadXuser, GetPublicacionHabitosUser } = require('../controllers/publicacionController')
+const { getAllpublicaciones, getPublicacionFollow, GetPublicacionActividadXuser, GetPublicacionHabitosUser, DeletePublicacion } = require('../controllers/publicacionController')
 const { InsertLove, ConteoLikes, RemoveLove, GetLikesUsuario, ShowLoves, ShowLovesCount } = require('../controllers/likesController')
 const { getAllNotificacionXUser, getAllNotificaciones, getAllNotisLikes, getAllNotisFollow } = require('../controllers/NotiController')
 const { CreateComentario, GetComentarioPublicacion } = require('../controllers/comentarioController')
@@ -50,6 +50,7 @@ router.delete("/actividades/d/:id",DestroyActividaes)
 router.post("/publicacion/actividad/:id/:userID",CreatePublicacionActividades)
 
 router.get("/publicaciones/actividades/all",GetAllPublicacionesActividades)
+router.delete("/publicaciones/r/d/:id",DeletePublicacion)
 //----------------------------------------------------
 
 router.get("/emociones",getEmociones)
