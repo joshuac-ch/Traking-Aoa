@@ -1,9 +1,23 @@
 const actividades_diarias = require("../../models/actividades_diarias")
 const habitos = require("../../models/habitos")
+const noti = require("../../models/noti")
 const publicaciones = require("../../models/publicaciones")
 const Seguidor = require("../../models/seguidores")
 const usuario = require("../../models/usuario")
-
+const DeletePublicacion=async(req,res)=>{
+    try{
+        const {id}=req.params
+        const modelo=await publicaciones.destroy({where:{contenido_id:id}})
+        const notificacion=await noti.destroy({where:{contenido_id:id}})
+        if(!modelo||!notificacion){
+            return res.status(404).json({message:`No se encontro esa publicacion: ${id}`})
+        }
+        res.status(200).json({message:"Se elimino correctamente"})
+    }catch(err){
+        console.error(err.message)
+    }
+    
+}
 const getAllpublicaciones=async(req,res)=>{
     const modelo=await publicaciones.findAll()
     if(!modelo){
@@ -75,4 +89,4 @@ const GetPublicacionHabitosUser=async(req,res)=>{
 }
 
 //Crear aqui el pos publicacion y enviarselo a actividaes y habitos 
-module.exports={getAllpublicaciones,getPublicacionFollow,GetPublicacionActividadXuser,GetPublicacionHabitosUser}
+module.exports={getAllpublicaciones,getPublicacionFollow,GetPublicacionActividadXuser,GetPublicacionHabitosUser,DeletePublicacion}
