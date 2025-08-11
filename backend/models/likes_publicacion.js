@@ -9,7 +9,7 @@ const sequelize=require("../src/config/database")
      */
     static associate(models) {
       // define association here
-      likes_publicacion.belongsTo(models.publicaciones,{foreignKey:"publicacion_id"})
+      likes_publicacion.belongsTo(models.publicaciones,{foreignKey:"publicacion_id",onDelete:"CASCADE"})
       //likes_publicacion.belongsTo(models.usuario,{foreignKey:"usuario_id"})
 
     }
