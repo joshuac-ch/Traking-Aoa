@@ -1,17 +1,26 @@
 const actividades_diarias = require("../../models/actividades_diarias")
 const habitos = require("../../models/habitos")
+const likes_publicacion = require("../../models/likes_publicacion")
 const noti = require("../../models/noti")
 const publicaciones = require("../../models/publicaciones")
 const Seguidor = require("../../models/seguidores")
 const usuario = require("../../models/usuario")
-const DeletePublicacion=async(req,res)=>{
+const DeletePublicacion=async(req,res)=>{//mejorarlo
     try{
         const {id}=req.params
-        const modelo=await publicaciones.destroy({where:{contenido_id:id}})
-        const notificacion=await noti.destroy({where:{contenido_id:id}})
-        if(!modelo||!notificacion){
-            return res.status(404).json({message:`No se encontro esa publicacion: ${id}`})
+        const modelo=await publicaciones.findOne({where:{contenido_id:id}})
+        if(!modelo){
+            return res.status(404).json({message:"No se encontro esa publicacion con ese contenido"})
         }
+        let publicacion=modelo.id
+        await noti.destroy({where:{contenido_id:id}})
+        const likes=await likes_publicacion.findOne({where:{publicacion_id:publicacion}})
+        if(likes){
+            await likes_publicacion.destroy({where:{publicacion_id:publicacion}})
+            await noti.destroy({where:{contenido_id:publicacion,tipo:"likes"}})
+        }
+        await publicaciones.destroy({where:{contenido_id:id}})
+        
         res.status(200).json({message:"Se elimino correctamente"})
     }catch(err){
         console.error(err.message)
