@@ -99,4 +99,7 @@ export const IconLock=()=>{
 }
 export const IconEntrada=()=>{
     return <AntDesign name="rightcircle" size={24} color="black" />
+}
+export const IconShow=()=>{
+    return <AntDesign name="eye" size={24} color="black" />
 } 
