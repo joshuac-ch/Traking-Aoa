@@ -275,7 +275,7 @@ export default function Perfil() {
 
                                 <View style={{display:'flex',justifyContent:'space-between'}}>
                                 {a.rutina.imagen&&(
-                                    <Image source={{uri:a.rutina.imagen}} style={{width:133,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                    <Image source={{uri:a.rutina.imagen}} style={{width:116,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                 
                                 )}
                                     <View style={styles.div_c_body}>
@@ -311,7 +311,7 @@ export default function Perfil() {
                             
                             <View style={{display:'flex',justifyContent:'space-between'}}>
                               {a.rutina.imagen&&(
-                                <Image source={{uri:a.rutina.imagen}} style={{width:133,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                <Image source={{uri:a.rutina.imagen}} style={{width:116,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                               )}
                               <View style={styles.div_c_body}>
                                     <Text style={{paddingLeft:5}}>{a.rutina.titulo.length>15?a.rutina.titulo.slice(0,12)+"...":a.rutina.titulo}</Text>
@@ -341,7 +341,7 @@ export default function Perfil() {
                             
                             <View style={{display:'flex',justifyContent:'space-between'}}>
                                {a.imagen &&(
-                                <Image source={{uri:a.imagen}} style={{width:133,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                <Image source={{uri:a.imagen}} style={{width:116,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                 
                                )}
                                <View style={styles.div_c_body}>
@@ -385,7 +385,7 @@ const styles=StyleSheet.create({
         borderColor:'black',
         borderStyle:'solid',
         borderRadius:5,
-        width:135,       
+        width:118,       
         height:180,
         marginTop:8,
         marginRight:0.8,
