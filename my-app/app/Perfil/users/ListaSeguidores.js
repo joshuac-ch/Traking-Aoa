@@ -8,17 +8,18 @@ import constantes from "expo-constants"
 import { Image } from 'react-native'
 import ListaFollos from '../../../components/ListaFollos'
 
-export default function ListaSeguidores() {
-  const {user}=useUser()
+export default function ListaSeguidores({usuario}) {
+    const {user}=useUser()
     const host=constantes.expoConfig.extra.host
     const [DataUser, setDataUser] = useState([])
+    
     const ShowUser=async()=>{
-    const {data}=await axios.get(`http://${host}:4000/usuarios/s/${user.id}`)
+    const {data}=await axios.get(`http://${host}:4000/usuarios/s/${usuario}`)
     setDataUser(data)
   }
   const [dataSeguidores, setdataSeguidores] = useState([])
   const ShowSeguidores=async()=>{
-    const {data}=await axios.get(`http://${host}:4000/listaseguidores/usuario/${user.id}`)
+    const {data}=await axios.get(`http://${host}:4000/listaseguidores/usuario/${usuario}`)
     setdataSeguidores(data)
   }
   useFocusEffect(
