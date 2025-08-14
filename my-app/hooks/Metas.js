@@ -8,7 +8,11 @@ export default function Metas() {
   const host=Constans.expoConfig.extra.host
   const FectMetas=async()=>{
     const {data}=await axios.get(`http://${host}:4000/metas/${user.id}`)
-    setmetas(data)
-  }
+    const metasUrl=data.map((m)=>({
+      ...m,
+      imagen:`http://${host}:4000/${m.imagen}`
+    }))
+    setmetas(metasUrl)
+  }  
   return {FectMetas,metas}
 }
