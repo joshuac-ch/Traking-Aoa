@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import Constants from "expo-constants"
 import { useUser } from '../components/UserContext';
+import GetImage from '../utils/GetImage';
 export default function Habitos() {
   const host=Constants.expoConfig.extra.host;
   const {user}=useUser()
@@ -9,7 +10,11 @@ export default function Habitos() {
   const FecthHabitos=async()=>{
     try{
         const {data}=await axios.get(`http://${host}:4000/habitos/${user.id}`)
-        sethabitos(data)
+        const habitosURl=data.map((h)=>({
+          ...h,
+          imagen:GetImage(h.imagen)
+        }))        
+        sethabitos(habitosURl)
     }catch(err){
         alert("Hubo un error",err.message)
     }
