@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Image, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { IconElipsis, IconHeart, IconReply } from '../assets/Icons'
 import Comentario from './Comentario'
-
+import GetImage from '../utils/GetImage'
 export default function PublicacionComponent({datosUser,datasRutina,publicacionID}) {
   const [imagenExpandida, setimagenExpandida] = useState(false)    
   return (
@@ -11,7 +11,7 @@ export default function PublicacionComponent({datosUser,datasRutina,publicacionI
             <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',margin:10}}>
                 <View style={{display:'flex',flexDirection:'row'}}>
                     <View >
-                        <Image source={{uri:datosUser.imagen}} style={{width:60,height:60,borderRadius:10,marginRight:10}}></Image>
+                        <Image source={{uri:GetImage(datosUser.imagen)}} style={{width:60,height:60,borderRadius:10,marginRight:10}}></Image>
                     </View>
                     <View>
                         <Text style={{fontWeight:'bold'}}>Creador</Text>
@@ -34,12 +34,12 @@ export default function PublicacionComponent({datosUser,datasRutina,publicacionI
                 </View>        
                 <View>
                     <Pressable onPress={()=>setimagenExpandida(true)}>
-                         <Image style={styles.imagen} source={{ uri: datasRutina.imagen }} />
+                         <Image style={styles.imagen} source={{ uri: GetImage(datasRutina.imagen) }} />
                     </Pressable>
                     <Modal visible={imagenExpandida} animationType="fade">
                         <View style={styles.modal}>
                         <Pressable style={styles.zona} onPress={()=>setimagenExpandida(false)}>
-                             <Image style={styles.imagen_expandida} source={{ uri: datasRutina.imagen }} />
+                             <Image style={styles.imagen_expandida} source={{ uri:GetImage(datasRutina.imagen) }} />
                         </Pressable>
                         </View>                    
                     </Modal>             
