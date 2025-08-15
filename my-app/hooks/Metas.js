@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import Constans from "expo-constants"
 import { useUser } from '../components/UserContext'
+import GetImage from '../utils/GetImage'
 export default function Metas() {
   const [metas, setmetas] = useState([])
   const {user}=useUser()
@@ -10,7 +11,7 @@ export default function Metas() {
     const {data}=await axios.get(`http://${host}:4000/metas/${user.id}`)
     const metasUrl=data.map((m)=>({
       ...m,
-      imagen:`http://${host}:4000/${m.imagen}`
+      imagen:GetImage(m.imagen)
     }))
     setmetas(metasUrl)
   }  
