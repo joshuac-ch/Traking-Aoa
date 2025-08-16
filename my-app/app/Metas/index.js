@@ -20,7 +20,7 @@ export default function index() {
         alert("Hubo un error"+err.message)
     }
   }
-  
+  console.log(metas)
   useFocusEffect(
     useCallback(()=>{
        if(user.id){
