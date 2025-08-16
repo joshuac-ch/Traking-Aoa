@@ -10,6 +10,7 @@ import { useUser } from '../../components/UserContext'
 import BusSearch from '../Buscador/bus'
 import { useHistoryial } from '../../components/HistorialProvider'
 import axios from 'axios'
+import GetImage from '../../utils/GetImage'
 import constantes from "expo-constants"
 export default function Buscardor() {
     const {FectUsuarios,dataUser}=usuarios()
@@ -48,7 +49,7 @@ export default function Buscardor() {
      <Stack.Screen options={{headerShown:false}}></Stack.Screen>
      <View style={{flexDirection:"row",alignItems:"center",justifyContent:"center",marginTop:60,}}>
         <View>
-            <Image source={{uri:creador.imagen}} style={{width:50,borderRadius:50,height:50}}></Image>
+            <Image source={{uri:GetImage(creador.imagen)}} style={{width:50,borderRadius:50,height:50}}></Image>
         </View>
         <View style={styles.buscar}>
             <TextInput style={{padding:10,width:240,borderRadius:20}} onChangeText={text=>setdatosbuscados(text)} value={datosbuscados}  placeholder='buscar...'></TextInput>
