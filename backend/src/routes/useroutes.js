@@ -6,7 +6,7 @@ const { GetMetas, InsertMetas, ShowMetas, UpdateMetas, DeleteMetas, GetMetasAll 
 const { getActividades, InsetActividades, ShowActividaes, UpdateActividades, DestroyActividaes, getAllActivites, CreatePublicacionActividades, GetAllPublicacionesActividades } = require('../controllers/actividadesdiariasController')
 const { getEmociones, InsertEmociones } = require('../controllers/emocionesController')
 const { GetSeguidor, CreateSeguidor, GetActividadesSeguidor, DeleteActividadSeguidor, showUserFollow, EstatusFollow, GetHabitosSeguidor, ContadorSeguidores, ContadorSiguiendo, ListaSeguidores, ListaSiguiendo } = require('../controllers/seguidorController')
-const { getAllpublicaciones, getPublicacionFollow, GetPublicacionActividadXuser, GetPublicacionHabitosUser, DeletePublicacion } = require('../controllers/publicacionController')
+const { getAllpublicaciones, getPublicacionFollow, GetPublicacionActividadXuser, GetPublicacionHabitosUser, DeletePublicacion, GetStatusPub } = require('../controllers/publicacionController')
 const { InsertLove, ConteoLikes, RemoveLove, GetLikesUsuario, ShowLoves, ShowLovesCount } = require('../controllers/likesController')
 const { getAllNotificacionXUser, getAllNotificaciones, getAllNotisLikes, getAllNotisFollow } = require('../controllers/NotiController')
 const { CreateComentario, GetComentarioPublicacion } = require('../controllers/comentarioController')
@@ -73,6 +73,8 @@ router.get("/publicaciones/feed/:userID",getPublicacionFollow)
 router.get("/publicacion/actividades/:userID",GetPublicacionActividadXuser)
 router.get("/publicacion/habitos/:userID",GetPublicacionHabitosUser)
 //--------------------------------------------------------------------------
+router.get("/publicacion/estado/:id",GetStatusPub)
+//--------------------------------------------------------------------------
 
 router.post("/publicacion/likes/i/:userID/:pubID",InsertLove)
 router.get("/publicacion/likes/conteo/:pubID",ConteoLikes)
@@ -118,6 +120,7 @@ router.post("/upload", upload.single('imagen'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: 'No se subió ninguna imagen.' });
   }
-  const imageUrl = `http://192.168.18.20:4000/uploads/${req.file.filename}`;
+  //const imageUrl = `http://192.168.18.27:4000/uploads/${req.file.filename}`;
+  const imageUrl = `uploads/${req.file.filename}`;
   res.status(200).json({ url: imageUrl });
 });
