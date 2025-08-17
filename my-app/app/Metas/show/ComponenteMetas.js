@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Image, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { IconElipsis, IconHeart, IconReply } from '../../../assets/Icons'
-
+import GetImage from '../../../utils/GetImage'
 export default function ComponenteMetas({datasRutina,datosUser}) {
   const [imagenExpandida, setimagenExpandida] = useState(false)    
   const fecha_inicio=new Date(datasRutina.fecha_inicio)
@@ -10,6 +10,7 @@ export default function ComponenteMetas({datasRutina,datosUser}) {
   const tiempo_total=fecha_final-fecha_inicio
   const tiempo_Acumulado=hoy-fecha_inicio
   const progreso=Math.min(tiempo_Acumulado/tiempo_total,1)
+ 
   //hacer un tipo recordatorio en aqui el componente meta que no sea publicacion sino algo como un logro 
   return (
     <ScrollView>
@@ -17,7 +18,7 @@ export default function ComponenteMetas({datasRutina,datosUser}) {
             <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',margin:10}}>
                 <View style={{display:'flex',flexDirection:'row'}}>
                     <View >
-                        <Image source={{uri:datosUser.imagen}} style={{width:60,height:60,borderRadius:10,marginRight:10}}></Image>
+                        <Image source={{uri:GetImage(datosUser.imagen)}} style={{width:60,height:60,borderRadius:10,marginRight:10}}></Image>
                     </View>
                     <View>
                         <Text style={{fontWeight:'bold'}}>Creador</Text>
@@ -46,12 +47,12 @@ export default function ComponenteMetas({datasRutina,datosUser}) {
                       
                 <View>
                     <Pressable onPress={()=>setimagenExpandida(true)}>
-                         <Image style={styles.imagen} source={{ uri: datasRutina.imagen }} />
+                         <Image style={styles.imagen} source={{ uri: GetImage(datasRutina.imagen) }} />
                     </Pressable>
                     <Modal visible={imagenExpandida} animationType="fade">
                         <View style={styles.modal}>
                         <Pressable style={styles.zona} onPress={()=>setimagenExpandida(false)}>
-                             <Image style={styles.imagen_expandida} source={{ uri: datasRutina.imagen }} />
+                             <Image style={styles.imagen_expandida} source={{ uri: GetImage(datasRutina.imagen) }} />
                         </Pressable>
                         </View>                    
                     </Modal>        
