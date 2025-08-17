@@ -11,6 +11,7 @@ import { useHistoryial } from '../../components/HistorialProvider'
 import { ToastAndroid } from 'react-native'
 import Metas from '../../hooks/Metas'
 import Comentario from '../../components/Comentario'
+import GetImage from '../../utils/GetImage'
 //crear rutas en el feed
 //mejororar diseño
 //crear el diseño par ael login
@@ -153,6 +154,9 @@ export default function Panel() {
 
   //tarea actuak
   //si eliminamos una actividad o un habitos tambien eliminar todo lo que este relacionado a el como la publicacion y el comentario y los likes
+
+
+  //implementar un loading al hacer click a la imagen hasta que cargue
     const cargarLikes = async () => {
     const { data } = await axios.get(`http://${host}:4000/publicacion/likes/getLove/${user.id}`)
     const likesMap = {}
@@ -265,7 +269,7 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
      
         <View key={miuser.id}  style={styles.contenedor_perfil}>
         <View style={{flexDirection:'row'}}>
-          <Image style={styles.image} source={{uri:miuser.imagen}}></Image>
+          <Image style={styles.image} source={{uri:GetImage(miuser.imagen)}}></Image>
         <View style={{flexDirection:'column',justifyContent:"flex-start",marginTop:10,height:20}}>{/*Verficar esto */}
             <Text >{miuser.nombre} {miuser.apellido}</Text>
             <Text style={{fontWeight:'bold'}}>{miuser.correo}</Text>
@@ -348,7 +352,7 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
                <Link href={`/Perfil/users/${d.creador.id}`} asChild>
                <Pressable>
                  <View>
-                  <Image source={{uri:d.creador.imagen}} style={{width:50,height:50,borderRadius:50,marginRight:15}}></Image>
+                  <Image source={{uri:GetImage(d.creador.imagen)}} style={{width:50,height:50,borderRadius:50,marginRight:15}}></Image>
                 </View>
                </Pressable>
                </Link>
@@ -368,7 +372,7 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
               <Text>{d.contendo.descripcion}</Text>
             </View>
               <Pressable onPress={()=>setimagenSeleccionada(d.contendo.imagen)}>
-                <Image style={{width:200,height:250,borderRadius:20,alignSelf:'center'}} source={{uri:d.contendo.imagen}}></Image>
+                <Image style={{width:200,height:250,borderRadius:20,alignSelf:'center'}} source={{uri:GetImage(d.contendo.imagen)}}></Image>
               </Pressable>
               <Modal visible={!!imagenSeleccionada} transparent={true} animationType='fade'>
                 <View style={{flex:1,backgroundColor:"black"}}>
@@ -387,7 +391,7 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
                   <IconClose></IconClose>
                 </Pressable>
                   <Pressable onPress={()=>setimagenSeleccionada(null)}>
-                    <Image style={{width:"100%",height:"100%",resizeMode:"contain",alignSelf:'center'}} source={{uri:imagenSeleccionada}}></Image>
+                    <Image style={{width:"100%",height:"100%",resizeMode:"contain",alignSelf:'center'}} source={{uri:GetImage(imagenSeleccionada)}}></Image>
                   </Pressable>
                 </View>
               </Modal>
