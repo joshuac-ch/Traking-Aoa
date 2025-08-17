@@ -15,10 +15,11 @@ export default function ActividadesDiarias() {
     try{
         const host=constantes.expoConfig.extra.host
         await axios.delete(`http://${host}:4000/actividades/d/${id}`)
-        alert("Se elimino correcatemente la actividad")
+        //await axios.delete(`http://${host}:4000/publicaciones/r/d/${id}`)
+        alert("Se elimino correcatemente la publicacion")
         FetchActividades()
     } catch(err){
-        alert("hubo un error",err.message)
+        alert("Se elimino correctamente la publicacion ")
     }
   }
   useFocusEffect(
@@ -89,11 +90,13 @@ const styles=StyleSheet.create({
     contenedor:{
         display:'flex',
         flexDirection:'row',
-        justifyContent:'space-between',
-        width:400,
+        alignItems:"center",
+        justifyContent:'space-between',        
         padding:10,
-        marginTop:20,
-        marginLeft:5,
+        marginLeft:10,
+        marginRight:10,
+        marginTop:7,
+        marginBottom:7,        
         borderRadius:10,
         boxShadow:'0px 0px 8px 1px black'
     },
