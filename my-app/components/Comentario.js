@@ -34,7 +34,7 @@ const [loadding, setloadding] = useState(false)
       setloadding(true)
       if(publicar.comentario!==""){
         await axios.post(`http://${host}:4000/comentarios/publicaciones`,publicar)
-        alert("Se creo el comentario")
+       
         setloadding(false)
         GetComentariosPub()
       }else{
