@@ -8,6 +8,7 @@ import { useHistoryial } from '../../../components/HistorialProvider'
 import { useUser } from '../../../components/UserContext'
 import { IconActivity, IconHeart } from '../../../assets/Icons'
 import LoveUser from "./LoveUser.js"
+import GetImage from '../../../utils/GetImage.js'
 
 export default function UserDiferent() {
     const [UserDiferent, setUserDiferent] = useState([])
@@ -174,7 +175,7 @@ export default function UserDiferent() {
         <Text >{UserDiferent.nombre}</Text>
     </View>
     <View style={{alignItems:'center'}}>
-        <Image style={styles.image} source={{uri:UserDiferent.imagen}}></Image>
+        <Image style={styles.image} source={{uri:GetImage(UserDiferent.imagen)}}></Image>
         <Text >{UserDiferent.correo}</Text>
     </View>
     <View style={styles.contenedor_sub}>
@@ -250,7 +251,7 @@ export default function UserDiferent() {
                                         <View style={{display:'flex',justifyContent:'space-between'}}>
                                            
                                            {a.rutina.imagen&&(
-                                            <Image source={{uri:a.rutina.imagen}} style={{width:133,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                            <Image source={{uri:GetImage(a.rutina.imagen)}} style={{width:116,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                             )}
                                            <View style={styles.div_c_body}>
                                                
@@ -277,7 +278,7 @@ export default function UserDiferent() {
                         <View style={styles.proyecto_c}>
                             <View style={{display:'flex',justifyContent:'space-between'}}>
                                 {h.rutina.imagen&&(
-                                    <Image source={{uri:h.rutina.imagen}} style={{width:133,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                    <Image source={{uri:GetImage(h.rutina.imagen)}} style={{width:116,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                 )}
                                 <View style={styles.div_c_body}>
                                     <Text style={{paddingLeft:5}}>{h.rutina.titulo.length>15?h.rutina.titulo.slice(0,12)+"...":h.rutina.titulo}</Text>
@@ -306,7 +307,7 @@ export default function UserDiferent() {
                                 <View style={styles.proyecto_c}>
                                     <View style={{display:'flex',justifyContent:'space-between'}}>
                                         {m.imagen&&(
-                                            <Image source={{uri:m.imagen}} style={{width:133,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                            <Image source={{uri:GetImage(m.imagen)}} style={{width:116,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                         )}
                                         <View style={styles.div_c_body}>
                                             <Text style={{paddingLeft:5}}>{m.titulo.length>15?m.titulo.slice(0,12)+"...":m.titulo}</Text>
@@ -456,7 +457,7 @@ const styles=StyleSheet.create({
         borderColor:'black',
         borderStyle:'solid',
         borderRadius:5,
-        width:135,
+        width:118,
         height:180,
         marginTop:8,
         marginRight:0.8,
