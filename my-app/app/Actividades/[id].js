@@ -1,11 +1,15 @@
 import axios from 'axios'
 import { useLocalSearchParams} from 'expo-router/build/hooks'
-import React, { useEffect, useState } from 'react'
-import { View,Text, StyleSheet, Image,TextInput, Pressable, Button, ScrollView  } from 'react-native'
+import React, { useCallback, useEffect, useState } from 'react'
+import { View,Text, StyleSheet, Image,TextInput, Pressable, Button, ScrollView, ActivityIndicator, Modal  } from 'react-native'
 import Constantes from "expo-constants"
 import { useUser } from '../../components/UserContext'
-import { Stack, useRouter } from 'expo-router'
+import { Stack, useFocusEffect, useRouter } from 'expo-router'
 import * as ImagePicker from 'expo-image-picker'
+import {IconCloseImage, IconDelete, IconShow } from '../../assets/Icons'
+import GetImage from '../../utils/GetImage'
+import PublicacionComponent from '../../components/PublicacionComponent'
+import PubicacionPrev from '../../components/PubicacionPrev'
 export default function DetalleActividad() {
   const {id}=useLocalSearchParams()
   const navegar=useRouter()
@@ -19,7 +23,7 @@ export default function DetalleActividad() {
     fecha:'',
     imagen:''
 
-  })
+  })  
   //Traer Actividades
     const FetchActividadesShow=async()=>{
         try{
@@ -30,14 +34,17 @@ export default function DetalleActividad() {
                 descripcion:data.descripcion,
                 usuario_id:data.usuario_id,
                 fecha:data.fecha,
-                imagen:data.imagen,
+                imagen:GetImage(data.imagen),
             })
         }catch(err){
             alert("Hubo un error: "+err.message)
         }
     }
+    const [loadding, setloadding] = useState(false)
     const UpdateActividad=async()=>{
+        setloadding(true)
         try{
+            
             let imagenURL=""
             if(Formdata.imagen.startsWith("file://")){
                 const newData=new FormData()
@@ -59,6 +66,7 @@ export default function DetalleActividad() {
     
             await axios.put(`http://${local}:4000/actividades/u/${id}`,{...Formdata,imagen:imagenURL})
             alert("Se actualizaron los datos")
+            setloadding(false)
             //navegar.push("/Panel")
         }catch(err){
             alert(err.message)
@@ -80,33 +88,104 @@ export default function DetalleActividad() {
        if(!result.canceled){
            setFordata({...Formdata,imagen:result.assets[0].uri})
        }}
+       
     const publicar=async()=>{
         await axios.post(`http://${local}:4000/publicacion/actividad/${id}/${user.id}`)
         alert("Se realizo la publicacion") 
     }
+    const DeletePublicacion=async()=>{
+        try{
+            await axios.delete(`http://${local}:4000/publicaciones/r/d/${id}`)
+            alert("Se elimino la publicacion")
+        }catch(err){
+            alert(err.message)
+        }
+    }
+    
+    const [valorPubID, setvalorPubID] = useState("borrador")
+    const Estado=async()=>{        
+        const {data}=await axios.get(`http://${local}:4000/publicacion/estado/${id}`)
+        if(data){                       
+            setvalorPubID("Subido")
+        }     
+           
+    }
+     const [dataCreador, setdataCreador] = useState()
+    const GetCreador=async()=>{
+        const {data}=await axios.get(`http://${local}:4000/usuarios/s/${user.id}`)
+        setdataCreador(data)             
+    }
+    
+    useFocusEffect(
+        useCallback(()=>{
+            if(id){
+                Estado()
+                GetCreador()
+                 
+            }
+        },[id])
+    )
+    const [mostrarImagen, setmostrarImagen] = useState(false)
+    const ShowImage=()=>{
+        setmostrarImagen(true)
+    }   
+    
     return (
    <>
    <Stack.Screen options={{title:`Actividad N°${id}`}}></Stack.Screen>
     <ScrollView>
-    <View>        
+        
+        <View>        
         {detalleactividad!=null?
         <View style={styles.contenedor}>
-            <Pressable onPress={publicar} style={{alignSelf:'flex-end',borderRadius:10,padding:10,backgroundColor:"purple",boxShadow:"0px 0px 7px 1px purple"}}>
+            <View>
+                <Text>Estado: {valorPubID}</Text>
+            </View>
+            <View style={{flexDirection:"row",justifyContent:"space-between",paddingTop:10}}>
+                <Pressable onPress={DeletePublicacion} style={{backgroundColor:"red",borderRadius:10,boxShadow:"0px 0px 7px 1px red",padding:10}}>
                 <View>
-                    <Text style={{color:"white"}}>Publicar</Text>
+                    <Text style={{color:"white"}}>Eliminar Publicacion</Text>
                 </View>
-            </Pressable>
+                </Pressable>
+                <Pressable onPress={publicar} style={{alignSelf:'flex-end',borderRadius:10,padding:10,backgroundColor:"purple",boxShadow:"0px 0px 7px 1px purple"}}>
+                    <View>
+                        <Text style={{color:"white"}}>Publicar</Text>
+                    </View>
+                </Pressable>
+            </View>
 
            <View>
              <View  style={styles.contenedor_img} className='p-4'>
                 {Formdata.imagen&&(
                     <Image source={{uri:Formdata.imagen}} style={{width:200,height:250,borderRadius:20}}></Image>
                 )}
-                <Pressable onPress={pickImage} >
+                <View style={{flexDirection:"row",alignItems:"center",justifyContent:"center"}}>
+                    <Pressable onPress={pickImage} >
                     <View style={styles.button}>
                         <Text>Seleccionar Imagen</Text>
                     </View>
-                </Pressable>
+                    </Pressable>
+                    <Pressable onPress={ShowImage} style={{borderWidth:2,borderColor:"black",borderStyle:"solid",padding:8,borderRadius:10}}>
+                        <View >
+                            <IconShow></IconShow>
+                        </View>
+                    </Pressable>
+                </View>
+                <Modal visible={mostrarImagen} transparent={true} animationType='fade'>
+                    <View style={{backgroundColor:"white",position:"absolute",borderWidth:2,borderColor:"black",top:60,left:10,height:`${92}%`,width:`${95}%`,borderRadius:20}}>
+                        <View style={{alignSelf:"flex-end",marginTop:10,marginRight:10}}>
+                            <Pressable onPress={()=>setmostrarImagen(false)}>
+                                <IconCloseImage></IconCloseImage> 
+                            </Pressable>                       
+                        </View>
+                        <View>
+                            {/*No usar este crear otro sin el get ImAGE, PARA PREVISUALIZAR */}
+                            <PubicacionPrev datosUser={dataCreador} datasRutina={Formdata}></PubicacionPrev>
+                            
+                        </View>
+
+                    </View>
+                </Modal>
             </View>
             <View className=''>
                 <Text className='font-black'>Titutlo: </Text>
@@ -123,14 +202,23 @@ export default function DetalleActividad() {
             
           </View>
           <View style={{alignItems:'center'}}>
+            {loadding?
+            <View style={styles.btn_update}>
+                <ActivityIndicator color={"purple"}></ActivityIndicator>
+            </View>
+            :
             <Pressable style={styles.btn_update} onPress={()=>UpdateActividad()}>
                 <Text style={{textAlign:'center'}}>Actualizar Datos</Text>
             </Pressable>
+            }
           </View>
+          
+               
            </View>
         </View>
         :<Text>No hay datos</Text>}
     </View>
+        
     </ScrollView>
    </>
   )
@@ -141,7 +229,7 @@ const styles=StyleSheet.create({
         borderWidth:2,
         borderColor:"black",
         borderStyle:'solid',
-        margin:20,
+        margin:10,
         padding:10
     },
     input_form:{
