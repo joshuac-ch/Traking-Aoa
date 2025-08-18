@@ -9,6 +9,7 @@ import Actividades from '../../hooks/Actividades'
 import Habitos from '../../hooks/Habitos'
 import { IconActivity, IconEditPerfil, IconHeart, IconLock } from '../../assets/Icons'
 import Love from "../Perfil/Love.js"
+import GetImage from '../../utils/GetImage.js'
 export default function Perfil() {
     const {user}=useUser()
     const navegar=useRouter()
@@ -177,7 +178,7 @@ export default function Perfil() {
         <Text >{user_specific.nombre}</Text>
     </View>
     <View style={{alignItems:'center'}}>
-        <Image style={styles.image} source={{uri:user_specific.imagen}}></Image>
+        <Image style={styles.image} source={{uri:GetImage(user_specific.imagen)}}></Image>
         <Text >{user_specific.correo}</Text>
     </View>
     <View style={styles.contenedor_sub}>
@@ -275,7 +276,7 @@ export default function Perfil() {
 
                                 <View style={{display:'flex',justifyContent:'space-between'}}>
                                 {a.rutina.imagen&&(
-                                    <Image source={{uri:a.rutina.imagen}} style={{width:116,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                    <Image source={{uri:GetImage(a.rutina.imagen)}} style={{width:116,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                 
                                 )}
                                     <View style={styles.div_c_body}>
@@ -311,7 +312,7 @@ export default function Perfil() {
                             
                             <View style={{display:'flex',justifyContent:'space-between'}}>
                               {a.rutina.imagen&&(
-                                <Image source={{uri:a.rutina.imagen}} style={{width:116,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                <Image source={{uri:GetImage(a.rutina.imagen)}} style={{width:116,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                               )}
                               <View style={styles.div_c_body}>
                                     <Text style={{paddingLeft:5}}>{a.rutina.titulo.length>15?a.rutina.titulo.slice(0,12)+"...":a.rutina.titulo}</Text>
@@ -326,7 +327,7 @@ export default function Perfil() {
                 :<Text>-</Text>}
                     
               </View>
-
+{/*TENER EN CUENTA QUE METAS NO NESECITA DEL GETIMAGE PORQUE ESTE YA LO USA EN EL SETDATAMETAS*/}
             <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center"}}>
                 <Text style={styles.proyecto_title}>Metas</Text>
                 <IconLock></IconLock>
