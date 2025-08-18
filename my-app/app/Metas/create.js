@@ -21,8 +21,7 @@ export default function create() {
   const EnviarDatos=async()=>{
     try{
       const host=Constants.expoConfig.extra.host
-      await axios.post(`http://${host}:4000/metas/i`,FormMetas)
-      console.log(FormMetas)
+      await axios.post(`http://${host}:4000/metas/i`,FormMetas)      
       alert("Se creo el habito")
 
     }catch(err){
