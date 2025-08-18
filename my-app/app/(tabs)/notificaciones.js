@@ -5,6 +5,7 @@ import { Link, Stack, useFocusEffect } from 'expo-router'
 import axios from 'axios'
 import constantes from "expo-constants" 
 import { useUser } from '../../components/UserContext'
+import GetImage from '../../utils/GetImage'
 export default function notificaciones() {
   const [notiUser, setnotiUser] = useState([])
   const {user}=useUser()
@@ -46,7 +47,7 @@ export default function notificaciones() {
       notispost:notiUser,
       notisfollow:notifollow      
     })
-    console.log(JSON.stringify(notificaciontotal,null,2))
+   
   } 
    useFocusEffect(
     useCallback(()=>{
@@ -78,7 +79,7 @@ export default function notificaciones() {
     <View>
           <View style={{flexDirection:"row",justifyContent:"space-between",margin:10,alignItems:"center"}}>
             <View style={{flexDirection:"row",alignItems:"center"}}>
-              <Image source={{uri:creador.imagen}} style={{width:50,height:50,borderRadius:50}}></Image>
+              <Image source={{uri:GetImage(creador.imagen)}} style={{width:50,height:50,borderRadius:50}}></Image>
               <Text style={{marginLeft:10,fontSize:18,fontWeight:"bold"}}>Notificaciones</Text>
             </View>
             <View>
@@ -114,7 +115,7 @@ export default function notificaciones() {
                   <View>      
                                 
                     {n.creador.imagen &&(
-                      <Image source={{uri:n.creador.imagen}} style={{height:50,width:50,borderRadius:50,marginRight:10}}></Image>
+                      <Image source={{uri:GetImage(n.creador.imagen)}} style={{height:50,width:50,borderRadius:50,marginRight:10}}></Image>
                     )}
                   </View>
                   <View>
@@ -122,7 +123,7 @@ export default function notificaciones() {
                     <Text>{n.post.titulo}</Text>
                     <Text>{n.post.descripcion}</Text>
                     {n.post.imagen&&(
-                      <Image style={{width:100,height:100,borderRadius:20}} source={{uri:n.post.imagen}}></Image>
+                      <Image style={{width:100,height:100,borderRadius:20}} source={{uri:GetImage(n.post.imagen)}}></Image>
                     )}
                   </View>
                 </View>
@@ -148,7 +149,7 @@ export default function notificaciones() {
                     <View>                  
                       {
                         n.creador.imagen&&(
-                          <Image source={{uri:n.creador.imagen}} style={{height:50,width:50,borderRadius:50,marginRight:10}}></Image>
+                          <Image source={{uri:GetImage(n.creador.imagen)}} style={{height:50,width:50,borderRadius:50,marginRight:10}}></Image>
                         )
                       }
                     </View>
@@ -156,7 +157,7 @@ export default function notificaciones() {
                       <Text>{n.noti.mensaje} a {n.creador.nombre}</Text>
                       <Text>{n.contenido.titulo}</Text>
                       {n.contenido.imagen&&(
-                        <Image source={{uri:n.contenido.imagen}} style={{width:100,height:150,borderRadius:10}}></Image>
+                        <Image source={{uri:GetImage(n.contenido.imagen)}} style={{width:100,height:150,borderRadius:10}}></Image>
                       )}
                     </View>
                   </View>
@@ -179,7 +180,7 @@ export default function notificaciones() {
                   <View style={{flexDirection:"row"}}>
                   <View>                  
                     {n.user.imagen&&
-                      (<Image source={{uri:n.user.imagen}} style={{height:50,width:50,borderRadius:50,marginRight:10}}></Image>)
+                      (<Image source={{uri:GetImage(n.user.imagen)}} style={{height:50,width:50,borderRadius:50,marginRight:10}}></Image>)
                     }
                   </View>
                   <View>
