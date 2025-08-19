@@ -7,7 +7,7 @@ import axios from 'axios'
 import Metas from '../../hooks/Metas'
 import Actividades from '../../hooks/Actividades'
 import Habitos from '../../hooks/Habitos'
-import { IconActivity, IconEditPerfil, IconHeart, IconLock } from '../../assets/Icons'
+import { IconActivity, IconActivityPerfil, IconEditPerfil, IconHeart, IconLock } from '../../assets/Icons'
 import Love from "../Perfil/Love.js"
 import GetImage from '../../utils/GetImage.js'
 export default function Perfil() {
@@ -290,7 +290,17 @@ export default function Perfil() {
                       
                     )
                 })
-                :<Text>-</Text>}
+                :<View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                    <View style={{padding:10,borderRadius:99,backgroundColor:"gray"}}>
+                        <IconActivityPerfil></IconActivityPerfil>
+                    </View>
+                    <View>
+                        <Text style={{textAlign:"center",fontWeight:"bold",fontSize:15}}>Sube tu primera Actividad</Text>
+                        <Text style={{textAlign:"center"}}>Tus actividades publicadas apareceran aqui</Text>
+                    </View>
+                     
+                   
+                 </View>}
                     
               </View>
             <View >
@@ -324,7 +334,17 @@ export default function Perfil() {
                       </View>
                     )
                 })
-                :<Text>-</Text>}
+                :<View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                    <View style={{padding:10,borderRadius:99,backgroundColor:"gray"}}>
+                        <IconActivityPerfil></IconActivityPerfil>
+                    </View>
+                    <View>
+                        <Text style={{textAlign:"center",fontWeight:"bold",fontSize:15}}>Sube tu primer Habito</Text>
+                        <Text style={{textAlign:"center"}}>Tus habitos publicadas apareceran aqui</Text>
+                    </View>
+                     
+                   
+                 </View>}
                     
               </View>
 {/*TENER EN CUENTA QUE METAS NO NESECITA DEL GETIMAGE PORQUE ESTE YA LO USA EN EL SETDATAMETAS*/}
@@ -354,7 +374,18 @@ export default function Perfil() {
                       </Link>
                     )
                 })
-                :<Text>-</Text>}
+                :
+                <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                    <View style={{padding:10,borderRadius:99,backgroundColor:"gray"}}>
+                        <IconActivityPerfil></IconActivityPerfil>
+                    </View>
+                    <View>
+                        <Text style={{textAlign:"center",fontWeight:"bold",fontSize:15}}>Sube tu primera Meta</Text>
+                        <Text style={{textAlign:"center"}}>Tus metas solo tu las podras vizualizar</Text>
+                    </View>
+                     
+                   
+                 </View>}
                     
               </View>      
        
