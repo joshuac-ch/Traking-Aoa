@@ -5,6 +5,7 @@ import { useUser } from '../../components/UserContext'
 import axios from 'axios'
 import constantes from "expo-constants"
 import * as ImagePicker from 'expo-image-picker';
+import GetImage from '../../utils/GetImage'
 
 export default function DetalleUser() {
   const {id}=useLocalSearchParams()
@@ -22,7 +23,7 @@ export default function DetalleUser() {
     try{
         const {data}=await axios.get(`http://${host}:4000/usuarios/s/${id}`,formUsuarios)
         setformUsuarios({
-          imagen:data.imagen,
+          imagen:GetImage(data.imagen),
           nombre:data.nombre,
           apellido:data.apellido,
           telefono:data.telefono,
