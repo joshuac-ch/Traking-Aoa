@@ -5,6 +5,8 @@ import { useUser } from '../../components/UserContext'
 import { Link, router, useFocusEffect } from 'expo-router'
 import constantes from "expo-constants"
 import { Pressable } from 'react-native'
+import GetImage from '../../utils/GetImage'
+import { IconLove } from '../../assets/Icons'
 export default function Love() {
     const [dataLove, setdataLove] = useState([])
     const host=constantes.expoConfig.extra.host
@@ -41,7 +43,7 @@ export default function Love() {
                     <Pressable key={p.id}>                   
                     <View >
                         <View style={styles.contenedor_imagen}>
-                        <Image style={{width:129.4,height:180,borderTopLeftRadius:8,borderTopRightRadius:8,alignSelf:'center'}} source={{uri:p.valor.imagen}}></Image>
+                        <Image style={{width:114,height:180,borderTopLeftRadius:8,borderTopRightRadius:8,alignSelf:'center'}} source={{uri:GetImage(p.valor.imagen)}}></Image>
                         <Text style={{textAlign:'left',padding:5}}>{p.valor.titulo.length>13?p.valor.titulo.slice(0,13)+"...":p.valor.titulo}</Text>
                         </View> 
                     </View>
@@ -53,7 +55,14 @@ export default function Love() {
            })}
         </View>
         :
-        <Text style={{textAlign:'center'}}>No hay PostLoves</Text>}
+        <View style={{justifyContent:"center",alignItems:"center",flex:1}}>
+            <View style={{borderRadius:99,padding:10,marginBottom:10,backgroundColor:"gray"}}>
+                <IconLove></IconLove>
+            </View>
+            <View>
+                <Text style={{fontSize:15,fontWeight:"bold",textAlign:"center",width:200}}>No se ha dado me encanta a ninguna publicacion</Text>
+            </View>
+        </View>}
     </View>
     </>
   )
@@ -68,9 +77,10 @@ const styles=StyleSheet.create({
     },
     contenedor_imagen:{
         height:210,
-        width:133,
-        marginLeft:2,
-        marginRight:2,
+        width:118,
+        marginRight:0.8,
+        marginLeft:0.8,
+        
         marginTop:10,
         marginBottom:5,
         flexDirection:'column',
