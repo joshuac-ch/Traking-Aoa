@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import {Image, ImageBackground, Pressable, StatusBar, StyleSheet, Text, TextInput, View } from 'react-native'
+import {Image, ImageBackground, Pressable, StatusBar, StyleSheet, Text, TextInput, ToastAndroid, View } from 'react-native'
 import usuarios from '../../hooks/usuarios'
 import { Link, Stack, useFocusEffect, useRouter } from 'expo-router'
 import { useUser } from '../../components/UserContext'
@@ -30,7 +30,7 @@ export default function AppPrincipal() {
             setUser(datos)
             navegar.push("/Panel")
         }else{
-            navegar.push("/Login")
+            ToastAndroid.show(`Correo o contraseña incorrecta`,ToastAndroid.BOTTOM)
         }
     }
     const LoginLogo=()=>{
