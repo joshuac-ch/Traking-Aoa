@@ -291,7 +291,7 @@ export default function Perfil() {
                     )
                 })
                 :<View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                    <View style={{padding:10,borderRadius:99,backgroundColor:"gray"}}>
+                    <View style={styles.estilos_icons}>
                         <IconActivityPerfil></IconActivityPerfil>
                     </View>
                     <View>
@@ -335,7 +335,7 @@ export default function Perfil() {
                     )
                 })
                 :<View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                    <View style={{padding:10,borderRadius:99,backgroundColor:"gray"}}>
+                    <View style={styles.estilos_icons}>
                         <IconActivityPerfil></IconActivityPerfil>
                     </View>
                     <View>
@@ -376,7 +376,7 @@ export default function Perfil() {
                 })
                 :
                 <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                    <View style={{padding:10,borderRadius:99,backgroundColor:"gray"}}>
+                    <View style={styles.estilos_icons}>
                         <IconActivityPerfil></IconActivityPerfil>
                     </View>
                     <View>
@@ -399,6 +399,9 @@ export default function Perfil() {
   )
 }
 const styles=StyleSheet.create({
+    estilos_icons:{
+        padding:10,borderRadius:99,backgroundColor:"white",boxShadow:"0px 0px 8px 0px black"
+    },
     proyecto_title:{
         textAlign:'center',
         fontWeight:'bold',
