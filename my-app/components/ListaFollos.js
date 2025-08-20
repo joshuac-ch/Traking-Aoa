@@ -2,6 +2,7 @@ import React from 'react'
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import { IconBack, IconElipsis } from '../assets/Icons'
 import { Link } from 'expo-router'
+import GetImage from '../utils/GetImage'
 
 
 export default function ListaFollos({user,lista,info}) {
@@ -17,7 +18,7 @@ export default function ListaFollos({user,lista,info}) {
                           <View style={{flexDirection:"row",alignItems:"center",justifyContent:"space-between",marginTop:5,marginBottom:5}}>
                             <View style={{flexDirection:"row",maxWidth:220,width:220}}>
                                 <View>
-                                 <Image source={{uri:m.creador.imagen}} style={{height:50,width:50,borderRadius:50,marginRight:10}}></Image>    
+                                 <Image source={{uri:GetImage(m.creador.imagen)}} style={{height:50,width:50,borderRadius:50,marginRight:10}}></Image>    
                                 </View>                        
                                 <View>
                                     <Text>{m.creador.nombre}</Text>
@@ -35,7 +36,7 @@ export default function ListaFollos({user,lista,info}) {
                        </Link>
                         )   
                 })
-                :<Text>No hay usuarios</Text>
+                :<Text style={{textAlign:"center"}}>No hay seguidores</Text>
             }
         </View>   
     </>
