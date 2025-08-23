@@ -7,8 +7,8 @@ const Seguidor = require("../../models/seguidores")
 const usuario = require("../../models/usuario")
 const DeletePublicacion=async(req,res)=>{//mejorarlo
     try{
-        const {id}=req.params
-        const modelo=await publicaciones.findOne({where:{contenido_id:id}})
+        const {id,estado}=req.params
+        const modelo=await publicaciones.findOne({where:{contenido_id:id,tipo:estado}})//se agrego esta linea
         if(!modelo){
             return res.status(404).json({message:"No se encontro esa publicacion con ese contenido"})
         }
@@ -19,7 +19,7 @@ const DeletePublicacion=async(req,res)=>{//mejorarlo
             await likes_publicacion.destroy({where:{publicacion_id:publicacion}})
             await noti.destroy({where:{contenido_id:publicacion,tipo:"likes"}})
         }
-        await publicaciones.destroy({where:{contenido_id:id}})
+        await publicaciones.destroy({where:{contenido_id:id,tipo:estado}})//se agrego esta linea
         
         res.status(200).json({message:"Se elimino correctamente"})
     }catch(err){
