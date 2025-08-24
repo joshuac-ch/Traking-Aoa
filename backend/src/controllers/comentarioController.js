@@ -34,7 +34,7 @@ const GetComentarioPublicacion=async(req,res)=>{
         )
         res.status(200).json(modeloExpandido)
     }catch(err){
-        console.err(err.message)
+         throw new Error(`Hubo un error ${err.message}`);  
     }
 }
 module.exports={CreateComentario,GetComentarioPublicacion}
