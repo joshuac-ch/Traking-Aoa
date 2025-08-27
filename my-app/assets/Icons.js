@@ -2,11 +2,12 @@ import Fontisto from '@expo/vector-icons/Fontisto';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Feather from '@expo/vector-icons/Feather';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
-
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export const IconDate=()=>{
     return <Fontisto name="date" size={24} color="black" />
 }
@@ -94,6 +95,9 @@ export const IconEditPerfil=()=>{
 export const IconClose=()=>{
     return <AntDesign name="closecircleo" size={30} color="white" />
 }
+export const IconCloseImage=()=>{
+    return <AntDesign name="closecircleo" size={30} color="black" />
+}
 export const IconLock=()=>{
     return <AntDesign name="lock" size={20} color="black" />
 }
@@ -102,4 +106,28 @@ export const IconEntrada=()=>{
 }
 export const IconShow=()=>{
     return <AntDesign name="eye" size={24} color="black" />
-} 
+}
+export const IconActivityPerfil=()=>{
+    return <MaterialIcons name="pending-actions" size={24} color="black" />
+}
+export const IconLove=()=>{
+    return <MaterialIcons name="volunteer-activism" size={24} color="black" />
+}
+export const IconDotPublic=()=>{
+    return <Entypo name="camera" size={30} color="black" />
+}
+export const IconDontMetas=()=>{
+    return <FontAwesome6 name="square-poll-vertical" size={30} color="black" />
+}
+export const IconDontSearch= ()=>{
+    return <MaterialCommunityIcons name="cloud-search-outline" size={30} color="black" />
+}
+export const IconDontNoti=()=>{
+    return <MaterialIcons name="notifications-off" size={30} color="black" />
+}
+export const IconSelectImage=()=>{
+    return <MaterialIcons name="photo-size-select-actual" size={24} color="black" />
+}
+export const IconDontActivity=()=>{
+    return <Fontisto name="search" size={24} color="black" />
+}
