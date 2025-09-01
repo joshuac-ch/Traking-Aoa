@@ -6,7 +6,7 @@ import Constantes from "expo-constants"
 import { useUser } from '../../components/UserContext'
 import { Stack, useFocusEffect, useRouter } from 'expo-router'
 import * as ImagePicker from 'expo-image-picker'
-import {IconCloseImage, IconDelete, IconShow } from '../../assets/Icons'
+import {IconCloseImage, IconDelete, IconSelectImage, IconShow } from '../../assets/Icons'
 import GetImage from '../../utils/GetImage'
 import PublicacionComponent from '../../components/PublicacionComponent'
 import PubicacionPrev from '../../components/PubicacionPrev'
@@ -66,10 +66,13 @@ export default function DetalleActividad() {
     
             await axios.put(`http://${local}:4000/actividades/u/${id}`,{...Formdata,imagen:imagenURL})
             alert("Se actualizaron los datos")
-            setloadding(false)
+            //setloadding(false)
             //navegar.push("/Panel")
         }catch(err){
             alert(err.message)
+            //setloadding(false)
+        }finally{
+            setloadding(false)
         }
     }
     useEffect(()=>{
@@ -95,10 +98,10 @@ export default function DetalleActividad() {
     }
     const DeletePublicacion=async()=>{
         try{
-            await axios.delete(`http://${local}:4000/publicaciones/r/d/${id}`)
+            await axios.delete(`http://${local}:4000/publicaciones/r/d/${id}/Actividades`)
             alert("Se elimino la publicacion")
         }catch(err){
-            alert(err.message)
+            alert("Ya elimino esta publicacion")
         }
     }
     
@@ -159,10 +162,10 @@ export default function DetalleActividad() {
                 {Formdata.imagen&&(
                     <Image source={{uri:Formdata.imagen}} style={{width:200,height:250,borderRadius:20}}></Image>
                 )}
-                <View style={{flexDirection:"row",alignItems:"center",justifyContent:"center"}}>
+                <View style={{flexDirection:"row",alignItems:"center",justifyContent:"center",marginTop:10}}>
                     <Pressable onPress={pickImage} >
                     <View style={styles.button}>
-                        <Text>Seleccionar Imagen</Text>
+                        <IconSelectImage></IconSelectImage>
                     </View>
                     </Pressable>
                     <Pressable onPress={ShowImage} style={{borderWidth:2,borderColor:"black",borderStyle:"solid",padding:8,borderRadius:10}}>
@@ -229,8 +232,8 @@ const styles=StyleSheet.create({
         borderWidth:2,
         borderColor:"black",
         borderStyle:'solid',
-        margin:10,
-        padding:10
+        marginRight:2,
+        padding:8
     },
     input_form:{
         borderWidth:2,

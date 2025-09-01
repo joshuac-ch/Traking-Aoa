@@ -10,6 +10,7 @@ import { IconActivity, IconBack, IconSeach, IconUser } from '../../assets/Icons'
 import { useHistoryial } from '../../components/HistorialProvider'
 import axios from 'axios'
 import constantes from "expo-constants"
+import GetImage from '../../utils/GetImage'
 //MEJORAR ESTO Y EL BUSCARDOR.JS
 export default function BusSearch() {
     const {entrada}=useLocalSearchParams()
@@ -144,7 +145,7 @@ export default function BusSearch() {
                     <Pressable onPress={()=>guardarbusqueda(m.id,m.nombre,m.tipo,m.correo)}>
                         <View style={styles.contendor_user}>
                             {m.imagen && m.imagen!=="" &&(
-                                 <Image source={{uri:m.imagen}} style={{width:50,height:50,borderRadius:50,margin:10}}></Image>    
+                                 <Image source={{uri:GetImage(m.imagen)}} style={{width:50,height:50,borderRadius:50,margin:10}}></Image>    
                             )}                           
                             <View>
                                 <Text>{m.nombre}</Text>
