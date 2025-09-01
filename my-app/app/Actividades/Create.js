@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { Pressable, StyleSheet, TextInput, View } from 'react-native'
+import { Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native'
 import { Text } from 'react-native'
 import { useUser } from '../../components/UserContext'
 import Constants from "expo-constants"
@@ -27,7 +27,8 @@ export default function Create() {
     return (
     <>
     <Stack.Screen options={{title:'Crear Actividad'}}></Stack.Screen>
-   <View className='m-4'>
+   <ScrollView>
+    <View className='m-4'>
     <View>
         <Text>Imagen</Text>
         <TextInput style={styles.form_input} onChangeText={text=>setDataForm({...DataForm,imagen:text})} value={DataForm.imagen} placeholder='ingrese link de imagen'></TextInput>
@@ -46,6 +47,7 @@ export default function Create() {
     </Pressable>
     </View>
    </View>
+   </ScrollView>
     </>
   )
 }

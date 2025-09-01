@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect } from 'react'
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import Actividades from '../../hooks/Actividades'
-import { IconAdd, Iconclock, IconDate, IconDelete } from '../../assets/Icons'
+import { IconActivity, IconAdd, Iconclock, IconDate, IconDelete } from '../../assets/Icons'
 import { Link, Stack, useFocusEffect } from 'expo-router'
 import axios from 'axios'
 import constantes from "expo-constants"
 import { useUser } from '../../components/UserContext'
+import GetImage from '../../utils/GetImage'
 export default function ActividadesDiarias() {
   const {user}=useUser()  
   const {FetchActividades,actividades}=Actividades()
@@ -44,18 +45,21 @@ export default function ActividadesDiarias() {
                 </Link>        
             </View>
          </View>
-    {actividades!=null?
+    {actividades.length>0?
     <View>
         {actividades.map((a,i)=>{
             return(
                 <Link key={i} href={`Actividades/${a.id}`} asChild>
                     <Pressable>
                         <View style={styles.contenedor} key={a.id}>
+                            
                             <View style={{flexDirection:'row',alignItems:'center'}}>
+                                
                                 <View style={{marginRight:10}}>
                                     <Iconclock></Iconclock>
                                 </View>
                                 <View >
+                                    
                                     <Text>{a.titulo}</Text>                            
                                     <Text> {a.fecha?new Date(a.fecha).toLocaleDateString():''}</Text>
                                 </View> 
@@ -72,7 +76,14 @@ export default function ActividadesDiarias() {
             )
         })}       
     </View>:
-    <Text>No hay datos</Text>
+    <View style={{justifyContent:"center",alignItems:"center",height:100}}>
+            <View style={{borderRadius:99,borderColor:"black",borderStyle:"solid",padding:7,borderWidth:2}}>
+              <IconActivity></IconActivity>
+            </View>
+            <View style={{paddingTop:5}}>
+              <Text style={{fontWeight:"600"}}>No se encontro ningun registro</Text>
+            </View>
+    </View>
     }
     </View>
     </ScrollView>
