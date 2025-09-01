@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { StyleSheet, TextInput,Text, View, ScrollView, Pressable, Image, Button } from 'react-native'
-import { IconActivity, IconSeach, IconUser } from '../../assets/Icons'
+import { IconActivity, IconDontSearch, IconSeach, IconUser } from '../../assets/Icons'
 import Metas from '../../hooks/Metas'
 import Habitos from '../../hooks/Habitos'
 import Actividades from '../../hooks/Actividades'
@@ -59,7 +59,8 @@ export default function Buscardor() {
         </View>
      </View>
    <View style={{flexDirection:'column',justifyContent:'space-around',margin:20}}>
-        {historialC.map((h,i)=>{           
+        {historialC.length>0?
+        historialC.map((h,i)=>{           
             return(
                     h.tipo=="Usuario"?
                     <Link key={i} href={`/Perfil/users/${h.id}`} asChild>
@@ -110,7 +111,17 @@ export default function Buscardor() {
                     </Pressable>
                    </Link>
                 )
-        })}
+        })
+        :
+        <View style={{height:200,justifyContent:"center",alignItems:"center"}}>
+            <View style={{padding:10,borderRadius:99,backgroundColor:"white",borderWidth:2,borderColor:"black"}}>
+                <IconDontSearch></IconDontSearch>
+            </View>
+            <View>
+                <Text style={{fontWeight:"bold",}}>No se hizo ninguna busqueda</Text>
+            </View>
+        </View>
+        }
    </View> 
    
    </ScrollView>

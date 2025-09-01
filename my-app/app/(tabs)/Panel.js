@@ -4,7 +4,7 @@ import { useUser } from '../../components/UserContext'
 
 import PagerView from 'react-native-pager-view'
 import { Link, router, Stack, Tabs, useFocusEffect, useRouter } from 'expo-router'
-import { IconAdd, IconClose, IconComment, IconElipsis, IconHeart, IconHeartActive, IconLeft, IconReply, IconText } from '../../assets/Icons'
+import { IconAdd, IconClose, IconComment, IconDontMetas, IconDotPublic, IconElipsis, IconHeart, IconHeartActive, IconLeft, IconReply, IconText } from '../../assets/Icons'
 import constantes from 'expo-constants'
 import axios from 'axios'
 import { useHistoryial } from '../../components/HistorialProvider'
@@ -293,7 +293,8 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
    <ScrollView  horizontal showsHorizontalScrollIndicator={false} scrollEnabled={metas.length>=5} contentContainerStyle={{paddingHorizontal:30,alignItems:"center"}}>
     <View style={[styles.contenedorCarrusel]}>
       
-        {metas.map((m)=>{
+        {metas.length>0?
+          metas.map((m)=>{
           return(
             <Link href={`/Metas/show/${m.id}`} key={m.id} asChild>
             <Pressable>
@@ -306,7 +307,15 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
             </Pressable>
             </Link>
           )
-        })}        
+        })  
+        :<View style={{flex:1,justifyContent:"center",alignContent:"center",alignItems:"center",height:80}}>
+              <View style={{padding:10,backgroundColor:"white",borderRadius:99,borderStyle:"solid",borderWidth:2}}>
+                <IconDontMetas></IconDontMetas>
+              </View>
+              <View>
+                <Text style={{fontSize:13,marginTop:5,fontWeight:"bold"}}>No hay metas</Text>
+              </View>
+          </View>}      
           
     </View>
    </ScrollView>
@@ -320,13 +329,13 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
       {RenderBoton("metas","Metas","/Metas","/Metas/create")}
      
       
-      <Link href={"/centro"} asChild>
+      
       <Pressable>
         <View>
-        <Text>Analisis inteligente</Text>
+        <Text>Analisis inteligente </Text>
       </View>
       </Pressable>
-      </Link>
+      
       </View>
       <View>
         {
@@ -433,7 +442,15 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
         
           )
         })
-       :<Text>No hay publicaciones actualmente</Text>
+       :
+       <View style={{flex:1,justifyContent:"center",alignItems:"center",padding:10,height:350}}>
+          <View style={{padding:10,backgroundColor:"white",borderRadius:99,borderStyle:"solid",borderWidth:2}}>
+            <IconDotPublic></IconDotPublic>
+          </View>
+          <View>
+             <Text style={{fontWeight:"bold",fontSize:14,marginTop:10}}>Todavia no hay publicaciones</Text>
+          </View>
+       </View>
         }
       </View>
       {/*
