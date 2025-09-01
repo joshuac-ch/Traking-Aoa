@@ -212,6 +212,9 @@ export default function Perfil() {
         </View>      
         
     </View>
+    <View style={{alignSelf:"center",marginTop:10}}>
+        <Text style={{textAlign:"center"}}>{user_specific.des?user_specific.des:"Welcome my Profile 💜💜"}</Text>
+    </View>
    
    </View>
    <View style={{flexDirection:'row',justifyContent:'space-around',margin:10,alignItems:"center"}}>

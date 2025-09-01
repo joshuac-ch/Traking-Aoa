@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { View,Text, StyleSheet, Image, ScrollView, Pressable } from 'react-native'
-import { IconElipsis, IconHome, IconLeft, IconSeach, IconSettings, IconUser } from '../../assets/Icons'
+import { IconDontNoti, IconElipsis, IconHome, IconLeft, IconSeach, IconSettings, IconUser } from '../../assets/Icons'
 import { Link, Stack, useFocusEffect } from 'expo-router'
 import axios from 'axios'
 import constantes from "expo-constants" 
@@ -200,7 +200,12 @@ export default function notificaciones() {
             )
         :
         <View style={{alignSelf:"center",marginTop:20}}>
-            <Text style={{fontWeight:"bold"}}>No hay notificaciones actualmente</Text>
+           <View style={{borderRadius:99,position:"absolute",padding:5,left:85,backgroundColor:"white",borderWidth:2,borderColor:"black"}}>
+              <IconDontNoti></IconDontNoti>
+           </View>
+           <View style={{marginTop:50}}>
+             <Text style={{fontWeight:"bold"}}>No hay notificaciones actualmente</Text>
+           </View>
         </View>}
 
         </View>
@@ -215,7 +220,7 @@ const styles=StyleSheet.create({
   principal:{
     borderColor:"black",
     borderStyle:"solid",
-      
+    
     paddingTop:10,
     paddingBottom:10,
     borderBottomWidth:2,
