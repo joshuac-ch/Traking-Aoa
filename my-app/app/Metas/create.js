@@ -53,6 +53,7 @@ export default function create() {
           <Text>Imagen</Text>
           <TextInput style={styles.form_input} value={FormMetas.imagen} onChangeText={text=>setFormMetas({...FormMetas,imagen:text})} placeholder='ingrese link' ></TextInput>
         </View>
+        
         <View>
             <Text>Titulo:</Text>
             <TextInput style={styles.form_input} onChangeText={text=>setFormMetas({...FormMetas,titulo:text})} value={FormMetas.titulo} placeholder='ingrese el nombre de su meta'></TextInput>
@@ -63,7 +64,7 @@ export default function create() {
         </View>
         <View>
             <Text>Fecha Limite: </Text>
-            <Pressable onPress={mostrarSelectorFecha} style={{borderWidth:1,borderRadius:5,padding:10,marginTop:5}}>
+            <Pressable onPress={mostrarSelectorFecha} style={{borderWidth:2,borderRadius:5,padding:10,marginTop:5}}>
                 <Text>{FormMetas.fecha_limite.toLocaleDateString()}</Text>
             </Pressable>
         </View>
@@ -94,7 +95,7 @@ const styles=StyleSheet.create({
     borderRadius:10
   },
   form_input:{
-    borderWidth:1,
+    borderWidth:2,
     borderStyle:'solid',
     borderColor:'black',
     padding:10,

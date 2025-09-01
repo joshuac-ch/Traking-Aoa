@@ -7,6 +7,7 @@ import { TextInput } from 'react-native'
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker'
 import * as ImagePicket from "expo-image-picker"
 import GetImage from '../../utils/GetImage'
+import { IconCalendar, IconSelectImage } from '../../assets/Icons'
 export default function DetalleMetas() {
   const {id}=useLocalSearchParams()
   const navegar=useRouter()
@@ -104,7 +105,10 @@ export default function DetalleMetas() {
               {FormDataMetas.imagen&&
               (  <Image style={{width:200,alignSelf:'center',height:300,borderRadius:10}} source={{uri:FormDataMetas.imagen}}></Image>)
               }
-                <Button onPress={OpenImage} title='seleccionar imagen'></Button>
+              <Pressable style={{alignSelf:"center",marginTop:10,borderStyle:"solid",padding:5,borderRadius:10,borderWidth:2}} onPress={OpenImage}>
+                <IconSelectImage></IconSelectImage>
+              </Pressable>
+                
             </View>
            <View>
                 <Text className='font-black text-lg'>Titulo: </Text>
@@ -121,11 +125,14 @@ export default function DetalleMetas() {
                 <TextInput style={styles.form_input} 
                  onChangeText={text=>setFormDataMetas({...FormDataMetas,meta_total:text})} value={FormDataMetas.meta_total}></TextInput>
             </View>
-            <View>
-                <Text className='font-black text-lg'>Fecha Limite: </Text>
-                <Text>{FormDataMetas.fecha_limite.toLocaleDateString()}</Text>
-                <Button onPress={SeleccionDate} title="Cambiar fecha" />
-                
+            <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
+               <View style={{margin:5}}>
+                 <Text className='font-black text-lg'>Fecha Limite: </Text>
+                <Text>{FormDataMetas.fecha_limite.toLocaleDateString()}</Text>  
+                </View>              
+                <Pressable style={{padding:5}} onPress={SeleccionDate}>
+                    <IconCalendar></IconCalendar>
+                </Pressable>
 
             </View>
             <View>
