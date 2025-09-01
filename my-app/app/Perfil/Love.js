@@ -56,7 +56,7 @@ export default function Love() {
         </View>
         :
         <View style={{justifyContent:"center",alignItems:"center",flex:1}}>
-            <View style={{borderRadius:99,padding:10,marginBottom:10,backgroundColor:"gray"}}>
+            <View style={styles.estilos_icon}>
                 <IconLove></IconLove>
             </View>
             <View>
@@ -68,6 +68,9 @@ export default function Love() {
   )
 }
 const styles=StyleSheet.create({
+    estilos_icon:{
+        padding:10,borderRadius:99,backgroundColor:"white",boxShadow:"0px 0px 8px 0px black",marginBottom:10
+    },
     tiulo_love:{
         padding:10,
         fontWeight:"bold",

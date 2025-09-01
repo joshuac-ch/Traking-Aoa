@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router'
 import React, { useState } from 'react'
-import { View,Text,TextInput, Pressable, Button, Image, StyleSheet } from 'react-native'
+import { View,Text,TextInput, Pressable, Button, Image, StyleSheet, ScrollView } from 'react-native'
 import constantes from 'expo-constants'
 import axios from 'axios'
 import * as PickerImage from "expo-image-picker"
@@ -11,35 +11,68 @@ export default function create() {
     apellido:'',
     correo:'',
     telefono:'',
-    pass:''
+    pass:''    
   })
   const host=constantes.expoConfig.extra.host
-  const InsertUser=async()=>{
-    try{
-            await axios.post(`http://${host}:4000/usuarios/c`,userDataForm)
-            alert("Usuario Registrado!!")
-    }catch(err){
-            alert("Hubo un error"+err.message)
-   }
-  }
-  const AddImage=async()=>{
-    let result=await PickerImage.launchImageLibraryAsync({
-        mediaTypes:['images'],
-        allowsEditing:true,
-        aspect:[4,3],
-        quality:1
-        
-    })
-    if(!result.canceled){
-        return setuserDataForm({...userDataForm,imagen:result.assets[0].uri})
+  const InsertUser = async () => {
+  try {
+    let imageUrl = "";
+    
+    // 1. Subir imagen si hay una seleccionada
+    if (userDataForm.imagen.startsWith("file://")) {
+      const NewData = new FormData();
+      NewData.append("imagen", {
+        uri: userDataForm.imagen,
+        name: "foto.jpg",
+        type: "image/jpeg",
+      });
+
+      const response = await axios.post(`http://${host}:4000/upload`, NewData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      imageUrl = response.data.url;
+     } else {
+      imageUrl = userDataForm.imagen; // por si ya es una URL (por edición, por ejemplo)
     }
-     
+
+    // 2. Enviar datos del usuario con la URL de imagen
+    await axios.post(`http://${host}:4000/usuarios/c`, {
+      ...userDataForm,
+      imagen: imageUrl,
+    });
+
+    alert("Usuario Registrado!!");
+  } catch (err) {
+    alert("Hubo un error: " + err.message);
   }
+};
+
+  const AddImage = async () => {
+  let result = await PickerImage.launchImageLibraryAsync({
+    mediaTypes: ['images'],
+    allowsEditing: true,
+    aspect: [4, 3],
+    quality: 1,
+  });
+
+  if (!result.canceled) {
+    // Solo guardar la URI local de la imagen, NO subir aún
+    const localUri = result.assets[0].uri;
+    setuserDataForm((prev) => ({
+      ...prev,
+      imagen: localUri
+    }));
+  }
+};
   //paso sigueinte rellenar con datos flasos sobre la app
     return (
     <>
     <Stack.Screen options={{title:'Crear Perfil'}}></Stack.Screen>
-    <View className='m-4'>
+    <ScrollView>
+      <View style={{padding:10}}>
         <View>
             <Text>Foto: </Text>
             {userDataForm.imagen&&(
@@ -51,6 +84,7 @@ export default function create() {
         <View>
             <Button title='Agregar Imagen' onPress={AddImage}></Button>
         </View>
+        
         <View>
             <Text>Nombre: </Text>
             <TextInput style={styles.input_form} onChangeText={text=>setuserDataForm({...userDataForm,nombre:text})} value={userDataForm.nombre} placeholder='ingrese nombre'></TextInput>
@@ -71,13 +105,14 @@ export default function create() {
             <Text>Contraseña: </Text>
             <TextInput style={styles.input_form} placeholder='ingrese contraseña segura' onChangeText={text=>setuserDataForm({...userDataForm,pass:text})} value={userDataForm.pass}></TextInput>
         </View>
-        <View>
+        <View style={{marginBottom:30}}>
             <Pressable style={styles.registrar} onPress={InsertUser}>
                 <Text style={{textAlign:'center',color:'white'}}>Registrarse</Text>
             </Pressable>
         </View>
         
     </View>
+    </ScrollView>
     </>
   )
 }
