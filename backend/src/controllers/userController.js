@@ -49,7 +49,7 @@ const ShowUser=async(req,res)=>{
 const UpdateUser=async(req,res)=>{
     try{
         const {id}=req.params
-        const {nombre,apellido,correo,telefono,imagen,pass}=req.body    
+        const {nombre,apellido,correo,telefono,imagen,pass,des}=req.body    
         const modelo=await Usuarios.findOne({where:{id}})
         if(!modelo){
             return res.status(404).json({message:"No se encontro ese user"})
@@ -59,6 +59,7 @@ const UpdateUser=async(req,res)=>{
         apellido,
         correo,
         pass,
+        des,
         imagen,
         telefono
         })

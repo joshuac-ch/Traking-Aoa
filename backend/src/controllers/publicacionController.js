@@ -100,7 +100,7 @@ const GetStatusPub=async(req,res)=>{
     const {id}=req.params
     const modelo=await publicaciones.findOne({where:{contenido_id:id}})
     if(!modelo){
-        return res.status(404).json({message:"No se encontro esa publicacion"})
+        return res.status(404).json(false)
     }
     res.status(200).json(modelo)
 }

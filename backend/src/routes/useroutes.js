@@ -50,7 +50,7 @@ router.delete("/actividades/d/:id",DestroyActividaes)
 router.post("/publicacion/actividad/:id/:userID",CreatePublicacionActividades)
 
 router.get("/publicaciones/actividades/all",GetAllPublicacionesActividades)
-router.delete("/publicaciones/r/d/:id",DeletePublicacion)
+router.delete("/publicaciones/r/d/:id/:estado",DeletePublicacion)
 //----------------------------------------------------
 
 router.get("/emociones",getEmociones)

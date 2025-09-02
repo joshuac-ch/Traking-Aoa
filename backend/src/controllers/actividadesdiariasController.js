@@ -1,6 +1,8 @@
 const ActividadesDiarias=require("../../models/actividades_diarias")
 const publicaciones = require("../../models/publicaciones")
 const notificaciones=require("../../models/noti")
+const noti = require("../../models/noti")
+const likes_publicacion = require("../../models/likes_publicacion")
 const getAllActivites=async(req,res)=>{
     try{
         const modelo=await ActividadesDiarias.findAll()
@@ -89,7 +91,7 @@ const UpdateActividades=async(req,res)=>{
         //const descripcion="breve"
         //const fecha=new Date()
         const {usuario_id,titulo,descripcion,fecha,imagen}=req.body
-        if(!usuario_id,!titulo,!descripcion,!fecha){
+        if(!usuario_id||!titulo||!descripcion||!fecha){
             return res.status(404).json({message:"No se llenaron las columnas"})
         }
         const modelo=await ActividadesDiarias.findByPk(id)
@@ -113,7 +115,7 @@ const CreatePublicacionActividades=async(req,res)=>{
         const {id,userID}=req.params
         //const {usuario_id}=req.body
         const modelo=await ActividadesDiarias.findByPk(id)
-        const pub=await publicaciones.findOne({where:{contenido_id:id}})
+        const pub=await publicaciones.findOne({where:{contenido_id:id,tipo:"Actividades"}})
         if(!pub){
         await publicaciones.create({
             usuario_id:userID,
@@ -141,9 +143,22 @@ const CreatePublicacionActividades=async(req,res)=>{
 const DestroyActividaes=async(req,res)=>{
     try{
         const {id}=req.params
-        const modelo=await ActividadesDiarias.destroy({where:{id}})
+        const modelo=await ActividadesDiarias.destroy({where:{id:id}})
+        const publicacion=await publicaciones.findOne({where:{contenido_id:id}})
+       if(publicacion){
+         let publi=publicacion.id
+        await noti.destroy({where:{contenido_id:id}})
+        const likes=await likes_publicacion.findOne({where:{publicacion_id:publi}})
+        if(likes){
+            await likes_publicacion.destroy({where:{publicacion_id:publi}})
+            await noti.destroy({where:{contenido_id:publi,tipo:"likes"}})
+        }
+        
+            await publicaciones.destroy({where:{contenido_id:id,tipo:"Actividades"}})//se agrego esta linea
+        
+       }
         if(!modelo){
-            return res.status(404).json({message:"No se enocntro el id"})
+            return res.status(404).json({message:"No se encontro el id"})
         }
         res.status(201).json({message:"Se elimino la actividad"})
     }catch(err){

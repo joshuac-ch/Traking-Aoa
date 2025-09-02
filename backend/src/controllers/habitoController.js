@@ -1,5 +1,6 @@
 const habitos = require("../../models/habitos")
 const Habitos=require("../../models/habitos")
+const likes_publicacion = require("../../models/likes_publicacion")
 const noti = require("../../models/noti")
 const publicaciones = require("../../models/publicaciones")
 const GetHabitosAll=async(req,res)=>{
@@ -61,20 +62,24 @@ const CrearPublicacionHabitos=async(req,res)=>{
     try{
         const {id,userID}=req.params
         const modelo=await habitos.findByPk(id)
-        const pub=await publicaciones.findOne({where:{contenido_id:id}})
+        if(!userID){
+            return res.status(404).json({message:"No se encontro ese usuario"})
+        }
+        const pub=await publicaciones.findOne({where:{contenido_id:id,tipo:"Habitos"}})
         if(!pub){
+            
             await publicaciones.create({
             usuario_id:userID,
             contenido_id:modelo.id,
             tipo:"Habitos",
             creacion:new Date()
-        })        
+        })      
             await noti.create({
             tipo:"Post_habito",
             contenido_id:modelo.id,
             mensaje:"creo un nuevo post",
             hora:new Date(),
-            usuario_id:usuario_id,
+            usuario_id:userID,
             emisor_id:0
         })    
     }
@@ -111,7 +116,7 @@ const UpdateHabito=async(req,res)=>{
     //const frecuencia="todos los dias"
     //const activo=1   
     //const usuario_id=3
-    if(!titulo,!frecuencia){
+    if(!titulo||!frecuencia){
         return res.status(404).json({message:"No se llenaron todas las columnas"})
     }
     const modelo=await habitos.findByPk(id)
@@ -144,7 +149,20 @@ const Showhabito=async(req,res)=>{
 const DeleteHabito=async(req,res)=>{
     try{
         const {id}=req.params
-        const modelo=await habitos.destroy({where:{id}})
+        const modelo=await habitos.destroy({where:{id:id}})
+        const publicacion=await publicaciones.findOne({where:{contenido_id:id}})
+        if(publicacion){
+            let publi=publicacion.id
+            await noti.destroy({where:{contenido_id:id}})
+            const likes=await likes_publicacion.findOne({where:{publicacion_id:publi}})
+            if(likes){
+                await likes_publicacion.destroy({where:{publicacion_id:publi}})
+                await noti.destroy({where:{contenido_id:publi,tipo:"likes"}})
+            }//ver el publi aqui en habito controller
+            
+                await publicaciones.destroy({where:{contenido_id:id,tipo:"Habitos"}})
+            
+            }
         if(!modelo){
             return res.status(404).json({message:"No se encontro ese habito"})
         }
