@@ -131,3 +131,6 @@ export const IconSelectImage=()=>{
 export const IconDontActivity=()=>{
     return <Fontisto name="search" size={24} color="black" />
 }
+export const IconCalendar=()=>{
+    return <AntDesign name="calendar" size={24} color="black" />
+}

@@ -7,7 +7,7 @@ import constantes from "expo-constants"
 import { useFocusEffect } from 'expo-router'
 import {  IconDislike, IconDown, IconHeartComent } from '../assets/Icons'
 import GetImage from '../utils/GetImage'
-export default function Comentario({pubID}) {
+export default function Comentario({pubID,estado=true}) {
   const {user}=useUser()
   const host=constantes.expoConfig.extra.host
   const [creador, setcreador] = useState([])
@@ -32,9 +32,8 @@ const [loadding, setloadding] = useState(false)
     
     try{
       setloadding(true)
-      if(publicar.comentario!==""){
-        await axios.post(`http://${host}:4000/comentarios/publicaciones`,publicar)
-       
+      if(publicar.comentario!=="" && estado){
+        await axios.post(`http://${host}:4000/comentarios/publicaciones`,publicar)       
         setloadding(false)
         GetComentariosPub()
       }else{
@@ -95,13 +94,16 @@ const [loadding, setloadding] = useState(false)
                 <Text style={{fontWeight:"bold"}}>{c.creador.nombre}{c.creador.apellido}</Text>
                 <Text>{c.comentario.comentario}</Text>
                 <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
-                  <Text>20 h</Text>
+                  <Text>{c.comentario.createdAt?new Date(c.comentario.createdAt).getMinutes()+"min":"s"}</Text>
                   <Text>Responder</Text>
-                  <View style={{flexDirection:"row",alignItems:"center"}}>
-                    <IconHeartComent></IconHeartComent>
-                    <Text style={{marginLeft:5}}>30</Text>
+                  <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
+                    <View style={{paddingLeft:5,flexDirection:"row",alignItems:"center",paddingRight:9}}>
+                      <IconHeartComent></IconHeartComent>
+                      <Text style={{textAlignVertical:"center",paddingLeft:3}}>0</Text>
+                    </View>
+                    <IconDislike></IconDislike>
                   </View>
-                  <IconDislike></IconDislike>                  
+                                    
                 </View>
               </View>
               

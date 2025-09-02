@@ -1,12 +1,15 @@
-import { Stack, useLocalSearchParams, useRouter } from 'expo-router'
-import React, { useEffect, useState } from 'react'
-import { View,Text, TextInput, Image, StyleSheet, Pressable, Switch, Button, ToastAndroid, ScrollView } from 'react-native'
+import { Stack, useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router'
+import React, { useCallback, useEffect, useState } from 'react'
+import { View,Text, TextInput, Image, StyleSheet, Pressable, Switch, Button, ToastAndroid, ScrollView, ActivityIndicator } from 'react-native'
 import constantes from "expo-constants"
 import axios from 'axios'
-import { IconFrecuencia, IconText, IconTitle } from '../../assets/Icons'
+import { IconCloseImage, IconFrecuencia, IconSelectImage, IconShow, IconText, IconTitle } from '../../assets/Icons'
 import { Picker } from '@react-native-picker/picker'
 import * as ImagePicker from 'expo-image-picker'
 import { useUser } from '../../components/UserContext'
+import GetImage from '../../utils/GetImage'
+import { Modal } from 'react-native'
+import PubicacionPrev from '../../components/PubicacionPrev'
 
 export default function DetalleHabito() {
   const {id}=useLocalSearchParams()
@@ -21,6 +24,11 @@ export default function DetalleHabito() {
     usuario_id:'',
     imagen:''
   })
+  const [creador, setcreador] = useState([])
+  const FectCreador=async()=>{
+    const {data}=await axios.get(`http:/${host}:4000/usuarios/s/${user.id}`)
+    setcreador(data)
+}
   const FectHabitos=async()=>{
     try{
         const {data}=await axios.get(`http:/${host}:4000/habitos/s/${id}`)
@@ -31,14 +39,16 @@ export default function DetalleHabito() {
             activo:data.activo,
             fecha_inicio:data.fecha_inicio,
             usuario_id:data.usuario_id,
-            imagen:data.imagen
+            imagen:GetImage(data.imagen)
         })
     }catch(err){
         alert(err.message)
     }
   }
+  const [loadding, setloadding] = useState(false)
   const UpdateHabitos=async()=>{
     try{
+        setloadding(true)
         let ImageUrl=""
         if(FormDataHabitos.imagen.startsWith("file://")){
             const newDataPerfil=new FormData()
@@ -58,16 +68,19 @@ export default function DetalleHabito() {
             ImageUrl=FormDataHabitos.imagen
         }
         await axios.put(`http://${host}:4000/habitos/u/${id}`,{...FormDataHabitos,imagen:ImageUrl})
-        alert("se realizo el registro")
+        alert("se realizo el registro")        
         //ToastAndroid.show("Se actualizaron los datos",ToastAndroid.SHORT)
         //navegar.push("/Panel")
     }catch(err){
         alert(err.message)
+    }finally{
+        setloadding(false)
     }
   }
   useEffect(()=>{
     if(id){
     FectHabitos()
+    FectCreador()
     }
   },[id])
   const pickImage=async()=>{
@@ -83,10 +96,38 @@ export default function DetalleHabito() {
      
   } 
   const {user}=useUser()
-      const Publicacion=async()=>{
-    await axios.post(`http://${host}:4000/publicacion/habitos/${id}/${user.id}`)
-    alert("Se creo el habito")
-  }     
+  const Publicacion=async()=>{
+        await axios.post(`http://${host}:4000/publicacion/habitos/${id}/${user.id}`)
+        alert("Se publico el habito")
+        
+  } 
+  const DeletePublicacion=async()=>{
+    try{
+        await axios.delete(`http://${host}:4000/publicaciones/r/d/${id}/Habitos`)
+        alert("Se elimino la publicacion")
+    }catch(err){
+        alert("Ya elimino esta publicacion")
+    }
+  } 
+  const [estadoPub, setestadoPub] = useState("borrador")
+  const GetEstado=async()=>{    
+        const {data}=await axios.get(`http://${host}:4000/publicacion/estado/${id}`)
+        if(data){
+            setestadoPub("Subido")
+        }
+    
+  }   
+  useFocusEffect(
+    useCallback(()=>{
+        if(id){
+            GetEstado()
+        }
+    },[id])
+  )
+  const [estadoimg, setestadoimg] = useState(false)
+  const ShowImage=()=>{
+    setestadoimg(true)
+  }
     return (
     <>
     <Stack.Screen options={{title:`Habito N°${id}`}}></Stack.Screen>
@@ -94,17 +135,49 @@ export default function DetalleHabito() {
     <View>
        {FormDataHabitos!=null?
        <View style={styles.contenedorP}>
-         <Pressable onPress={Publicacion}  style={{position:"absolute",zIndex:1,top:0,alignSelf:'flex-end',borderRadius:10,padding:10,backgroundColor:"purple",boxShadow:"0px 0px 7px 1px purple"}}>
-                        <View>
-                            <Text style={{color:"white"}}>Publicar</Text>
-                        </View>
-                    </Pressable>
-            <View>
+        <View>
+            <Text>Estado: {estadoPub}</Text>
+        </View>
+        <View style={{flexDirection:"row",justifyContent:"space-between",paddingTop:10,paddingBottom:10}}>
+            <Pressable onPress={DeletePublicacion} style={{backgroundColor:"red",borderRadius:10,boxShadow:"0px 0px 7px 1px red",padding:10}}>
+                <View>
+                    <Text style={{color:"white"}}>Eliminar Publicacion</Text>
+                </View>
+            </Pressable>
+            <Pressable onPress={Publicacion}  style={{borderRadius:10,padding:10,backgroundColor:"purple",boxShadow:"0px 0px 7px 1px purple"}}>
+                <View>
+                    <Text style={{color:"white"}}>Publicar</Text>
+                </View>
+            </Pressable>
+        </View>
+            <View style={{flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
                 {FormDataHabitos.imagen&&(
                      <Image source={{uri:FormDataHabitos.imagen}} style={{width:200,height:300,borderRadius:20}}></Image>
                 )}
-                
-                <Button onPress={pickImage} title='Seleccionar imagen'></Button>
+               <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:10}}>
+                 <Pressable style={{borderRadius:10,borderWidth:2,borderColor:"black",borderStyle:"solid",padding:8,marginRight:2}} onPress={pickImage}>
+                    <View >
+                        <IconSelectImage></IconSelectImage>                        
+                    </View>
+                </Pressable>
+                <Pressable onPress={ShowImage} style={{borderWidth:2,borderColor:"black",borderStyle:"solid",padding:8,borderRadius:10}}>
+                    <View>
+                        <IconShow></IconShow>
+                    </View>
+                </Pressable>
+               </View>
+               <Modal visible={estadoimg} animationType='fade' transparent={true}>
+                <View style={{backgroundColor:"white",position:"absolute",borderWidth:2,borderColor:"black",top:60,left:10,borderRadius:20,height:`${93}%`,width:`${95}%`,}}>
+                    <View style={{alignSelf:"flex-end",marginTop:10,marginRight:10}}>
+                        <Pressable onPress={()=>setestadoimg(false)}>
+                            <IconCloseImage></IconCloseImage>
+                        </Pressable>
+                    </View>
+                    <View>
+                        <PubicacionPrev datosUser={creador} datasRutina={FormDataHabitos}></PubicacionPrev>
+                    </View>
+                </View>
+               </Modal>
             </View>
             <View>
             </View>
@@ -143,9 +216,16 @@ export default function DetalleHabito() {
                 <Text>{FormDataHabitos.fecha_inicio?new Date(FormDataHabitos.fecha_inicio).toLocaleDateString():""} </Text>
             </View>
             <View >
+                {loadding?
+                <View style={styles.btn_update}>
+                    <ActivityIndicator color={"purple"}></ActivityIndicator>
+                </View>
+                :
                 <Pressable style={styles.btn_update} onPress={()=>UpdateHabitos()}>
-                    <Text>Actualizar datos</Text>
+                    <Text style={{textAlign:"center"}}>Actualizar datos</Text>
                 </Pressable>
+                }
+                
             </View>
             
        </View>
@@ -197,23 +277,21 @@ const styles=StyleSheet.create({
     contenedorP:{
         margin:20,        
         textAlign:'left',
-        display:'flex',
-        justifyContent:'center',
-        alignItems:'center',
+        padding:20,
         borderRadius:20,
         boxShadow:'0px 0px 8px 1px black'
     },
     cotenedor_des:{
         marginTop:10,
         display:'flex',
-        width:'70%',
+        
         alignItems:'flex-start',
     },
     contenedorForm:{
         display:'flex',
         flexDirection:'row',
         justifyContent:'space-between',
-       width:'70%',
+       
         alignItems:'center'
     },
    

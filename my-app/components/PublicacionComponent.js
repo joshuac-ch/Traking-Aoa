@@ -3,6 +3,7 @@ import { Image, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'rea
 import { IconElipsis, IconHeart, IconReply } from '../assets/Icons'
 import Comentario from './Comentario'
 import GetImage from '../utils/GetImage'
+import { Link } from 'expo-router'
 export default function PublicacionComponent({datosUser,datasRutina,publicacionID}) {
   const [imagenExpandida, setimagenExpandida] = useState(false)    
   return (
@@ -11,7 +12,9 @@ export default function PublicacionComponent({datosUser,datasRutina,publicacionI
             <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',margin:10}}>
                 <View style={{display:'flex',flexDirection:'row'}}>
                     <View >
+                        <Link style={{marginRight:10}} href={`/Perfil/users/${datosUser.id}`}>
                         <Image source={{uri:GetImage(datosUser.imagen)}} style={{width:60,height:60,borderRadius:10,marginRight:10}}></Image>
+                        </Link>
                     </View>
                     <View>
                         <Text style={{fontWeight:'bold'}}>Creador</Text>

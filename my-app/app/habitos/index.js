@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, ToastAndroid, View } from 'react-native'
 import Habitos from '../../hooks/Habitos'
-import { IconAdd, IconCircle, Iconclock, IconDate, IconDelete } from '../../assets/Icons'
+import { IconAdd, IconCircle, Iconclock, IconDate, IconDelete, IconDontActivity } from '../../assets/Icons'
 import { Link, Stack, useFocusEffect } from 'expo-router'
 import axios from 'axios'
 import contantes from "expo-constants"
@@ -70,7 +70,14 @@ export default function index() {
             )
         })}
        </View>
-       :<Text>No hay valores para mostrar</Text>}
+       :<View style={{justifyContent:"center",alignItems:"center",height:100}}>
+        <View style={{borderRadius:99,borderColor:"black",borderStyle:"solid",padding:7,borderWidth:2}}>
+          <IconDontActivity></IconDontActivity>
+        </View>
+        <View style={{paddingTop:5}}>
+          <Text style={{fontWeight:"600"}}>No se encontro ningun registro</Text>
+        </View>
+        </View>}
     </View>
     </ScrollView>
   )
@@ -91,7 +98,7 @@ const styles=StyleSheet.create({
         marginRight:10,
         marginTop:7,
         marginBottom:7,
-        borderRadius:20        
+        borderRadius:10        
     },
     contenedorHeader:{
         display:'flex',
