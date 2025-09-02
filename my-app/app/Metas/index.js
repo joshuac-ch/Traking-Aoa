@@ -19,8 +19,7 @@ export default function index() {
     }catch(err){
         alert("Hubo un error"+err.message)
     }
-  }
-  console.log(metas)
+  }  
   useFocusEffect(
     useCallback(()=>{
        if(user.id){
@@ -74,13 +73,13 @@ export default function index() {
                         </View>
                         <View>
                             <View style={styles.btn_delete} >
-                                <Text>Meta: {m.meta_total}</Text>
+                                {/*<Text>Meta: {m.meta_total}</Text> */}
                                 <Pressable onPress={()=>BTNDelete(m.id)}>
                                     <IconDelete ></IconDelete>    
                                 </Pressable> 
                             </View>
-                            <Text>Fecha inicio:{m.fecha_inicio?new Date(m.fecha_inicio).toLocaleDateString():''}</Text>
-                            <Text>Fecha limite:{m.fecha_limite?new Date(m.fecha_limite).toLocaleDateString():''}</Text>
+                            <Text>Fecha inicio: {m.fecha_inicio? new Date(m.fecha_inicio).getMonth()+"/"+ new Date(m.fecha_inicio).getDate():''}</Text>
+                            <Text>Fecha limite: {m.fecha_limite?new Date(m.fecha_limite).getMonth()+"/"+ new Date(m.fecha_limite).getDate():''}</Text>
                             
                         </View>                        
                     </View>
@@ -131,7 +130,7 @@ const styles=StyleSheet.create({
     btn_delete:{
        display:'flex',
        flexDirection:'row',
-       justifyContent:'space-between',
+       justifyContent:'flex-end',
        alignItems:'center'   
     }
 })

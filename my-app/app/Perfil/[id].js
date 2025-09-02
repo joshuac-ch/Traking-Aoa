@@ -1,6 +1,6 @@
 import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router'
 import React, { useCallback, useEffect, useState } from 'react'
-import { Button, Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Button, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import { useUser } from '../../components/UserContext'
 import axios from 'axios'
 import constantes from "expo-constants"
@@ -17,7 +17,8 @@ export default function DetalleUser() {
     apellido:'',
     telefono:'',
     correo:'',
-    pass:''
+    pass:'',
+    des:''
   })
   const ShowUser=async()=>{
     try{
@@ -28,7 +29,8 @@ export default function DetalleUser() {
           apellido:data.apellido,
           telefono:data.telefono,
           correo:data.correo,
-          pass:data.pass
+          pass:data.pass,
+          des:data.des
         })
     }catch(err){
       alert("Hubo un error"+err.message)
@@ -86,7 +88,8 @@ export default function DetalleUser() {
    } 
     return (
     <>
-    <View className='m-4'> 
+    <ScrollView>
+      <View className='m-4' style={{marginBottom:50,marginTop:20}}> 
         <View>
         <Text className='font-black text-xl'>Actualizar Perfil </Text>
     </View>
@@ -99,6 +102,10 @@ export default function DetalleUser() {
     <View>
       <Button onPress={pickImage} title='Seleccionar Imagen'></Button>
       
+    </View>
+    <View>
+      <Text>Descripcion</Text>
+      <TextInput style={styles.form_input} onChangeText={text=>setformUsuarios({...formUsuarios,des:text})} value={formUsuarios.des} placeholder='ingrese su descripcion de perfil'></TextInput>
     </View>
     <View>
       <Text>Nombre</Text>
@@ -126,6 +133,7 @@ export default function DetalleUser() {
       </Pressable>
     </View>
     </View>
+    </ScrollView>
     </>
   )
 }

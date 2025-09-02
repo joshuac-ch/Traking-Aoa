@@ -215,10 +215,12 @@ export default function UserDiferent() {
                 <Text>Compartir Perfil</Text>
             </Pressable>
         </View>      
-
+                
        
     </View>
-               
+    <View style={{alignSelf:"center",marginTop:10}}>
+        <Text style={{textAlign:"center"}}>{UserDiferent.des?UserDiferent.des:"Welcome my Profile 💜💜"}</Text>
+    </View>       
    </View>
     <View style={{flexDirection:'row',justifyContent:"space-around",margin:10}}>
         <Pressable onPress={()=>setestadouser("actividades")}>
@@ -234,7 +236,7 @@ export default function UserDiferent() {
     </View> 
    {/*No quedamos aqui revisar que corra bien  */}
    {estadouser=="actividades"?
-   <View>
+   <View style={{paddingBottom:40}}>
    
     <View>
         <Text style={{textAlign:'center'}}>Actividades</Text>
