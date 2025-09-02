@@ -43,8 +43,7 @@ const sequelize=require("../src/config/database")
       type: DataTypes.TEXT
     }  
     }, {
-    sequelize,
-    timestamps:false,
+    sequelize,    
     modelName: 'comentario',
   });
 module.exports=comentario

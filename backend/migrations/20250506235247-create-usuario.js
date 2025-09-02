@@ -26,6 +26,10 @@ module.exports = {
       },
       pass:{
         type:Sequelize.STRING
+      },
+      des:{
+        type:Sequelize.STRING,
+        allowNull:true
       }
     });
   },

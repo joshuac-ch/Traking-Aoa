@@ -34,6 +34,10 @@ const sequelize=require('../src/config/database')
     correo: DataTypes.STRING,
     telefono: DataTypes.STRING,
     pass:DataTypes.STRING,
+    des:{
+      type:DataTypes.STRING,
+      allowNull:true
+    }
   }, {
     sequelize,
     modelName: 'usuario',
