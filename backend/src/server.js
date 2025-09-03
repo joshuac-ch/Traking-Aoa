@@ -8,8 +8,7 @@ app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 app.use("/",router)
 const port=process.env.port|| 4000
 ruta_app="192.168.18.25"
-const server=process.env.IP
 app.listen(port,()=>{
-    console.log(`Entra al siguiente puerto: http://${server}:${port}`)
+    console.log(`Entra al siguiente puerto: ${port}`)
     console.log(process.env.DB_NAME)
 })
