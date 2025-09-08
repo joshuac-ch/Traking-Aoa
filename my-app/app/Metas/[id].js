@@ -8,10 +8,11 @@ import { DateTimePickerAndroid } from '@react-native-community/datetimepicker'
 import * as ImagePicket from "expo-image-picker"
 import GetImage from '../../utils/GetImage'
 import { IconCalendar, IconSelectImage } from '../../assets/Icons'
+import getHost from '../../hooks/getHost'
 export default function DetalleMetas() {
   const {id}=useLocalSearchParams()
   const navegar=useRouter()
-  const host=constantes.expoConfig.extra.host
+  const host=getHost()
   const [FormDataMetas, setFormDataMetas] = useState({
     imagen:'',
     usuario_id:'',

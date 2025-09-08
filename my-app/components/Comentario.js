@@ -7,9 +7,10 @@ import constantes from "expo-constants"
 import { useFocusEffect } from 'expo-router'
 import {  IconDislike, IconDown, IconHeartComent } from '../assets/Icons'
 import GetImage from '../utils/GetImage'
+import getHost from '../hooks/getHost'
 export default function Comentario({pubID,estado=true}) {
   const {user}=useUser()
-  const host=constantes.expoConfig.extra.host
+  const host=getHost()
   const [creador, setcreador] = useState([])
   const GetCreador=async()=>{
       const {data}=await axios.get(`http://${host}:4000/usuarios/s/${user.id}`)

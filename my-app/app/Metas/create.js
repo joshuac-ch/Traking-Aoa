@@ -7,6 +7,7 @@ import Constants from "expo-constants"
 import { useUser } from '../../components/UserContext'
 import { Stack } from 'expo-router'
 import * as ImagePicker from "expo-image-picker"
+import getHost from '../../hooks/getHost'
 export default function create() {
   const {user}=useUser()
   const [FormMetas, setFormMetas] = useState({
@@ -20,7 +21,7 @@ export default function create() {
   })
   const EnviarDatos=async()=>{
     try{
-      const host=Constants.expoConfig.extra.host
+      const host=getHost()
       await axios.post(`http://${host}:4000/metas/i`,FormMetas)      
       alert("Se creo el habito")
 

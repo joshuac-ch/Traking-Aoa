@@ -9,12 +9,13 @@ import { useUser } from '../../../components/UserContext'
 import { IconActivity, IconHeart } from '../../../assets/Icons'
 import LoveUser from "./LoveUser.js"
 import GetImage from '../../../utils/GetImage.js'
+import getHost from '../../../hooks/getHost.js'
 
 export default function UserDiferent() {
     const [UserDiferent, setUserDiferent] = useState([])
     const {id}=useLocalSearchParams()
     const {user}=useUser()
-    const host=constantes.expoConfig.extra.host
+    const host=getHost()
     const ShowUsers=async()=>{
 
        const {data}= await axios.get(`http://${host}:4000/usuarios/s/${id}`)

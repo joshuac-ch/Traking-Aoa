@@ -6,10 +6,11 @@ import axios from 'axios'
 import constantes from "expo-constants" 
 import { useUser } from '../../components/UserContext'
 import GetImage from '../../utils/GetImage'
+import getHost from '../../hooks/getHost'
 export default function notificaciones() {
   const [notiUser, setnotiUser] = useState([])
   const {user}=useUser()
-  const host=constantes.expoConfig.extra.host
+  const host=getHost()
   const notificaciones=async()=>{
     const {data}=await axios.get(`http://${host}:4000/notificaciones/xuser/${user.id}`)
     setnotiUser(data)

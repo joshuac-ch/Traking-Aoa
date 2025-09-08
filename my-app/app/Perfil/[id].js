@@ -6,11 +6,12 @@ import axios from 'axios'
 import constantes from "expo-constants"
 import * as ImagePicker from 'expo-image-picker';
 import GetImage from '../../utils/GetImage'
+import getHost from '../../hooks/getHost'
 
 export default function DetalleUser() {
   const {id}=useLocalSearchParams()
   const {user}=useUser()
-  const host=constantes.expoConfig.extra.host 
+  const host=getHost()
   const [formUsuarios, setformUsuarios] = useState({
     imagen:'',
     nombre:'',

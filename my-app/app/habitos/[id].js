@@ -10,11 +10,12 @@ import { useUser } from '../../components/UserContext'
 import GetImage from '../../utils/GetImage'
 import { Modal } from 'react-native'
 import PubicacionPrev from '../../components/PubicacionPrev'
+import getHost from '../../hooks/getHost'
 
 export default function DetalleHabito() {
   const {id}=useLocalSearchParams()
   const navegar=useRouter()
-  const host=constantes.expoConfig.extra.host
+  const host=getHost()
   const [FormDataHabitos, setFormDataHabitos] = useState({
     titulo:'',
     descripcion:'',

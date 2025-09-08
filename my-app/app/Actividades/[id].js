@@ -10,11 +10,12 @@ import {IconCloseImage, IconDelete, IconSelectImage, IconShow } from '../../asse
 import GetImage from '../../utils/GetImage'
 import PublicacionComponent from '../../components/PublicacionComponent'
 import PubicacionPrev from '../../components/PubicacionPrev'
+import getHost from '../../hooks/getHost'
 export default function DetalleActividad() {
   const {id}=useLocalSearchParams()
   const navegar=useRouter()
   const {user}=useUser()
-  const local=Constantes.expoConfig.extra.host
+  const local=getHost()
   const [detalleactividad, setdetalleactividad] = useState([])
   const [Formdata, setFordata] = useState({
     titulo:'',

@@ -6,12 +6,13 @@ import { Link, Stack, useFocusEffect } from 'expo-router'
 import axios from 'axios'
 import contantes from "expo-constants"
 import { useUser } from '../../components/UserContext'
+import getHost from '../../hooks/getHost'
 export default function index() {
   const {user}=useUser()
   const {FecthHabitos,habitos}=Habitos()  
   const EliminarHabito=async(id)=>{
     try{
-      const host=contantes.expoConfig.extra.host
+      const host=getHost()
       await axios.delete(`http://${host}:4000/habitos/d/${id}`)
       ToastAndroid.show("Se elimino correctamente el habito",ToastAndroid.SHORT)
       FecthHabitos()

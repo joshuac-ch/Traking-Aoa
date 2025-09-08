@@ -3,8 +3,9 @@ import React, { useState } from 'react'
 import Constants from "expo-constants"
 import { useUser } from '../components/UserContext';
 import GetImage from '../utils/GetImage';
+import getHost from './getHost';
 export default function Habitos() {
-  const host=Constants.expoConfig.extra.host;
+  const host=getHost()
   const {user}=useUser()
   const [habitos, sethabitos] = useState([])
   const FecthHabitos=async()=>{

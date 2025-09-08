@@ -5,6 +5,7 @@ import { useUser } from '../../components/UserContext'
 import axios from 'axios'
 import Constants from "expo-constants"
 import { Stack, useRouter } from 'expo-router'
+import getHost from '../../hooks/getHost'
 export default function create() {
   const {user}=useUser()
   const navegar=useRouter()
@@ -18,7 +19,7 @@ export default function create() {
   }) 
   const CreateHabito=async()=>{
     try{
-      const local=Constants.expoConfig.extra.host
+      const local=getHost()
       await axios.post(`http://${local}:4000/habitos/c`,fromHabitos)
       ToastAndroid.show("Se enviaron los datos correctamente",ToastAndroid.TOP)
       

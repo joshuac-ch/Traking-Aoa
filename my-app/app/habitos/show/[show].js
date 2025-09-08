@@ -4,12 +4,13 @@ import React, { useEffect, useState } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import constantes from "expo-constants"
 import PublicacionComponent from '../../../components/PublicacionComponent'
+import getHost from '../../../hooks/getHost'
 export default function ShowHabitosUser() {
     const [dataHabito, setdataHabito] = useState([])
     const [userCreator, setuserCreator] = useState(null)
     const [dataCreator, setdataCreator] = useState([])
     const {show}=useLocalSearchParams()
-    const host=constantes.expoConfig.extra.host
+    const host=getHost()
     const {publi}=useLocalSearchParams()
     
     const showHabito=async()=>{

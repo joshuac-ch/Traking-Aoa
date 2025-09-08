@@ -5,8 +5,9 @@ import { useLocalSearchParams } from 'expo-router'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { IconElipsis, IconHeart, IconReply } from '../../../assets/Icons'
 import PublicacionComponent from '../../../components/PublicacionComponent'
+import getHost from '../../../hooks/getHost'
 export default function ShowActividadUser() {
-    const host=constantes.expoConfig.extra.host
+    const host=getHost()
     const [creatorUser, setcreatorUser] = useState("")
     const [dataCreator, setdataCreator] = useState([])
     const {show}=useLocalSearchParams()

@@ -16,18 +16,22 @@ export default {
       backgroundColor: '#ffffff',
     },
     extra: {
-      host: process.env.LOCAL,
-      
+      host: "52.23.170.150",
+      eas:{
+         projectId: "ae7be154-bc88-495d-b52a-65a786ebae6e"
+      }
     },
     ios: {
       supportsTablet: true,
     },
     android: {
+      package: "com.ninodev1.myapp",
       adaptiveIcon: {
         foregroundImage: './assets/adaptive-icon.png',
         backgroundColor: '#ffffff',
       },
       edgeToEdgeEnabled: true,
+      usesCleartextTraffic: true,   // 👈 NECESARIO
     },
     web: {
       favicon: './assets/favicon.png',

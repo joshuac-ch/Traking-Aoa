@@ -4,8 +4,9 @@ import constatnes from "expo-constants"
 import { useLocalSearchParams } from 'expo-router'
 import PublicacionComponent from '../../../components/PublicacionComponent'
 import ComponenteMetas from './ComponenteMetas'
+import getHost from '../../../hooks/getHost'
 export default function ShowMetasOther() {
-  const host=constatnes.expoConfig.extra.host 
+  const host=getHost()
   const {show}=useLocalSearchParams()
   const [dataMetas, setdataMetas] = useState([])
   

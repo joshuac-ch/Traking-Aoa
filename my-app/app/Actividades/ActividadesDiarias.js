@@ -7,6 +7,7 @@ import axios from 'axios'
 import constantes from "expo-constants"
 import { useUser } from '../../components/UserContext'
 import GetImage from '../../utils/GetImage'
+import getHost from '../../hooks/getHost'
 export default function ActividadesDiarias() {
   const {user}=useUser()  
   const {FetchActividades,actividades}=Actividades()
@@ -14,7 +15,7 @@ export default function ActividadesDiarias() {
   const EliminarActividad=async(id)=>{
       
     try{
-        const host=constantes.expoConfig.extra.host
+        const host=getHost()
         await axios.delete(`http://${host}:4000/actividades/d/${id}`)
         //await axios.delete(`http://${host}:4000/publicaciones/r/d/${id}`)
         alert("Se elimino correcatemente la publicacion")

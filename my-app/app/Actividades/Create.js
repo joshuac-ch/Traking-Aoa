@@ -5,8 +5,9 @@ import { Text } from 'react-native'
 import { useUser } from '../../components/UserContext'
 import Constants from "expo-constants"
 import { Stack } from 'expo-router'
+import getHost from '../../hooks/getHost'
 export default function Create() {
-    const host=Constants.expoConfig.extra.host; //No dejar espacios en blancko en el Host
+    const host=getHost() //No dejar espacios en blancko en el Host
     const {user}=useUser()
     const [DataForm, setDataForm] = useState({
         usuario_id:user.id,

@@ -7,9 +7,10 @@ import constantes from "expo-constants"
 import { Pressable } from 'react-native'
 import GetImage from '../../utils/GetImage'
 import { IconLove } from '../../assets/Icons'
+import getHost from '../../hooks/getHost'
 export default function Love() {
     const [dataLove, setdataLove] = useState([])
-    const host=constantes.expoConfig.extra.host
+    const host=getHost()
     const {user}=useUser()     
     const ShowLovePost=async()=>{
         const {data}=await axios.get(`http://${host}:4000/seguidor/loves/${user.id}`)

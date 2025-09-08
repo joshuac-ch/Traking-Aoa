@@ -12,6 +12,7 @@ import { useHistoryial } from '../../components/HistorialProvider'
 import axios from 'axios'
 import GetImage from '../../utils/GetImage'
 import constantes from "expo-constants"
+import getHost from '../../hooks/getHost'
 export default function Buscardor() {
     const {FectUsuarios,dataUser}=usuarios()
     const {FectMetas,metas}=Metas()
@@ -31,7 +32,7 @@ export default function Buscardor() {
         })
     }
     const [creador, setcreador] = useState([])
-    const host=constantes.expoConfig.extra.host
+    const host=getHost()
     const MostCreador=async()=>{
         const {data}=await axios.get(`http://${host}:4000/usuarios/s/${user.id}`)
         setcreador(data)

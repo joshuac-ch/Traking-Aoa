@@ -11,6 +11,7 @@ import { useHistoryial } from '../../components/HistorialProvider'
 import axios from 'axios'
 import constantes from "expo-constants"
 import GetImage from '../../utils/GetImage'
+import getHost from '../../hooks/getHost'
 //MEJORAR ESTO Y EL BUSCARDOR.JS
 export default function BusSearch() {
     const {entrada}=useLocalSearchParams()
@@ -26,7 +27,7 @@ export default function BusSearch() {
     //hacer el buscador global en si si es el mismo suario permitirle editar caso que sea otro o no coincia el id tencones que lo rediriga al show
     //el buscador se implmento el actividades global falta implementear el metas y habitos y redireccion como se menciona arriba! 
       const [busquedaNueva, setbusquedaNueva] = useState(null) //ver sino seriver no sirve pero igual asegurar quue no haya errores?
-      const host=constantes.expoConfig.extra.host
+      const host=getHost()
       const [actividadesAll, setactividadesAll] = useState([])
       const ShowMetasOtherUsers=async()=>{
         const {data}=await axios.get(`http://${host}:4000/publicaciones/actividades/all`)

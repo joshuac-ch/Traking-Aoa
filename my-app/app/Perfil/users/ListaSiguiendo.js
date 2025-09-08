@@ -6,10 +6,11 @@ import axios from 'axios'
 import { useFocusEffect } from 'expo-router'
 import constantes from "expo-constants" 
 import ListaFollos from '../../../components/ListaFollos'
+import getHost from '../../../hooks/getHost'
 
 export default function ListaSiguiendo({usuario}) {
     const {user}=useUser()
-    const host=constantes.expoConfig.extra.host
+    const host=getHost()
     const [DataUser, setDataUser] = useState([])
     
     const ShowUser=async()=>{

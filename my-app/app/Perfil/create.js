@@ -4,6 +4,7 @@ import { View,Text,TextInput, Pressable, Button, Image, StyleSheet, ScrollView }
 import constantes from 'expo-constants'
 import axios from 'axios'
 import * as PickerImage from "expo-image-picker"
+import getHost from '../../hooks/getHost'
 export default function create() {
   const [userDataForm, setuserDataForm] = useState({
     imagen:'',
@@ -13,7 +14,7 @@ export default function create() {
     telefono:'',
     pass:''    
   })
-  const host=constantes.expoConfig.extra.host
+  const host=getHost()
   const InsertUser = async () => {
   try {
     let imageUrl = "";

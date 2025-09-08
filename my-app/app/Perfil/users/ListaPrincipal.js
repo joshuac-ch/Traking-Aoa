@@ -7,8 +7,9 @@ import ListaSiguiendo from './ListaSiguiendo'
 import { useFocusEffect, useLocalSearchParams } from 'expo-router'
 import axios from 'axios'
 import constantes from "expo-constants"
+import getHost from '../../../hooks/getHost'
 export default function ListaPrincipal(){
-    const host=constantes.expoConfig.extra.host
+    const host=getHost()
     const {estado,usuario}=useLocalSearchParams()    
     const [estadofollow, setestadofollow] = useState(estado)   
     const {user}=useUser()

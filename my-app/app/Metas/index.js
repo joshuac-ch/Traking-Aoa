@@ -6,11 +6,12 @@ import { IconAdd, IconDelete } from '../../assets/Icons'
 import { Link, Stack, useFocusEffect } from 'expo-router'
 import axios from 'axios'
 import constantes from 'expo-constants'
+import getHost from '../../hooks/getHost'
 export default function index() {
   const {user}=useUser()
   const {FectMetas,metas}=Metas()  
   
-  const host=constantes.expoConfig.extra.host
+  const host=getHost()
   const BTNDelete=async(id)=>{
     try{
         await axios.delete(`http://${host}:4000/metas/d/${id}`)

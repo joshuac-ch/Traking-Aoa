@@ -12,12 +12,13 @@ import { ToastAndroid } from 'react-native'
 import Metas from '../../hooks/Metas'
 import Comentario from '../../components/Comentario'
 import GetImage from '../../utils/GetImage'
+import getHost from '../../hooks/getHost'
 //crear rutas en el feed
 //mejororar diseño
 //crear el diseño par ael login
 export default function Panel() {
     const {user}=useUser()
-    const  host=constantes.expoConfig.extra.host
+    const host=getHost()
     const [miuser, setmiuser] = useState([])
     const navegar=useRouter()
     const ShowUser=async()=>{

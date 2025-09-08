@@ -10,6 +10,7 @@ import Habitos from '../../hooks/Habitos'
 import { IconActivity, IconActivityPerfil, IconEditPerfil, IconHeart, IconLock } from '../../assets/Icons'
 import Love from "../Perfil/Love.js"
 import GetImage from '../../utils/GetImage.js'
+import getHost from '../../hooks/getHost.js'
 export default function Perfil() {
     const {user}=useUser()
     const navegar=useRouter()
@@ -21,7 +22,7 @@ export default function Perfil() {
     const [dataMetas, setdataMetas] = useState([])
     const [dataHabitos, setdataHabitos] = useState([])
     const [dataActividades, setdataActividades] = useState([])
-    const host=constantes.expoConfig.extra.host
+    const host=getHost()
     //useEffect(()=>{
     //    FectMetas(),
     //    FecthHabitos(),
