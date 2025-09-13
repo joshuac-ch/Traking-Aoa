@@ -7,7 +7,7 @@ import { useUser } from '../../components/UserContext'
 
 import login from "../../assets/login1.png"
 import ramas from "../../assets/ramas4.png"
-
+import lady from "../../assets/lady.png"
 import fondo2 from "../../assets/fondoprueba.png"
 import fondov2 from "../../assets/fondov2.png" 
 
@@ -45,68 +45,90 @@ export default function AppPrincipal() {
    
    <Stack.Screen options={{headerShown:false}}></Stack.Screen>
    <View style={{flex: 1,backgroundColor:"#807c76"}}>
-    <ImageBackground source={fondov2} style={styles.fondo2}></ImageBackground>
-    <ImageBackground source={fondo2} style={styles.fondo} resizeMode='contain' imageStyle={{alignSelf:"flex-end"}} >
+    {/*Fondo capa 1 base de ramas */}
+    <ImageBackground source={fondov2} style={styles.fondo2}></ImageBackground>   
+    {/*Fondo capa 2 color con capa 2 */}
+    <ImageBackground style={{position: 'absolute',
+      opacity:0.7,
+      width: '100%',
+      height: '100%',backgroundColor:"#191717"}}></ImageBackground>
         
     <View style={styles.contenedor}>
     <View style={{position:"absolute",top:180,left:100,alignItems:"center"}}>
-        <LoginLogo></LoginLogo>    
+        
+        {/* <LoginLogo></LoginLogo> */}    
     </View> 
-    <View style={{position:"absolute",top:260,left:0,width:280}} className='m-4'>
+    <View style={{position:"absolute",top:260,left:15,width:350}} className='m-4'>
         <Text >Correo</Text>
-        <TextInput value={correo} onChangeText={setcorreo} className='rounded w-full bg-gray border-2' placeholder='example@gmail.com'></TextInput>
+        <TextInput value={correo} onChangeText={setcorreo} style={styles.text_input} placeholder='example@gmail.com'></TextInput>
     </View>
-    <View style={{position:"absolute",top:340,left:0,width:280}} className='m-4'>
+    <View style={{position:"absolute",top:340,left:15,width:350}} className='m-4'>
         <Text>Password</Text>
-        <TextInput value={pass} onChangeText={setpass} className='rounded w-full bg-gray border-2' placeholder='*********'></TextInput>
+        <TextInput value={pass} onChangeText={setpass} style={styles.text_input} placeholder='*********'></TextInput>
     </View>
-    <View  style={{position:"absolute",top:440,left:5}} className='m-4 flex-row'>
+    <View  style={{position:"absolute",top:440,left:20}} className='m-4 flex-row'>
         <Link style={styles.cuenta} href={"/Perfil/create"}>No tienes cuenta?</Link>
     </View>
-    <View style={{position:"absolute",bottom:250,left:120}} className='flex-row justify-center p-4'>
+    <View style={{position:"absolute",bottom:250,left:120,zIndex:1}} className='flex-row justify-center p-4'>
         <Pressable onPress={VeificarUse} className='bg-white rounded-full '>
             <IconEntrada></IconEntrada>
         </Pressable>
     </View>
     
     </View>
-    </ImageBackground>
+    {/*Fondo Capa 3 */}
+    <Image source={lady} style={styles.flor} resizeMode='contain'></Image>    
+    
   
    </View>
   
    </>
 )}
-//
+//{/*backgroundColor:"#191717"*/} flor
 const styles=StyleSheet.create({
     cuenta:{
         textDecorationLine:"underline",
         fontWeight:"700"
     },
-    fondo2:{
+    flor:{
+     position: 'absolute',
+     zIndex:0,
+     padding:0,
+      opacity:0.7,
+      bottom:25,
+      right:-140,
+      width: 600,
+      height: 600,
       
+    },
+    fondo2:{      
       position: 'absolute',
       opacity:0.7,
       width: '100%',
       height: '100%',
-        backgroundColor:"#625f59"
+     backgroundColor:"#191717"
     },
-    fondo: {
-      
+    fondo: {      
       position: 'absolute',
-        
       width: '100%',
       height: '100%',
+      
     
     flex: 1,    
     alignItems: 'center',
   },
     text_input:{
+        marginTop:5,
         borderRadius:0,
+        backgroundColor:"gray",
+        borderColor:"gray",
+        color:"black",
+        borderRadius:10,
+        borderWidth:2
     },
     contenedor:{
         width:"80%",
-        flex:1,
-        
+        flex:1,        
         justifyContent:'center',
         alignContent:'center'
     },   
