@@ -1,5 +1,6 @@
 import Fontisto from '@expo/vector-icons/Fontisto';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -7,6 +8,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Feather from '@expo/vector-icons/Feather';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export const IconDate=()=>{
     return <Fontisto name="date" size={24} color="black" />
@@ -15,13 +17,13 @@ export const IconAdd=()=>{
     return <FontAwesome6 name="add" size={24} color="black" />
 }
 export const IconLeft=()=>{
-    return <AntDesign name="rightcircle" size={24} color="black" />
+    return <AntDesign name="right-circle" size={24} color="black" />
 }
 export const IconDelete=()=>{
     return <AntDesign name="delete" size={24} color="black" />
 }
 export const IconElipsis=()=>{
-    return <AntDesign name="ellipsis1" size={24} color="black" />
+    return <FontAwesome6 name="ellipsis" size={24} color="black" />
 }
 export const IconHome=()=>{
     return <Entypo name="home" size={24} color="black" />
@@ -30,7 +32,7 @@ export const IconSeach=()=>{
     return <Feather name="search" size={24} color="black" />
 }
 export const IconUser=()=>{
-    return <AntDesign name="user" size={24} color="black" />
+    return <FontAwesome5 name="user-circle" size={24} color="black" />
 }
 export const IconTitle=()=>{
     return <MaterialIcons name="title" size={24} color="black" />
@@ -42,7 +44,7 @@ export const IconFrecuencia=()=>{
     return <Fontisto name="spinner-refresh" size={24} color="black" />
 }
 export const IconSafe=()=>{
-    return <AntDesign name="Safety" size={24} color="black" />
+    return <AntDesign name="safety" size={24} color="black" />
 }
 export const IconLogin=()=>{
     return <Entypo name="login" size={24} color="black" />
@@ -54,19 +56,19 @@ export const IconActivity=()=>{
     return <Feather name="activity" size={24} color="black" />
 }
 export const IconBack=()=>{
-   return <AntDesign name="leftcircle" size={24} color="black" />
+   return <AntDesign name="left-circle" size={24} color="black" />
 }
 export const Iconclock=()=>{
-    return <AntDesign name="clockcircle" size={24} color="black" />
+    return <AntDesign name="clock-circle" size={24} color="black" />
 }
 export const IconCircle=()=>{
     return <Entypo name="circle" size={24} color="black" />
 }
 export const IconHeart=({color="black"})=>{
-    return <AntDesign name="hearto" size={24} color={color} />
+    return <AntDesign name="heart" size={24} color={color} />
 }
 export const IconHeartActive=({color="black"})=>{
-    return <AntDesign name="heart" size={24} color={color} />
+    return <FontAwesome name="heart" size={24} color={color} />
 }
 export const IconReply=()=>{
     return <Entypo name="reply" size={24} color="black" />
@@ -78,13 +80,13 @@ export const IconAddPerson=()=>{
     return <AntDesign name="adduser" size={24} color="black" />
 }
 export const IconDown=()=>{
-    return <AntDesign name="caretdown" size={20} color="black" />
+    return <AntDesign name="caret-down" size={20} color="black" />
 }
 export const IconDislike=()=>{
     return <SimpleLineIcons name="dislike" size={16} color="black" />
 }
 export const IconHeartComent=({color="black"})=>{
-    return <AntDesign name="hearto" size={16} color={color} />
+    return <AntDesign name="heart" size={16} color={color} />
 }
 export const IconComment=()=>{
     return <EvilIcons name="comment" size={24} color="black" />
@@ -102,7 +104,7 @@ export const IconLock=()=>{
     return <AntDesign name="lock" size={20} color="black" />
 }
 export const IconEntrada=()=>{
-    return <AntDesign name="rightcircle" size={24} color="black" />
+    return <AntDesign name="right-circle" size={30} color="black" />
 }
 export const IconShow=()=>{
     return <AntDesign name="eye" size={24} color="black" />
