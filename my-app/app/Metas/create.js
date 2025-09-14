@@ -23,7 +23,7 @@ export default function create() {
     try{
       const host=getHost()
       await axios.post(`http://${host}:4000/metas/i`,FormMetas)      
-      alert("Se creo el habito")
+      alert("Se creo la meta")
 
     }catch(err){
       alert(err.message)
