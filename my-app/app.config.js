@@ -3,12 +3,12 @@ import 'dotenv/config';
 
 export default {
   expo: {
-    name: 'my-app',
-    slug: 'my-app',
+    name: 'Tracking-Aot',
+    slug: 'tracking-aot',
     version: '1.0.0',
     scheme: 'meta',
     orientation: 'portrait',
-    icon: './assets/icon.png',
+    icon: './assets/corona.png',
     userInterfaceStyle: 'light',
     splash: {
       image: './assets/splash-icon.png',
@@ -16,18 +16,18 @@ export default {
       backgroundColor: '#ffffff',
     },
     extra: {
-      host: "52.23.170.150",
+      host: "192.168.18.25",
       eas:{
-         projectId: "ae7be154-bc88-495d-b52a-65a786ebae6e"
+         projectId: "63f98d9a-6f67-4a94-bd8d-085d71d5ff6f"
       }
     },
     ios: {
       supportsTablet: true,
     },
     android: {
-      package: "com.ninodev1.myapp",
+      package: "com.ninodev1.trackingoat",
       adaptiveIcon: {
-        foregroundImage: './assets/adaptive-icon.png',
+        foregroundImage: './assets/corona.png',
         backgroundColor: '#ffffff',
       },
       edgeToEdgeEnabled: true,
