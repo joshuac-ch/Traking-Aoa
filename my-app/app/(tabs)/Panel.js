@@ -12,6 +12,7 @@ import { ToastAndroid } from 'react-native'
 import Metas from '../../hooks/Metas'
 import Comentario from '../../components/Comentario'
 import GetImage from '../../utils/GetImage'
+
 import getHost from '../../hooks/getHost'
 //crear rutas en el feed
 //mejororar diseño
@@ -208,7 +209,7 @@ export default function Panel() {
   
   const backgroundColor=anim.interpolate({
     inputRange:[0,1],
-    outputRange:["transparent","#a3a3a3"]
+    outputRange:["transparent","#252525"]
   }) 
   const navegar=(ruta)=>{
   Animated.timing(anim,{
@@ -226,7 +227,7 @@ export default function Panel() {
       <Pressable onPress={() => navegar(ruta_principal)}>
         <View style={styles.btn_router}>
           <IconLeft />         
-            <Text style={{paddingLeft: 10,textAlignVertical:"center"}}>Ir a {label}</Text>
+            <Text className="text-white text-sm mt-1 pl-10 text-center">Ir a {label}</Text>
           </View>
       </Pressable>
 
@@ -257,7 +258,7 @@ const border=animacionCirbleBtn.interpolate({
 })
 const backgroud=animacionCirbleBtn.interpolate({
   inputRange:[0,1],
-  outputRange:["transparent","#a3a3a3"]
+  outputRange:["transparent","#252525"]
 })
 const [imagenSeleccionada, setimagenSeleccionada] = useState(null)
 const anchoPantalla=Dimensions.get('window').width
@@ -267,13 +268,13 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
         
        
      <Stack.Screen options={{headerShown:false}}></Stack.Screen>
-     
+     <View style={{backgroundColor:"#131313"}}>
         <View key={miuser.id}  style={styles.contenedor_perfil}>
-        <View style={{flexDirection:'row'}}>
+        <View className='flex flex-row '>
           <Image style={styles.image} source={{uri:GetImage(miuser.imagen)}}></Image>
         <View style={{flexDirection:'column',justifyContent:"flex-start",marginTop:10,height:20}}>{/*Verficar esto */}
-            <Text >{miuser.nombre} {miuser.apellido}</Text>
-            <Text style={{fontWeight:'bold'}}>{miuser.correo}</Text>
+            <Text className="text-white">{miuser.nombre} {miuser.apellido}</Text>
+            <Text  className="text-white font-bold">{miuser.correo}</Text>
         </View>       
         </View>
 
@@ -289,7 +290,7 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
         
         </View>
     <View style={{marginLeft:30,marginBottom:10}}>
-       <Text style={{fontSize:13}}>Metas para este {new Date().getFullYear()}</Text>
+       <Text className="text-white text-sm" >Metas para este {new Date().getFullYear()}</Text>
     </View>   
    <ScrollView  horizontal showsHorizontalScrollIndicator={false} scrollEnabled={metas.length>=5} contentContainerStyle={{paddingHorizontal:30,alignItems:"center"}}>
     <View style={[styles.contenedorCarrusel]}>
@@ -314,7 +315,7 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
                 <IconDontMetas></IconDontMetas>
               </View>
               <View>
-                <Text style={{fontSize:13,marginTop:5,fontWeight:"bold"}}>No hay metas</Text>
+                <Text className="text-white text-sm mt-1 font-bold">No hay metas</Text>
               </View>
           </View>}      
           
@@ -333,7 +334,7 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
       
       <Pressable>
         <View>
-        <Text>Analisis inteligente </Text>
+        <Text className="text-white text-sm mt-1 font-bold">Analisis inteligente </Text>
       </View>
       </Pressable>
       
@@ -368,18 +369,18 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
                </Link>
                 <View>
                   <View style={{flexDirection:'row'}}>
-                    <Text style={{marginRight:20}}>{d.creador.nombre}</Text>
+                    <Text style={{marginRight:20,color:"white"}}>{d.creador.nombre}</Text>
                     <Text style={{color:'#787777'}}>{d.tipo}</Text>
                   </View>
-                  <Text style={{fontWeight:'bold'}}>{d.creador.correo}</Text>
+                  <Text style={{fontWeight:'bold',color:"white"}}>{d.creador.correo}</Text>
                 </View>
               </View>
               <View>
                 <IconElipsis></IconElipsis>
               </View>
              </View>
-              <Text>{d.contendo.titulo}</Text>
-              <Text>{d.contendo.descripcion}</Text>
+              <Text style={{color:"white"}}>{d.contendo.titulo}</Text>
+              <Text style={{color:"white"}}>{d.contendo.descripcion}</Text>
             </View>
               <Pressable onPress={()=>setimagenSeleccionada(d.contendo.imagen)}>
                 <Image style={{width:200,height:250,borderRadius:20,alignSelf:'center'}} source={{uri:GetImage(d.contendo.imagen)}}></Image>
@@ -422,13 +423,13 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
                   </View>
                  </Pressable>
                                                
-                  <Text  style={{marginLeft:10}}>{/*{dataCountLoves[d.id]||"0"} */}Me encanta</Text>                
+                  <Text  style={{marginLeft:10,color:"white"}}>{/*{dataCountLoves[d.id]||"0"} */}Me encanta</Text>                
               </View>
              
               <View style={{flexDirection:'row'}}>
                <Pressable onPress={()=>OcultarComentarios(d.id)} style={{flexDirection:"row"}} >
                  <IconComment></IconComment>
-                <Text style={{marginLeft:10}}>Comentarios</Text>
+                <Text style={{marginLeft:10,color:"white"}}>Comentarios</Text>
                </Pressable>
               </View>
               </View>
@@ -560,6 +561,7 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
       
       
     </View>
+  </View>
     </ScrollView>
   )
 }
@@ -570,7 +572,7 @@ const styles=StyleSheet.create({
     height:180,
   },
   modelo_pub:{
-    backgroundColor:"white",
+    backgroundColor:"#252525",
     borderRadius:20,
     borderColor:"transparent",
     borderStyle:"solid",
@@ -615,7 +617,7 @@ const styles=StyleSheet.create({
     borderRadius:20,
     paddingLeft:5,
     paddingRight:5,
-      
+          
     boxShadow:'0px 0px 8px 1px black',
   },
     contenedor_perfil:{
