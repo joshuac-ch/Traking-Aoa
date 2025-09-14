@@ -3,13 +3,17 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
-import Ionicons from '@expo/vector-icons/Ionicons';
+
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Feather from '@expo/vector-icons/Feather';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import Ionicons from '@expo/vector-icons/Ionicons';
+export const IconSend=({color="black"})=>{
+    return <Ionicons name="send" size={20} color={color} />
+}
 export const IconDate=()=>{
     return <Fontisto name="date" size={24} color="black" />
 }
@@ -25,14 +29,14 @@ export const IconDelete=()=>{
 export const IconElipsis=()=>{
     return <FontAwesome6 name="ellipsis" size={24} color="black" />
 }
-export const IconHome=()=>{
-    return <Entypo name="home" size={24} color="black" />
+export const IconHome=({color="black"})=>{
+    return <Entypo name="home" size={24} color={color} />
 }
-export const IconSeach=()=>{
-    return <Feather name="search" size={24} color="black" />
+export const IconSeach=({color="black"})=>{
+    return <Feather name="search" size={24} color={color} />
 }
-export const IconUser=()=>{
-    return <FontAwesome5 name="user-circle" size={24} color="black" />
+export const IconUser=({color="black"})=>{
+    return <FontAwesome5 name="user-circle" size={24} color={color} />
 }
 export const IconTitle=()=>{
     return <MaterialIcons name="title" size={24} color="black" />
@@ -49,8 +53,8 @@ export const IconSafe=()=>{
 export const IconLogin=()=>{
     return <Entypo name="login" size={24} color="black" />
 }
-export const IconBell=()=>{
-    return <Feather name="bell" size={24} color="black" />
+export const IconBell=({color="gray"})=>{
+    return <Feather name="bell" size={24} color={color} />
 }
 export const IconActivity=()=>{
     return <Feather name="activity" size={24} color="black" />
@@ -95,10 +99,10 @@ export const IconEditPerfil=()=>{
     return <Feather name="edit" size={24} color="black" />
 }
 export const IconClose=()=>{
-    return <AntDesign name="closecircleo" size={30} color="white" />
+    return <AntDesign name="close" size={30} color="white" />
 }
 export const IconCloseImage=()=>{
-    return <AntDesign name="closecircleo" size={30} color="black" />
+    return <AntDesign name="close" size={30} color="black" />
 }
 export const IconLock=()=>{
     return <AntDesign name="lock" size={20} color="black" />
