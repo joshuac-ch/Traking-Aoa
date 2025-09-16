@@ -48,14 +48,15 @@ export default function Buscardor() {
    <ScrollView>
     
      <Stack.Screen options={{headerShown:false}}></Stack.Screen>
+     <View style={{backgroundColor:"#131313",height:"900"}}>{/*Verificar si no hay otra forma que ponerlo asi */}
      <View style={{flexDirection:"row",alignItems:"center",justifyContent:"center",marginTop:60,}}>
         <View>
             <Image source={{uri:GetImage(creador.imagen)}} style={{width:50,borderRadius:50,height:50}}></Image>
         </View>
         <View style={styles.buscar}>
-            <TextInput style={{padding:10,width:240,borderRadius:20}} onChangeText={text=>setdatosbuscados(text)} value={datosbuscados}  placeholder='buscar...'></TextInput>
+            <TextInput style={{padding:10,width:240,borderRadius:20,color:"white"}} onChangeText={text=>setdatosbuscados(text)} value={datosbuscados}  placeholder='buscar...'></TextInput>
             <Pressable onPress={(EnviarSearch)}>
-                <IconSeach style={styles.icon_Search}></IconSeach>
+                <IconSeach color='white' style={styles.icon_Search}></IconSeach>
             </Pressable>
         </View>
      </View>
@@ -70,11 +71,11 @@ export default function Buscardor() {
                             <View style={styles.box}>
                             <View style={{flexDirection:'row',alignItems:'center'}}>
                                 <View style={{marginRight:10}}>
-                                   <IconUser></IconUser> 
+                                   <IconUser color='white'></IconUser> 
                                 </View>                           
                                 <View>
-                                    <Text>{h.titulo}</Text>
-                                <Text>{h.descripcion}</Text>
+                                    <Text style={{color:"white"}}>{h.titulo}</Text>
+                                <Text style={{color:"white"}}>{h.descripcion}</Text>
                                 </View>
                             </View>
                             <View style={styles.box_tipe} >                                
@@ -93,11 +94,11 @@ export default function Buscardor() {
                             <View style={styles.box}>
                              <View style={{flexDirection:'row',alignItems:'center'}}>
                                 <View style={{marginRight:10}}>
-                                    <IconActivity></IconActivity>
+                                    <IconActivity color='white'></IconActivity>
                                 </View>
                             <View  >
-                                <Text>Titulo: </Text>
-                                <Text>{h.titulo}</Text>
+                                <Text style={{color:"white",fontWeight:"bold"}}>Titulo: </Text>
+                                <Text style={{color:"white"}}>{h.titulo}</Text>
                                 
                             </View>
                              </View>
@@ -119,12 +120,12 @@ export default function Buscardor() {
                 <IconDontSearch></IconDontSearch>
             </View>
             <View>
-                <Text style={{fontWeight:"bold",}}>No se hizo ninguna busqueda</Text>
+                <Text style={{fontWeight:"bold",color:"white"}}>No se hizo ninguna busqueda</Text>
             </View>
         </View>
         }
    </View> 
-   
+    </View>
    </ScrollView>
    </>
   )
@@ -168,12 +169,12 @@ const styles=StyleSheet.create({
         
         marginLeft:5,
         marginRight:5,
-        
+        backgroundColor:"#252525",
         padding:3,  
         borderStyle:'solid',
         borderWidth:2,
         width:290,
-        borderColor:'black',
+        borderColor:'#4d4d4d',
         borderRadius:50,        
     }
    
@@ -203,7 +204,7 @@ const styles=StyleSheet.create({
         alignSelf:'center',
         borderWidth:2,
         borderStyle:'solid',
-        borderColor:'black',
+        borderColor:'#4d4d4d',
         borderRadius:10,
         width:340,
         height:70,
@@ -218,7 +219,7 @@ const styles=StyleSheet.create({
     },
     box_tipe:{
         display:'flex',
-        backgroundColor:'purple',
+        backgroundColor:'#db515e',
         color:'white',
         padding:5,
         //width:90,
