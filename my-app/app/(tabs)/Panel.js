@@ -282,7 +282,7 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
           <Animated.View style={{borderRadius:border,backgroundColor:backgroud}}>            
               <Pressable style={{padding:5}} onPress={()=>AnimacionCirle("/configuracion")} >
                                
-                   <IconElipsis></IconElipsis>
+                   <IconElipsis color='white'></IconElipsis>
                
               </Pressable>
            </Animated.View>                
@@ -359,6 +359,7 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
              
             <View style={{margin:10}}>
              <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
+
                <View style={{flexDirection:'row',justifyContent:'flex-start',alignItems:'center'}}>
                <Link href={`/Perfil/users/${d.creador.id}`} asChild>
                <Pressable>
@@ -375,8 +376,9 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
                   <Text style={{fontWeight:'bold',color:"white"}}>{d.creador.correo}</Text>
                 </View>
               </View>
+
               <View>
-                <IconElipsis></IconElipsis>
+                <IconElipsis color='white'></IconElipsis>
               </View>
              </View>
               <Text style={{color:"white"}}>{d.contendo.titulo}</Text>
