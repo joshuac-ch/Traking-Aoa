@@ -34,7 +34,7 @@ const sequelize=require("../src/config/database")
     descripcion: DataTypes.STRING,
     frecuencia: DataTypes.STRING,
     activo: DataTypes.BOOLEAN,
-    fecha_inicio:DataTypes.DATE
+    fecha:DataTypes.DATE
   }, {
     sequelize,
     modelName: 'habitos',

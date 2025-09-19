@@ -29,7 +29,7 @@ const InsertHabitos=async(req,res)=>{
     //const activo=1
     //const fecha_inicio
     //const usuario_id=1
-    const {titulo,descripcion,imagen,frecuencia,activo,fecha_inicio,usuario_id}=req.body
+    const {titulo,descripcion,imagen,frecuencia,activo,fecha,usuario_id}=req.body
     if(!titulo,!frecuencia){
         return res.status(404).json({message:"No se llenaron todos los campos"})
     }
@@ -39,7 +39,7 @@ const InsertHabitos=async(req,res)=>{
         descripcion,
         frecuencia,
         activo:1,
-        fecha_inicio:new Date(),
+        fecha:new Date(),
         usuario_id,
     })
     
@@ -129,7 +129,7 @@ const UpdateHabito=async(req,res)=>{
         descripcion,
         frecuencia,
         activo,
-        fecha_inicio:new Date(),
+        fecha:new Date(),
         usuario_id,
     })
     res.status(200).json(modelo)

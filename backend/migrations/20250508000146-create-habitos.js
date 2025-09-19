@@ -24,7 +24,7 @@ module.exports = {
       activo: {
         type: Sequelize.BOOLEAN
       },
-      fecha_inicio:{
+      fecha:{
         type:Sequelize.DATE
       },
       usuario_id:{
