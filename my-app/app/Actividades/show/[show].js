@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import constantes from "expo-constants"
-import { useLocalSearchParams } from 'expo-router'
+import { Stack, useLocalSearchParams } from 'expo-router'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { IconElipsis, IconHeart, IconReply } from '../../../assets/Icons'
 import PublicacionComponent from '../../../components/PublicacionComponent'
@@ -35,6 +35,7 @@ export default function ShowActividadUser() {
 
     return (
     <>
+    <Stack.Screen options={{title:'Publicacion',headerStyle:{backgroundColor:"#131313"},headerTintColor:"white"}}></Stack.Screen>
     <PublicacionComponent datosUser={dataCreator} datasRutina={dataActividaes}  publicacionID={publi}></PublicacionComponent>
     </>
   )

@@ -45,7 +45,7 @@ export default function Love() {
                     <View >
                         <View style={styles.contenedor_imagen}>
                         <Image style={{width:114,height:180,borderTopLeftRadius:8,borderTopRightRadius:8,alignSelf:'center'}} source={{uri:GetImage(p.valor.imagen)}}></Image>
-                        <Text style={{textAlign:'left',padding:5}}>{p.valor.titulo.length>13?p.valor.titulo.slice(0,13)+"...":p.valor.titulo}</Text>
+                        <Text style={{textAlign:'left',padding:5,color:"white"}}>{p.valor.titulo.length>13?p.valor.titulo.slice(0,13)+"...":p.valor.titulo}</Text>
                         </View> 
                     </View>
                     </Pressable>                                       
@@ -61,7 +61,7 @@ export default function Love() {
                 <IconLove></IconLove>
             </View>
             <View>
-                <Text style={{fontSize:15,fontWeight:"bold",textAlign:"center",width:200}}>No se ha dado me encanta a ninguna publicacion</Text>
+                <Text style={{fontSize:15,fontWeight:"bold",textAlign:"center",width:200,color:"white"}}>No se ha dado me encanta a ninguna publicacion</Text>
             </View>
         </View>}
     </View>
@@ -73,6 +73,7 @@ const styles=StyleSheet.create({
         padding:10,borderRadius:99,backgroundColor:"white",boxShadow:"0px 0px 8px 0px black",marginBottom:10
     },
     tiulo_love:{
+        color:"white",
         padding:10,
         fontWeight:"bold",
         textAlign:"center",
@@ -88,7 +89,7 @@ const styles=StyleSheet.create({
         marginTop:10,
         marginBottom:5,
         flexDirection:'column',
-        backgroundColor:'white',
+        backgroundColor:'#131313',
         borderRadius:10,
         boxShadow:"0px 0px 8px 1px black",
         borderColor:"black",

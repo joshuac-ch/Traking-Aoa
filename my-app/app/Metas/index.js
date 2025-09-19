@@ -7,7 +7,7 @@ import { Link, Stack, useFocusEffect } from 'expo-router'
 import axios from 'axios'
 import constantes from 'expo-constants'
 import getHost from '../../hooks/getHost'
-export default function index() {
+export default function Index() {
   const {user}=useUser()
   const {FectMetas,metas}=Metas()  
   
@@ -30,19 +30,19 @@ export default function index() {
   )
   
   return (
-    <ScrollView>
-        <Stack.Screen options={{title:'Metas'}}></Stack.Screen>
+    <ScrollView style={{backgroundColor:"#131313"}}>
+        <Stack.Screen options={{title:'Metas',headerStyle:{backgroundColor:"#131313"},headerTintColor:"white"}}></Stack.Screen>
         <View >
       <View style={styles.contendorHeader}>
-          <Text className='p-4'>Metas del usuario {user.nombre}</Text>
+          <Text className='p-4 text-white font-semibold'>Metas del usuario {user.nombre}</Text>
           <Link href={"/Metas/create"} asChild> 
         <Pressable>
-              <IconAdd></IconAdd>
+              <IconAdd color='white'></IconAdd>
         </Pressable>
           </Link>
       </View>
     <View>
-    {metas!=null?
+    {metas.length>0?
     <View>
         {metas.map((m)=>{
             const fechaLImite=new Date(m.fecha_limite)
@@ -59,15 +59,15 @@ export default function index() {
                                 <View style={styles.contenedorPrincipal} >
                         <View>
                             <View>
-                                <Text>Titulo: </Text>
-                                <Text>{m.titulo}</Text>
+                                <Text style={{color:"white"}}>Titulo: </Text>
+                                <Text style={{color:"white"}}>{m.titulo}</Text>
                             </View>
                             <View>
-                                <Text>Descripcion: </Text>
-                                <Text>{m.descripcion}</Text>
+                                <Text style={{color:"white"}}>Descripcion: </Text>
+                                <Text style={{color:"white"}}>{m.descripcion}</Text>
                             </View>
                             <View>
-                                <Text>Proceso</Text>
+                                <Text style={{color:"white"}}>Proceso</Text>
                                 
                               
                             </View>
@@ -76,16 +76,16 @@ export default function index() {
                             <View style={styles.btn_delete} >
                                 {/*<Text>Meta: {m.meta_total}</Text> */}
                                 <Pressable onPress={()=>BTNDelete(m.id)}>
-                                    <IconDelete ></IconDelete>    
+                                    <IconDelete color='white' ></IconDelete>    
                                 </Pressable> 
                             </View>
-                            <Text>Fecha inicio: {m.fecha_inicio? new Date(m.fecha_inicio).getMonth()+"/"+ new Date(m.fecha_inicio).getDate():''}</Text>
-                            <Text>Fecha limite: {m.fecha_limite?new Date(m.fecha_limite).getMonth()+"/"+ new Date(m.fecha_limite).getDate():''}</Text>
+                            <Text style={{color:"white"}}>Fecha inicio: {m.fecha_inicio? new Date(m.fecha_inicio).getMonth()+"/"+ new Date(m.fecha_inicio).getDate():''}</Text>
+                            <Text style={{color:"white"}}>Fecha limite: {m.fecha_limite?new Date(m.fecha_limite).getMonth()+"/"+ new Date(m.fecha_limite).getDate():''}</Text>
                             
                         </View>                        
                     </View>
-                    <View style={{backgroundColor:'white',borderRadius:20,width:'100%',height:10}}>
-                        <View style={{backgroundColor:progreso<1?'purple' : '#2196f3',width:`${progreso*100}%`,height:10,borderRadius:20}}></View>
+                    <View style={{backgroundColor:'#4b4b4b',borderRadius:20,width:'100%',height:10}}>
+                        <View style={{backgroundColor:progreso<1?'#2196f3' : '#db515e',width:`${progreso*100}%`,height:10,borderRadius:20}}></View>
                     </View>
                         </View>
                     
@@ -95,7 +95,7 @@ export default function index() {
             )
         })}
     </View>
-    :<Text>No se encontraron datos</Text>}
+    :<Text style={{textAlign:"center",color:"white",fontWeight:"bold"}}>No se encontraron datos</Text>}
     </View>
     </View>
     </ScrollView>
@@ -107,7 +107,7 @@ const styles=StyleSheet.create({
         margin:10,
         borderWidth:2,
         borderStyle:'solid',
-        borderColor:'black',
+        borderColor:'#4b4b4b',
         borderRadius:10
     },
     contendorHeader:{

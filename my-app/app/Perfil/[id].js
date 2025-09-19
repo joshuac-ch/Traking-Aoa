@@ -1,4 +1,4 @@
-import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router'
+import { Stack, useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Button, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import { useUser } from '../../components/UserContext'
@@ -89,10 +89,11 @@ export default function DetalleUser() {
    } 
     return (
     <>
-    <ScrollView>
+    <Stack.Screen options={{title:`Editar Perfil`,headerStyle:{backgroundColor:"#131313"},headerTintColor:"white"}}></Stack.Screen>
+    <ScrollView style={{backgroundColor:"#131313"}}>
       <View className='m-4' style={{marginBottom:50,marginTop:20}}> 
         <View>
-        <Text className='font-black text-xl'>Actualizar Perfil </Text>
+        <Text className='font-black text-xl' style={{color:"white"}}>Actualizar Perfil </Text>
     </View>
     <View>
       {formUsuarios.imagen&&
@@ -101,36 +102,39 @@ export default function DetalleUser() {
      
     </View>
     <View>
-      <Button onPress={pickImage} title='Seleccionar Imagen'></Button>
+      <Pressable onPress={pickImage} style={{backgroundColor:"#252525",padding:10,borderRadius:10,width:150,alignSelf:"center"}}>
+        <Text style={{color:"white",textAlign:"center"}}>Seleccionar Imagen</Text>
+      </Pressable>
+     
       
     </View>
     <View>
-      <Text>Descripcion</Text>
+      <Text style={{color:"white"}}>Descripcion</Text>
       <TextInput style={styles.form_input} onChangeText={text=>setformUsuarios({...formUsuarios,des:text})} value={formUsuarios.des} placeholder='ingrese su descripcion de perfil'></TextInput>
     </View>
     <View>
-      <Text>Nombre</Text>
+      <Text style={{color:"white"}}>Nombre</Text>
       <TextInput style={styles.form_input} value={formUsuarios.nombre} onChangeText={text=>setformUsuarios({...formUsuarios,nombre:text})}></TextInput>
     </View>
     <View>
-      <Text>Apellido</Text>
+      <Text style={{color:"white"}}>Apellido</Text>
       <TextInput style={styles.form_input} value={formUsuarios.apellido} onChangeText={text=>setformUsuarios({...formUsuarios,apellido:text})}></TextInput>
     </View>
     <View>
-      <Text>Telefono</Text>
+      <Text style={{color:"white"}}>Telefono</Text>
       <TextInput style={styles.form_input} value={formUsuarios.telefono} onChangeText={text=>setformUsuarios({...formUsuarios,telefono:text})}></TextInput>
     </View>
     <View>
-      <Text>Correo</Text>
+      <Text style={{color:"white"}}>Correo</Text>
       <TextInput style={styles.form_input} value={formUsuarios.correo} onChangeText={text=>setformUsuarios({...formUsuarios,correo:text})}></TextInput>
     </View>
     <View>
-      <Text>Contraseña</Text>
+      <Text style={{color:"white"}}>Contraseña</Text>
       <TextInput style={styles.form_input} value={formUsuarios.pass} onChangeText={text=>setformUsuarios({...formUsuarios,pass:text})}></TextInput>
     </View>
     <View style={{alignItems:'center'}}>
       <Pressable onPress={()=>updatePofile()} style={styles.btn_sub}>
-        <Text>Actualizar Perfil</Text>
+        <Text style={{color:"white"}}>Actualizar Perfil</Text>
       </Pressable>
     </View>
     </View>
@@ -139,9 +143,10 @@ export default function DetalleUser() {
   )
 }
 const styles=StyleSheet.create({
-  form_input:{
+  form_input:{    
+    color:"white",
     borderRadius:10,
-    borderColor:'black',
+    borderColor:'#4d4d4d',
     borderWidth:2,
     borderStyle:'solid',
     width:'100%',
@@ -165,7 +170,7 @@ const styles=StyleSheet.create({
     borderWidth:2,
     borderRadius:10,
     borderStyle:'solid',
-    borderColor:'black',
+    borderColor:'#4d4d4d',
     padding:10,
   }
 })

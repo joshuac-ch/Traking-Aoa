@@ -7,7 +7,7 @@ import axios from 'axios'
 import contantes from "expo-constants"
 import { useUser } from '../../components/UserContext'
 import getHost from '../../hooks/getHost'
-export default function index() {
+export default function Index() {
   const {user}=useUser()
   const {FecthHabitos,habitos}=Habitos()  
   const EliminarHabito=async(id)=>{
@@ -29,14 +29,14 @@ export default function index() {
     },[user.id])
   )  
   return (
-    <ScrollView>
-      <Stack.Screen options={{title:'Habitos'}}></Stack.Screen>
+    <ScrollView style={{backgroundColor:"#131313"}}>
+      <Stack.Screen options={{title:'Habitos',headerStyle:{backgroundColor:"#131313"},headerTintColor:"white"}}></Stack.Screen>
       <View>
        <View style={styles.contenedorHeader}>
-            <Text className='font-black'>Hoy</Text>
+            <Text className='font-black text-white'>Hoy</Text>
             <Link href={'/Habitos/create/'} asChild>
                 <Pressable>  
-                  <IconAdd />  
+                  <IconAdd color='white'/>  
                 </Pressable>
             </Link>
        </View>
@@ -49,12 +49,12 @@ export default function index() {
                       <View style={styles.contenedor} key={h.id}>
                         <View style={{flexDirection:'row',justifyContent:'flex-start',alignItems:'center'}}>
                           <View style={{marginRight:10}}>
-                            <Iconclock ></Iconclock>
+                            <Iconclock color='white'></Iconclock>
                           </View>
                             <View>                               
-                                <Text>{h.titulo}</Text>
+                                <Text style={{color:"white"}}>{h.titulo}</Text>
                               <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:5}}>
-                                 <Text>{h.fecha_inicio?new Date(h.fecha_inicio).toLocaleDateString():''}</Text>  
+                                 <Text style={{color:"white"}}>{h.fecha?new Date(h.fecha).toLocaleDateString():''}</Text>  
                                  
                               </View>
                             </View>                         
@@ -62,7 +62,7 @@ export default function index() {
                         
                         <View style={{flexDirection:'row',alignItems:'center'}}>
                           <Pressable onPress={()=>EliminarHabito(h.id)}>
-                              <IconDelete></IconDelete>
+                              <IconDelete color='white'></IconDelete>
                           </Pressable>
                         </View>                                        
                       </View>
@@ -72,11 +72,11 @@ export default function index() {
         })}
        </View>
        :<View style={{justifyContent:"center",alignItems:"center",height:100}}>
-        <View style={{borderRadius:99,borderColor:"black",borderStyle:"solid",padding:7,borderWidth:2}}>
-          <IconDontActivity></IconDontActivity>
+        <View style={{borderRadius:99,borderColor:"#4b4b4b",borderStyle:"solid",padding:7,borderWidth:2}}>
+          <IconDontActivity color='white'></IconDontActivity>
         </View>
         <View style={{paddingTop:5}}>
-          <Text style={{fontWeight:"600"}}>No se encontro ningun registro</Text>
+          <Text style={{fontWeight:"600",color:"white"}}>No se encontro ningun registro</Text>
         </View>
         </View>}
     </View>
@@ -93,6 +93,7 @@ const styles=StyleSheet.create({
         flexDirection:'row',
         justifyContent:'space-between',
         alignContent:'center',
+        backgroundColor:"#252525",
         boxShadow:'0px 0px 8px 1px black',
         padding:5,
         marginLeft:10,

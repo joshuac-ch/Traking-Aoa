@@ -111,25 +111,25 @@ export default function BusSearch() {
     
   return (
    <>
-    <ScrollView>
+    <ScrollView style={{backgroundColor:"#131313"}}>
     
-     <Stack.Screen options={{headerShown:false}}></Stack.Screen>
+     <Stack.Screen options={{headerShown:false,headerStyle:{backgroundColor:"#131313"},headerTintColor:"white"}}></Stack.Screen>
     <View style={styles.buscar}>
     <Link asChild href={"/Buscardor"}>
     <Pressable>
-        <IconBack></IconBack>
+        <IconBack color='white'></IconBack>
     </Pressable>
     </Link>
-    <TextInput style={{width:250}} onChangeText={text=>setdatosbuscados(text)} value={datosbuscados}  placeholder='buscar...'></TextInput>
+    <TextInput style={{width:250,color:"white"}} onChangeText={text=>setdatosbuscados(text)} value={datosbuscados}  placeholder='buscar...'></TextInput>
     
-    <IconSeach style={styles.icon_Search}></IconSeach>
+    <IconSeach color='white' style={styles.icon_Search}></IconSeach>
    </View>
    <View style={{flexDirection:'row',justifyContent:'space-around',margin:20}}>
     <View>
-        <Text>Actividades</Text>
+        <Text style={{color:"white"}}>Actividades</Text>
     </View>
     <View>
-        <Text>Usuarios</Text>
+        <Text style={{color:"white"}}>Usuarios</Text>
     </View>
    
    </View>
@@ -149,8 +149,8 @@ export default function BusSearch() {
                                  <Image source={{uri:GetImage(m.imagen)}} style={{width:50,height:50,borderRadius:50,margin:10}}></Image>    
                             )}                           
                             <View>
-                                <Text>{m.nombre}</Text>
-                                <Text style={{fontWeight:'bold'}}>{m.correo}</Text>
+                                <Text style={{color:"white"}}>{m.nombre}</Text>
+                                <Text style={{fontWeight:'bold',color:"white"}}>{m.correo}</Text>
                             </View>
                         </View>
                     </Pressable>
@@ -160,18 +160,25 @@ export default function BusSearch() {
                     <Pressable onPress={()=>guardarbusqueda(m.rutina.id,m.rutina.titulo,m.tipo,m.rutina.descripcion,m.pub.id)}>
                         <View style={styles.contenedor_mostrar}>
                             <View style={{marginLeft:10,marginRight:10}}>
-                                <IconActivity></IconActivity>
+                                <IconActivity color='white'></IconActivity>
                             </View>
                             <View>
-                                 <Text>{m.tipo}</Text>
-                                 <Text>{m.rutina.titulo}</Text>
+                                 <Text style={{color:"white"}}>{m.tipo}</Text>
+                                 <Text style={{color:"white"}}>{m.rutina.titulo}</Text>
                             </View>                            
                         </View>
                     </Pressable>
                 </Link>
             )
         })
-        :historial.length>0?
+        
+        :      
+        <View style={styles.contenedor_no_datos}>            
+            <ActivityIndicator size="large" color={"#db515e"}></ActivityIndicator>
+        </View>}
+    </View>
+   </View>
+   {/* ESTO IBA EN LA LINEA 174 :historial.length>0?
             historial.map((h,i)=>{
                 //IMPORTANTE ESTA LINEA AHORA GUARDAR EL HISTORIAL Y VER SI FUNCIONA CORRECTAMENTE 
                 //ver la eliminacion de publicacion y si se permite eliminar los comentarios junto con ella 
@@ -231,13 +238,7 @@ export default function BusSearch() {
                     </Pressable>
                    </Link>
                 )
-            })
-        :
-        <View style={styles.contenedor_no_datos}>            
-            <ActivityIndicator size="large" color={"purple"}></ActivityIndicator>
-        </View>}
-    </View>
-   </View>
+            })*/}
    </ScrollView>
    </>
   )
@@ -256,7 +257,7 @@ const styles=StyleSheet.create({
         height:65,
         borderWidth:2,
         borderStyle:'solid',
-        borderColor:'black',
+        borderColor:'#4d4d4d',
         alignContent:'center'
         
     },
@@ -277,6 +278,7 @@ const styles=StyleSheet.create({
         justifyContent:'space-between',
         alignItems:'center',
         alignSelf:'center',
+        backgroundColor:"#4d4d4d",
 
         marginLeft:10,
         marginRight:10,
@@ -288,7 +290,7 @@ const styles=StyleSheet.create({
         borderStyle:'solid',
         borderWidth:2,
         width:350,
-        borderColor:'black',
+        borderColor:'#4d4d4d',
         borderRadius:10,        
     }
    
@@ -304,7 +306,8 @@ const styles=StyleSheet.create({
         flexDirection:'row',
         alignItems:'center',
         borderWidth:2,
-        borderStyle:'black',
+        borderColor:"#4d4d4d",
+        borderStyle:'solid',
         borderRadius:10,
         padding:10,
         alignSelf:'center',

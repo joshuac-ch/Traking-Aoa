@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useLocalSearchParams } from 'expo-router'
+import { Stack, useLocalSearchParams } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import constantes from "expo-constants"
@@ -36,6 +36,7 @@ export default function ShowHabitosUser() {
     
     return (
    <>
+   <Stack.Screen options={{title:'Publicacion',headerStyle:{backgroundColor:"#131313"},headerTintColor:"white"}}></Stack.Screen>
     <PublicacionComponent datasRutina={dataHabito} datosUser={dataCreator} publicacionID={publi}></PublicacionComponent>
    </>
   )

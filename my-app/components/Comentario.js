@@ -1,11 +1,11 @@
 import React, { useCallback, useState } from 'react'
-import { ActivityIndicator, Pressable, StyleSheet, TextInput } from 'react-native'
+import { ActivityIndicator, Pressable, StyleSheet, TextInput, ToastAndroid } from 'react-native'
 import { Image, Text, View } from 'react-native'
 import { useUser } from './UserContext'
 import axios from 'axios'
 import constantes from "expo-constants"
 import { useFocusEffect } from 'expo-router'
-import {  IconDislike, IconDown, IconHeartComent } from '../assets/Icons'
+import {  IconDislike, IconDown, IconHeartComent, IconSend } from '../assets/Icons'
 import GetImage from '../utils/GetImage'
 import getHost from '../hooks/getHost'
 export default function Comentario({pubID,estado=true}) {
@@ -35,15 +35,19 @@ const [loadding, setloadding] = useState(false)
       setloadding(true)
       if(publicar.comentario!=="" && estado){
         await axios.post(`http://${host}:4000/comentarios/publicaciones`,publicar)       
-        setloadding(false)
+        //setloadding(false)
         GetComentariosPub()
+        publicar.comentario=''
       }else{
-        alert("comentario vacio")
-        setloadding(false)
+        ToastAndroid.show("comentario vacio",ToastAndroid.BOTTOM)
+        
+        //setloadding(false)
       }
-    }catch(err){
+    }catch(err){       
         alert(err.message)
         console.err(err.message)
+    }finally{
+        setloadding(false)
     }
   }
   const [comentario, setcomentario] = useState([])
@@ -61,9 +65,10 @@ const [loadding, setloadding] = useState(false)
      <>
      <View style={styles.contenedor}>              
         <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
-          <View style={{flexDirection:"row"}}>
+          <View style={{flexDirection:"row",alignItems:"center"}}>
             <Image source={{uri:GetImage(creador.imagen)}} style={styles.creador}></Image>
-            <TextInput value={publicar.comentario}  onChangeText={text=>setpublicar({...publicar,comentario:text})} style={{paddingLeft:10}} placeholder='ingrese comentario'></TextInput>
+            <TextInput value={publicar.comentario}  onChangeText={text=>setpublicar({...publicar,comentario:text})}
+             style={{paddingLeft:10,backgroundColor:"#3f3f3f",color:"white",height:40,width:150,borderRadius:10,marginLeft:5,marginRight:5}} ></TextInput>
           </View>
           <View>
           {loadding?
@@ -71,7 +76,8 @@ const [loadding, setloadding] = useState(false)
           :
            <Pressable onPress={CreateComentario} style={styles.boton}>
             <View>
-            <Text style={{color:"white"}}>Enviar</Text>
+            <IconSend color='white'></IconSend>
+            
             </View>
           </Pressable>
           }
@@ -80,8 +86,8 @@ const [loadding, setloadding] = useState(false)
     </View>
     <View>
       <View style={{flexDirection:"row",justifyContent:"space-between",margin:30}}>
-        <Text>Comentarios</Text>
-        <IconDown></IconDown>
+        <Text style={{color:"white"}}>Comentarios</Text>
+        <IconDown color='white'></IconDown>
       </View>
       <View >
         {comentario.length>0?
@@ -91,18 +97,18 @@ const [loadding, setloadding] = useState(false)
               <View>
                 <Image source={{uri:GetImage(c.creador.imagen)}} style={{margin:5,width:50,height:50,borderRadius:50}}></Image>
               </View>
-              <View style={{backgroundColor:"#c9c9c9",padding:5,marginLeft:5,marginRight:5,flex:1,borderRadius:10}}>
-                <Text style={{fontWeight:"bold"}}>{c.creador.nombre}{c.creador.apellido}</Text>
-                <Text>{c.comentario.comentario}</Text>
+              <View style={{backgroundColor:"#3f3f3f",padding:5,marginLeft:5,marginRight:5,flex:1,borderRadius:10}}>
+                <Text style={{fontWeight:"bold",color:"white"}}>{c.creador.nombre}{c.creador.apellido}</Text>
+                <Text style={{color:"white"}}>{c.comentario.comentario}</Text>
                 <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
-                  <Text>{c.comentario.createdAt?new Date(c.comentario.createdAt).getMinutes()+"min":"s"}</Text>
-                  <Text>Responder</Text>
+                  <Text style={{color:"white"}}>{c.comentario.createdAt?new Date(c.comentario.createdAt).getMinutes()+"min":"s"}</Text>
+                  <Text style={{color:"white"}}>Responder</Text>
                   <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
                     <View style={{paddingLeft:5,flexDirection:"row",alignItems:"center",paddingRight:9}}>
-                      <IconHeartComent></IconHeartComent>
-                      <Text style={{textAlignVertical:"center",paddingLeft:3}}>0</Text>
+                      <IconHeartComent color='white'></IconHeartComent>
+                      <Text style={{textAlignVertical:"center",paddingLeft:3,color:"white"}}>0</Text>
                     </View>
-                    <IconDislike></IconDislike>
+                    <IconDislike color='white'></IconDislike>
                   </View>
                                     
                 </View>
@@ -113,7 +119,7 @@ const [loadding, setloadding] = useState(false)
         })
         :
         <View style={{alignSelf:"center",margin:10}}>
-          <Text style={{fontWeight:"bold"}}>No hay comentarios</Text>
+          <Text style={{fontWeight:"bold",color:"white"}}>No hay comentarios</Text>
         </View>
         }        
       </View>
@@ -134,11 +140,11 @@ const styles=StyleSheet.create({
         height:50
     },
     boton:{
-    backgroundColor:"purple",
-    paddingTop:10,
-    paddingRight:15,
-    paddingBottom:10,
-    paddingLeft:15,
+    backgroundColor:"#131313",
+    paddingTop:8,
+    paddingRight:8,
+    paddingBottom:8,
+    paddingLeft:8,
     borderRadius:10
     }
 })

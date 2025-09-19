@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from 'react'
-import { Pressable, Text, View } from 'react-native'
+import { Pressable, ScrollView, Text, View } from 'react-native'
 import { IconAddPerson, IconBack } from '../../../assets/Icons'
 import { useUser } from '../../../components/UserContext'
 import ListaSeguidores from './ListaSeguidores'
 import ListaSiguiendo from './ListaSiguiendo'
-import { useFocusEffect, useLocalSearchParams } from 'expo-router'
+import { Stack, useFocusEffect, useLocalSearchParams } from 'expo-router'
 import axios from 'axios'
 import constantes from "expo-constants"
 import getHost from '../../../hooks/getHost'
@@ -25,27 +25,29 @@ export default function ListaPrincipal(){
         },[vistaUsuario])
     )    
     return(
-    <>    
+    <> 
+    <Stack.Screen options={{title:'Lista Principal',headerStyle:{backgroundColor:"#131313"},headerTintColor:"white"}}></Stack.Screen>
+    <ScrollView style={{backgroundColor:"#131313"}}>   
     <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center",margin:10}}>
         <View>
-            <IconBack></IconBack>
+            <IconBack color='white'></IconBack>
         </View>
         <View>
-            <Text>{dataUser.correo}</Text>
+            <Text style={{color:"white"}}>{dataUser.correo}</Text>
         </View>
         <View>
-            <IconAddPerson></IconAddPerson>
+            <IconAddPerson color='white'></IconAddPerson>
         </View>
     </View>
     <View style={{flexDirection:"row",justifyContent:"space-around",marginTop:10}}>
         <Pressable onPress={()=>setestadofollow("siguiendo")}>
             <View>
-            <Text>Siguiendo</Text>
+            <Text style={{color:"white"}}>Siguiendo</Text>
         </View>
         </Pressable>        
         <Pressable onPress={()=>setestadofollow("seguidores")}>
             <View>
-            <Text>Seguidores</Text>
+            <Text style={{color:"white"}}>Seguidores</Text>
         </View>
         </Pressable>
         
@@ -57,7 +59,7 @@ export default function ListaPrincipal(){
         <ListaSeguidores usuario={vistaUsuario}></ListaSeguidores>
         }
     </View>
-    
+    </ScrollView>
     </>
   )
 }

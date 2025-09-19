@@ -136,22 +136,22 @@ export default function DetalleActividad() {
     
     return (
    <>
-   <Stack.Screen options={{title:`Actividad N°${id}`}}></Stack.Screen>
-    <ScrollView>
+   <Stack.Screen options={{title:`Actividad N°${id}`,headerStyle:{backgroundColor:"#131313"},headerTintColor:"white"}}></Stack.Screen>
+    <ScrollView style={{backgroundColor:"#131313"}}>
         
         <View>        
         {detalleactividad!=null?
         <View style={styles.contenedor}>
             <View>
-                <Text>Estado: {valorPubID}</Text>
+                <Text style={{color:"white"}}>Estado: {valorPubID}</Text>
             </View>
             <View style={{flexDirection:"row",justifyContent:"space-between",paddingTop:10}}>
-                <Pressable onPress={DeletePublicacion} style={{backgroundColor:"red",borderRadius:10,boxShadow:"0px 0px 7px 1px red",padding:10}}>
+                <Pressable onPress={DeletePublicacion} style={{backgroundColor:"#db515e",borderRadius:10,boxShadow:"0px 0px 7px 1px red",padding:10}}>
                 <View>
                     <Text style={{color:"white"}}>Eliminar Publicacion</Text>
                 </View>
                 </Pressable>
-                <Pressable onPress={publicar} style={{alignSelf:'flex-end',borderRadius:10,padding:10,backgroundColor:"purple",boxShadow:"0px 0px 7px 1px purple"}}>
+                <Pressable onPress={publicar} style={{alignSelf:'flex-end',borderRadius:10,padding:10,backgroundColor:"#131313",boxShadow:"0px 0px 7px 1px white"}}>
                     <View>
                         <Text style={{color:"white"}}>Publicar</Text>
                     </View>
@@ -166,23 +166,23 @@ export default function DetalleActividad() {
                 <View style={{flexDirection:"row",alignItems:"center",justifyContent:"center",marginTop:10}}>
                     <Pressable onPress={pickImage} >
                     <View style={styles.button}>
-                        <IconSelectImage></IconSelectImage>
+                        <IconSelectImage color='white'></IconSelectImage>
                     </View>
                     </Pressable>
-                    <Pressable onPress={ShowImage} style={{borderWidth:2,borderColor:"black",borderStyle:"solid",padding:8,borderRadius:10}}>
+                    <Pressable onPress={ShowImage} style={{borderWidth:2,borderColor:"#4b4b4b",borderStyle:"solid",padding:8,borderRadius:10}}>
                         <View >
-                            <IconShow></IconShow>
+                            <IconShow color='white'></IconShow>
                         </View>
                     </Pressable>
                 </View>
                 <Modal visible={mostrarImagen} transparent={true} animationType='fade'>
-                    <View style={{backgroundColor:"white",position:"absolute",borderWidth:2,borderColor:"black",top:60,left:10,height:`${92}%`,width:`${95}%`,borderRadius:20}}>
+                    <View style={{backgroundColor:"#131313",position:"absolute",borderWidth:2,borderColor:"black",top:60,left:10,height:`${92}%`,width:`${95}%`,borderRadius:20}}>
                         <View style={{alignSelf:"flex-end",marginTop:10,marginRight:10}}>
                             <Pressable onPress={()=>setmostrarImagen(false)}>
-                                <IconCloseImage></IconCloseImage> 
+                                <IconCloseImage color='white'></IconCloseImage> 
                             </Pressable>                       
                         </View>
-                        <View>
+                        <View >
                             {/*No usar este crear otro sin el get ImAGE, PARA PREVISUALIZAR */}
                             <PubicacionPrev datosUser={dataCreador} datasRutina={Formdata}></PubicacionPrev>
                             
@@ -192,27 +192,27 @@ export default function DetalleActividad() {
                 </Modal>
             </View>
             <View className=''>
-                <Text className='font-black'>Titutlo: </Text>
+                <Text className='font-black text-white'>Titutlo: </Text>
                 <TextInput style={styles.input_form} value={Formdata.titulo} onChangeText={text=>setFordata({...Formdata,titulo:text})}></TextInput>
                 
             </View >
             <View >
-                <Text  className='font-black'>Desripcion:</Text>
+                <Text className='font-black text-white'>Desripcion:</Text>
                 <TextInput style={styles.des_input_form} value={Formdata.descripcion} onChangeText={text=>setFordata({...Formdata,descripcion:text})}></TextInput>
             </View>
             <View className=''>
-                <Text  className='font-black'>Fecha Emitida: </Text>
-                <Text>{Formdata.fecha?new Date(Formdata.fecha).toLocaleDateString():""}</Text>
+                <Text className='font-black text-white'>Fecha Emitida: </Text>
+                <Text style={{color:"white"}}>{Formdata.fecha?new Date(Formdata.fecha).toLocaleDateString():""}</Text>
             
           </View>
           <View style={{alignItems:'center'}}>
             {loadding?
             <View style={styles.btn_update}>
-                <ActivityIndicator color={"purple"}></ActivityIndicator>
+                <ActivityIndicator color={"#db515e"}></ActivityIndicator>
             </View>
             :
             <Pressable style={styles.btn_update} onPress={()=>UpdateActividad()}>
-                <Text style={{textAlign:'center'}}>Actualizar Datos</Text>
+                <Text style={{textAlign:'center',color:"white"}}>Actualizar Datos</Text>
             </Pressable>
             }
           </View>
@@ -220,7 +220,7 @@ export default function DetalleActividad() {
                
            </View>
         </View>
-        :<Text>No hay datos</Text>}
+        :<Text style={{color:"white"}}>No hay datos</Text>}
     </View>
         
     </ScrollView>
@@ -231,7 +231,7 @@ const styles=StyleSheet.create({
     button:{
         borderRadius:10,
         borderWidth:2,
-        borderColor:"black",
+        borderColor:"#4b4b4b",
         borderStyle:'solid',
         marginRight:2,
         padding:8
@@ -259,7 +259,7 @@ const styles=StyleSheet.create({
     },
     contenedor:{
         margin:10,
-        
+        backgroundColor:"#252525",
         borderRadius:20,
         padding:20,
         boxShadow:'0px 0px 8px 1px black'
@@ -275,7 +275,7 @@ const styles=StyleSheet.create({
         margin:15,
         borderRadius:10,
         borderWidth:2,
-        borderColor:'black',
+        borderColor:'#4b4b4b',
         borderStyle:'solid',
         width:150,
         padding:10,

@@ -33,15 +33,17 @@ export default function ActividadesDiarias() {
   )  
   return (
     <>
-    <Stack.Screen options={{title:"Actividades"}}></Stack.Screen>
-    <ScrollView>
+    
+    <Stack.Screen options={{title:"Actividades",headerStyle:{backgroundColor:"#131313"},headerTintColor:"white",contentStyle: { backgroundColor: "#131313" }}}></Stack.Screen>
+    
+    <ScrollView style={{backgroundColor:"#131313"}}>
     <View className=''>
              <View style={styles.header_Acti}>
-            <Text className='font-black text-lg'>Hoy</Text>
+            <Text className='font-black text-lg text-white'>Hoy</Text>
             <View >
                 <Link href={'/Actividades/Create'} asChild>
                 <Pressable >
-                    <IconAdd ></IconAdd>
+                    <IconAdd color='white'></IconAdd>
                 </Pressable>
                 </Link>        
             </View>
@@ -57,17 +59,17 @@ export default function ActividadesDiarias() {
                             <View style={{flexDirection:'row',alignItems:'center'}}>
                                 
                                 <View style={{marginRight:10}}>
-                                    <Iconclock></Iconclock>
+                                    <Iconclock color='white'></Iconclock>
                                 </View>
                                 <View >
                                     
-                                    <Text>{a.titulo}</Text>                            
-                                    <Text> {a.fecha?new Date(a.fecha).toLocaleDateString():''}</Text>
+                                    <Text style={{color:"white"}}>{a.titulo}</Text>                            
+                                    <Text style={{color:"white"}}> {a.fecha?new Date(a.fecha).toLocaleDateString():''}</Text>
                                 </View> 
                             </View>                       
                             <View style={{flexDirection:'row',alignItems:'center'}}>
                                     <Pressable onPress={()=>EliminarActividad(a.id)}>
-                                        <IconDelete></IconDelete>
+                                        <IconDelete color='white'></IconDelete>
                                     </Pressable>
                             </View>                   
                         </View>
@@ -78,11 +80,11 @@ export default function ActividadesDiarias() {
         })}       
     </View>:
     <View style={{justifyContent:"center",alignItems:"center",height:100}}>
-            <View style={{borderRadius:99,borderColor:"black",borderStyle:"solid",padding:7,borderWidth:2}}>
-              <IconActivity></IconActivity>
+            <View style={{borderRadius:99,borderColor:"#4b4b4b",borderStyle:"solid",padding:7,borderWidth:2}}>
+              <IconActivity color='white'></IconActivity>
             </View>
             <View style={{paddingTop:5}}>
-              <Text style={{fontWeight:"600"}}>No se encontro ningun registro</Text>
+              <Text style={{fontWeight:"600",color:"white"}}>No se encontro ningun registro</Text>
             </View>
     </View>
     }
@@ -103,6 +105,7 @@ const styles=StyleSheet.create({
         display:'flex',
         flexDirection:'row',
         alignItems:"center",
+        backgroundColor:"#252525",
         justifyContent:'space-between',        
         padding:10,
         marginLeft:10,

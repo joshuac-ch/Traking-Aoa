@@ -41,6 +41,7 @@ export default function DetalleMetas() {
     const [loadding, setloadding] = useState(false)
     const UpdateMeta=async()=>{
         setloadding(true)
+        try{
         let imageUrl=""
         if(FormDataMetas.imagen.startsWith("file://")){
             const newDataMeta=new FormData()
@@ -53,18 +54,19 @@ export default function DetalleMetas() {
             imageUrl=response.data.url
         }else{
             imageUrl=FormDataMetas.imagen
-        }
-        try{
-            await axios.put(`http://${host}:4000/metas/u/${id}`,{
+        }        
+        await axios.put(`http://${host}:4000/metas/u/${id}`,{
                 ...FormDataMetas,               
                 meta_total:parseInt(FormDataMetas.meta_total),
                 imagen:imageUrl
             })
             alert("Se actualizaron los datos exitosamente")
             //navegar.push("/Panel")    
-            setloadding(false)
+            
         }catch(err){
             alert("Hubo un error al enviar los datos: ",err.response?.data?.message )
+        }finally{
+            setloadding(false)
         }
     }
     const SeleccionDate=()=>{
@@ -95,44 +97,44 @@ export default function DetalleMetas() {
     },[])
   return (
     <>
-    <Stack.Screen options={{title:`Meta N°${id}`}}></Stack.Screen>
-    <ScrollView>
+    <Stack.Screen options={{title:`Meta N°${id}`,headerStyle:{backgroundColor:"#131313"},headerTintColor:"white"}}></Stack.Screen>
+    <ScrollView style={{backgroundColor:"#131313"}}>
         {
         <View style={{marginTop:20,marginBottom:30}}>
        {FormDataMetas!=null?
        <View className='m-4'>
             <View>
-                <Text className='font-black text-lg'>Imagen: </Text>
+                <Text className='font-black text-lg text-white'>Imagen: </Text>
               {FormDataMetas.imagen&&
               (  <Image style={{width:200,alignSelf:'center',height:300,borderRadius:10}} source={{uri:FormDataMetas.imagen}}></Image>)
               }
-              <Pressable style={{alignSelf:"center",marginTop:10,borderStyle:"solid",padding:5,borderRadius:10,borderWidth:2}} onPress={OpenImage}>
-                <IconSelectImage></IconSelectImage>
+              <Pressable style={{alignSelf:"center",marginTop:10,borderStyle:"solid",borderColor:"#252525",padding:5,borderRadius:10,borderWidth:2}} onPress={OpenImage}>
+                <IconSelectImage color='white'></IconSelectImage>
               </Pressable>
                 
             </View>
            <View>
-                <Text className='font-black text-lg'>Titulo: </Text>
+                <Text className='font-black text-lg text-white'>Titulo: </Text>
                 <TextInput style={styles.form_input}
                 onChangeText={text=>setFormDataMetas({...FormDataMetas,titulo:text})} value={FormDataMetas.titulo}></TextInput>
             </View>
             <View>
-                <Text className='font-black text-lg'>Descripcion: </Text>
+                <Text className='font-black text-lg text-white'>Descripcion: </Text>
                 <TextInput style={styles.form_input}
                 onChangeText={text=>setFormDataMetas({...FormDataMetas,descripcion:text})} value={FormDataMetas.descripcion}></TextInput>    
             </View>
             <View>
-                <Text className='font-black text-lg'>Meta Total: </Text>
+                <Text className='font-black text-lg text-white'>Meta Total: </Text>
                 <TextInput style={styles.form_input} 
                  onChangeText={text=>setFormDataMetas({...FormDataMetas,meta_total:text})} value={FormDataMetas.meta_total}></TextInput>
             </View>
             <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
                <View style={{margin:5}}>
-                 <Text className='font-black text-lg'>Fecha Limite: </Text>
-                <Text>{FormDataMetas.fecha_limite.toLocaleDateString()}</Text>  
+                 <Text className='font-black text-lg text-white'>Fecha Limite: </Text>
+                <Text style={{color:"white"}}>{FormDataMetas.fecha_limite.toLocaleDateString()}</Text>  
                 </View>              
                 <Pressable style={{padding:5}} onPress={SeleccionDate}>
-                    <IconCalendar></IconCalendar>
+                    <IconCalendar color='white'></IconCalendar>
                 </Pressable>
 
             </View>
@@ -140,7 +142,7 @@ export default function DetalleMetas() {
                 {
                     loadding?
                     <View style={styles.btn_enviar}>
-                        <ActivityIndicator></ActivityIndicator>
+                        <ActivityIndicator color={"#db515e"}></ActivityIndicator>
                     </View>
                     :
                     <Pressable style={styles.btn_enviar} onPress={()=>UpdateMeta()}>
@@ -149,7 +151,7 @@ export default function DetalleMetas() {
                 }
             </View>  
        </View>
-       :<Text>No hay datos disponibles</Text>}
+       :<Text style={{color:"white"}}>No hay datos disponibles</Text>}
     </View>
     }    
     </ScrollView>    
@@ -159,7 +161,7 @@ export default function DetalleMetas() {
 const styles=StyleSheet.create({
     btn_enviar:{
         marginTop:20,
-        backgroundColor:"purple",
+        backgroundColor:"#252525",
         padding:10,
         borderRadius:20,
         width:200,
@@ -167,10 +169,12 @@ const styles=StyleSheet.create({
         
     },
     form_input:{
+        color:"white",
         borderRadius:10,
         borderWidth:2,
         borderStyle:'solid',
-        borderColor:'black',
+        borderColor:'#252525',
+        backgroundColor:"#252525",
         marginTop:5,
         marginBottom:5
     }

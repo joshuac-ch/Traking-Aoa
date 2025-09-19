@@ -1,6 +1,6 @@
 import React from 'react'
 import constantes from "expo-constants"
 export default function getHost() {
-    return(constantes.manifest2?.extra?.host|| constantes?.expoConfig?.extra?.host|| "52.23.170.150")// fallback hardcodeado opcional
+    return(constantes?.expoConfig?.extra?.host|| "192.168.18.25")// fallback hardcodeado opcional
      
 }

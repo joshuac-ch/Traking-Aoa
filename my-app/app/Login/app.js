@@ -58,19 +58,20 @@ export default function AppPrincipal() {
         
         {/* <LoginLogo></LoginLogo> */}    
     </View> 
+    
     <View style={{position:"absolute",top:260,left:15,width:350}} className='m-4'>
-        <Text >Correo</Text>
+        <Text style={{color:"#141414"}}>Correo</Text>
         <TextInput value={correo} onChangeText={setcorreo} style={styles.text_input} placeholder='example@gmail.com'></TextInput>
     </View>
     <View style={{position:"absolute",top:340,left:15,width:350}} className='m-4'>
-        <Text>Password</Text>
+        <Text style={{color:"#141414"}}>Password</Text>
         <TextInput value={pass} onChangeText={setpass} style={styles.text_input} placeholder='*********'></TextInput>
     </View>
-    <View  style={{position:"absolute",top:440,left:20}} className='m-4 flex-row'>
+    <View  style={{position:"absolute",top:440,left:20,zIndex:1}} className='m-4 flex-row'>
         <Link style={styles.cuenta} href={"/Perfil/create"}>No tienes cuenta?</Link>
     </View>
     <View style={{position:"absolute",bottom:250,left:120,zIndex:1}} className='flex-row justify-center p-4'>
-        <Pressable onPress={VeificarUse} className='bg-white rounded-full '>
+        <Pressable onPress={VeificarUse} className='rounded-full '>
             <IconEntrada></IconEntrada>
         </Pressable>
     </View>
@@ -87,8 +88,9 @@ export default function AppPrincipal() {
 //{/*backgroundColor:"#191717"*/} flor
 const styles=StyleSheet.create({
     cuenta:{
-        textDecorationLine:"underline",
-        fontWeight:"700"
+       
+        fontWeight:"800",
+        color:"#db515e",
     },
     flor:{
      position: 'absolute',
@@ -118,6 +120,7 @@ const styles=StyleSheet.create({
     alignItems: 'center',
   },
     text_input:{
+        width:300,
         marginTop:5,
         borderRadius:0,
         backgroundColor:"gray",

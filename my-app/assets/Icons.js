@@ -17,17 +17,17 @@ export const IconSend=({color="black"})=>{
 export const IconDate=()=>{
     return <Fontisto name="date" size={24} color="black" />
 }
-export const IconAdd=()=>{
-    return <FontAwesome6 name="add" size={24} color="black" />
+export const IconAdd=({color="black"})=>{
+    return <FontAwesome6 name="add" size={24} color={color} />
 }
-export const IconLeft=()=>{
-    return <AntDesign name="right-circle" size={24} color="black" />
+export const IconLeft=({color="black"})=>{
+    return <AntDesign name="right-circle" size={24} color={color} />
 }
-export const IconDelete=()=>{
-    return <AntDesign name="delete" size={24} color="black" />
+export const IconDelete=({color="black"})=>{
+    return <AntDesign name="delete" size={24} color={color} />
 }
-export const IconElipsis=()=>{
-    return <FontAwesome6 name="ellipsis" size={24} color="black" />
+export const IconElipsis=({color="black"})=>{
+    return <FontAwesome6 name="ellipsis" size={24} color={color} />
 }
 export const IconHome=({color="black"})=>{
     return <Entypo name="home" size={24} color={color} />
@@ -38,32 +38,32 @@ export const IconSeach=({color="black"})=>{
 export const IconUser=({color="black"})=>{
     return <FontAwesome5 name="user-circle" size={24} color={color} />
 }
-export const IconTitle=()=>{
-    return <MaterialIcons name="title" size={24} color="black" />
+export const IconTitle=({color="white"})=>{
+    return <MaterialIcons name="title" size={24} color={color} />
 }
-export const IconText=()=>{
-    return <Entypo name="text" size={24} color="black" />
+export const IconText=({color="black"})=>{
+    return <Entypo name="text" size={24} color={color} />
 }
-export const IconFrecuencia=()=>{
-    return <Fontisto name="spinner-refresh" size={24} color="black" />
+export const IconFrecuencia=({color="black"})=>{
+    return <Fontisto name="spinner-refresh" size={24} color={color} />
 }
-export const IconSafe=()=>{
-    return <AntDesign name="safety" size={24} color="black" />
+export const IconSafe=({color="black"})=>{
+    return <AntDesign name="safety" size={24} color={color} />
 }
-export const IconLogin=()=>{
-    return <Entypo name="login" size={24} color="black" />
+export const IconLogin=({color="black"})=>{
+    return <Entypo name="login" size={24} color={color} />
 }
 export const IconBell=({color="gray"})=>{
     return <Feather name="bell" size={24} color={color} />
 }
-export const IconActivity=()=>{
-    return <Feather name="activity" size={24} color="black" />
+export const IconActivity=({color="black"})=>{
+    return <Feather name="activity" size={24} color={color} />
 }
-export const IconBack=()=>{
-   return <AntDesign name="left-circle" size={24} color="black" />
+export const IconBack=({color="black"})=>{
+   return <AntDesign name="left-circle" size={24} color={color} />
 }
-export const Iconclock=()=>{
-    return <AntDesign name="clock-circle" size={24} color="black" />
+export const Iconclock=({color="black"})=>{
+    return <AntDesign name="clock-circle" size={24} color={color} />
 }
 export const IconCircle=()=>{
     return <Entypo name="circle" size={24} color="black" />
@@ -74,69 +74,69 @@ export const IconHeart=({color="black"})=>{
 export const IconHeartActive=({color="black"})=>{
     return <FontAwesome name="heart" size={24} color={color} />
 }
-export const IconReply=()=>{
-    return <Entypo name="reply" size={24} color="black" />
+export const IconReply=({color="black"})=>{
+    return <Entypo name="reply" size={24} color={color} />
 }
-export const IconSettings=()=>{
-    return <AntDesign name="setting" size={24} color="black" />
+export const IconSettings=({color="black"})=>{
+    return <AntDesign name="setting" size={24} color={color} />
 }
-export const IconAddPerson=()=>{
-    return <AntDesign name="adduser" size={24} color="black" />
+export const IconAddPerson=({color="black"})=>{
+    return <AntDesign name="user-add" size={24} color={color} />
 }
-export const IconDown=()=>{
-    return <AntDesign name="caret-down" size={20} color="black" />
+export const IconDown=({color="black"})=>{
+    return <AntDesign name="caret-down" size={20} color={color} />
 }
-export const IconDislike=()=>{
-    return <SimpleLineIcons name="dislike" size={16} color="black" />
+export const IconDislike=({color="black"})=>{
+    return <SimpleLineIcons name="dislike" size={16} color={color} />
 }
 export const IconHeartComent=({color="black"})=>{
     return <AntDesign name="heart" size={16} color={color} />
 }
-export const IconComment=()=>{
-    return <EvilIcons name="comment" size={24} color="black" />
+export const IconComment=({color="black"})=>{
+    return <EvilIcons name="comment" size={24} color={color} />
 }
-export const IconEditPerfil=()=>{
-    return <Feather name="edit" size={24} color="black" />
+export const IconEditPerfil=({color="black"})=>{
+    return <Feather name="edit" size={24} color={color} />
 }
 export const IconClose=()=>{
     return <AntDesign name="close" size={30} color="white" />
 }
-export const IconCloseImage=()=>{
-    return <AntDesign name="close" size={30} color="black" />
+export const IconCloseImage=({color="black"})=>{
+    return <AntDesign name="close" size={30} color={color} />
 }
-export const IconLock=()=>{
-    return <AntDesign name="lock" size={20} color="black" />
+export const IconLock=({color="black"})=>{
+    return <AntDesign name="lock" size={20} color={color} />
 }
-export const IconEntrada=()=>{
-    return <AntDesign name="right-circle" size={30} color="black" />
+export const IconEntrada=({color="black"})=>{
+    return <AntDesign name="right-circle" size={30} color={color} />
 }
-export const IconShow=()=>{
-    return <AntDesign name="eye" size={24} color="black" />
+export const IconShow=({color="black"})=>{
+    return <AntDesign name="eye" size={24} color={color} />
 }
-export const IconActivityPerfil=()=>{
-    return <MaterialIcons name="pending-actions" size={24} color="black" />
+export const IconActivityPerfil=({color="black"})=>{
+    return <MaterialIcons name="pending-actions" size={24} color={color} />
 }
-export const IconLove=()=>{
-    return <MaterialIcons name="volunteer-activism" size={24} color="black" />
+export const IconLove=({color="black"})=>{
+    return <MaterialIcons name="volunteer-activism" size={24} color={color} />
 }
-export const IconDotPublic=()=>{
-    return <Entypo name="camera" size={30} color="black" />
+export const IconDotPublic=({color="black"})=>{
+    return <Entypo name="camera" size={30} color={color} />
 }
-export const IconDontMetas=()=>{
-    return <FontAwesome6 name="square-poll-vertical" size={30} color="black" />
+export const IconDontMetas=({color="black"})=>{
+    return <FontAwesome6 name="square-poll-vertical" size={30} color={color} />
 }
-export const IconDontSearch= ()=>{
-    return <MaterialCommunityIcons name="cloud-search-outline" size={30} color="black" />
+export const IconDontSearch= ({color="black"})=>{
+    return <MaterialCommunityIcons name="cloud-search-outline" size={30} color={color} />
 }
-export const IconDontNoti=()=>{
-    return <MaterialIcons name="notifications-off" size={30} color="black" />
+export const IconDontNoti=({color="black"})=>{
+    return <MaterialIcons name="notifications-off" size={30} color={color} />
 }
-export const IconSelectImage=()=>{
-    return <MaterialIcons name="photo-size-select-actual" size={24} color="black" />
+export const IconSelectImage=({color="black"})=>{
+    return <MaterialIcons name="photo-size-select-actual" size={24} color={color} />
 }
-export const IconDontActivity=()=>{
-    return <Fontisto name="search" size={24} color="black" />
+export const IconDontActivity=({color="black"})=>{
+    return <Fontisto name="search" size={24} color={color} />
 }
-export const IconCalendar=()=>{
-    return <AntDesign name="calendar" size={24} color="black" />
+export const IconCalendar=({color="black"})=>{
+    return <AntDesign name="calendar" size={24} color={color} />
 }

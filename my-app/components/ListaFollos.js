@@ -21,22 +21,22 @@ export default function ListaFollos({user,lista,info}) {
                                  <Image source={{uri:GetImage(m.creador.imagen)}} style={{height:50,width:50,borderRadius:50,marginRight:10}}></Image>    
                                 </View>                        
                                 <View>
-                                    <Text>{m.creador.nombre}</Text>
-                                    <Text>{m.creador.correo}</Text>
+                                    <Text style={{color:"white"}}>{m.creador.nombre}</Text>
+                                    <Text style={{color:"white"}}>{m.creador.correo}</Text>
                                 </View>
                             </View>
                             <View style={styles.boton_info}>
                                 <Text style={{fontWeight:"bold"}}>{info}</Text>
                             </View>                            
                             <View>
-                                <IconElipsis></IconElipsis>
+                                <IconElipsis color='white'></IconElipsis>
                             </View>                             
                          </View>
                         </Pressable>
                        </Link>
                         )   
                 })
-                :<Text style={{textAlign:"center"}}>No hay seguidores</Text>
+                :<Text style={{textAlign:"center",color:"white"}}>No hay seguidores</Text>
             }
         </View>   
     </>
@@ -46,7 +46,8 @@ const styles=StyleSheet.create({
     boton_info:{
         borderRadius:50,
         borderWidth:2,
-        borderColor:"transparend",
+        
+        borderColor:"transparent",
         backgroundColor:"#fff",
         paddingTop:5,
         paddingBottom:5,

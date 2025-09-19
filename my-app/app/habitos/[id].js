@@ -131,21 +131,21 @@ export default function DetalleHabito() {
   }
     return (
     <>
-    <Stack.Screen options={{title:`Habito N°${id}`}}></Stack.Screen>
-    <ScrollView>
+    <Stack.Screen options={{title:`Habito N°${id}`,headerStyle:{backgroundColor:"#131313"},headerTintColor:"white"}}></Stack.Screen>
+    <ScrollView style={{backgroundColor:"#131313"}}>
     <View>
        {FormDataHabitos!=null?
        <View style={styles.contenedorP}>
         <View>
-            <Text>Estado: {estadoPub}</Text>
+            <Text style={{color:"white"}}>Estado: {estadoPub}</Text>
         </View>
         <View style={{flexDirection:"row",justifyContent:"space-between",paddingTop:10,paddingBottom:10}}>
-            <Pressable onPress={DeletePublicacion} style={{backgroundColor:"red",borderRadius:10,boxShadow:"0px 0px 7px 1px red",padding:10}}>
+            <Pressable onPress={DeletePublicacion}  style={{backgroundColor:"#db515e",borderRadius:10,boxShadow:"0px 0px 7px 1px red",padding:10}}>
                 <View>
                     <Text style={{color:"white"}}>Eliminar Publicacion</Text>
                 </View>
             </Pressable>
-            <Pressable onPress={Publicacion}  style={{borderRadius:10,padding:10,backgroundColor:"purple",boxShadow:"0px 0px 7px 1px purple"}}>
+            <Pressable onPress={Publicacion} style={{borderRadius:10,padding:10,backgroundColor:"#131313",boxShadow:"0px 0px 7px 1px white"}}>
                 <View>
                     <Text style={{color:"white"}}>Publicar</Text>
                 </View>
@@ -156,22 +156,22 @@ export default function DetalleHabito() {
                      <Image source={{uri:FormDataHabitos.imagen}} style={{width:200,height:300,borderRadius:20}}></Image>
                 )}
                <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:10}}>
-                 <Pressable style={{borderRadius:10,borderWidth:2,borderColor:"black",borderStyle:"solid",padding:8,marginRight:2}} onPress={pickImage}>
+                 <Pressable style={{borderRadius:10,borderWidth:2,borderColor:"#4b4b4b",borderStyle:"solid",padding:8,marginRight:2}} onPress={pickImage}>
                     <View >
-                        <IconSelectImage></IconSelectImage>                        
+                        <IconSelectImage color='white'></IconSelectImage>                        
                     </View>
                 </Pressable>
-                <Pressable onPress={ShowImage} style={{borderWidth:2,borderColor:"black",borderStyle:"solid",padding:8,borderRadius:10}}>
+                <Pressable onPress={ShowImage} style={{borderWidth:2,borderColor:"#4b4b4b",borderStyle:"solid",padding:8,borderRadius:10}}>
                     <View>
-                        <IconShow></IconShow>
+                        <IconShow color='white'></IconShow>
                     </View>
                 </Pressable>
                </View>
                <Modal visible={estadoimg} animationType='fade' transparent={true}>
-                <View style={{backgroundColor:"white",position:"absolute",borderWidth:2,borderColor:"black",top:60,left:10,borderRadius:20,height:`${93}%`,width:`${95}%`,}}>
+                <View style={{backgroundColor:"#131313",position:"absolute",borderWidth:2,borderColor:"black",top:60,left:10,borderRadius:20,height:`${93}%`,width:`${95}%`,}}>
                     <View style={{alignSelf:"flex-end",marginTop:10,marginRight:10}}>
                         <Pressable onPress={()=>setestadoimg(false)}>
-                            <IconCloseImage></IconCloseImage>
+                            <IconCloseImage color='white'></IconCloseImage>
                         </Pressable>
                     </View>
                     <View>
@@ -184,24 +184,24 @@ export default function DetalleHabito() {
             </View>
             <View style={styles.cotenedor_des}>
                 <View style={styles.contenedortitulo}>
-                    <IconTitle></IconTitle>
-                    <Text>Titulo: </Text>
+                    <IconTitle color='#4b4b4b'></IconTitle>
+                    <Text style={{color:"white"}}>Titulo: </Text>
                 </View>
                 <TextInput style={styles.input_form} onChangeText={text=>setFormDataHabitos({...FormDataHabitos,titulo:text})}  value={FormDataHabitos.titulo}></TextInput>
             </View>
             <View style={styles.cotenedor_des}>
                 <View style={styles.contenedortitulo}>
-                    <IconText></IconText>
-                    <Text>Descripcion: </Text>
+                    <IconText color='#4b4b4b'></IconText>
+                    <Text style={{color:"white"}}>Descripcion: </Text>
                 </View>                
                 <TextInput style={styles.input_form_des} onChangeText={text=>setFormDataHabitos({...FormDataHabitos,descripcion:text})} value={FormDataHabitos.descripcion}></TextInput>
             </View>
             <View style={styles.contenedorForm}>
                 <View style={styles.contenedortitulo}>
-                    <IconFrecuencia></IconFrecuencia>
-                    <Text>Frecuencia: </Text>                  
+                    <IconFrecuencia color='#4b4b4b'></IconFrecuencia>
+                    <Text style={{color:"white"}}>Frecuencia: </Text>                  
                 </View>                 
-                      <Picker style={{width:100}} selectedValue={FormDataHabitos.frecuencia} onValueChange={value=>setFormDataHabitos({...FormDataHabitos,frecuencia:value})}>
+                      <Picker style={{width:100,color:"white"}} selectedValue={FormDataHabitos.frecuencia} onValueChange={value=>setFormDataHabitos({...FormDataHabitos,frecuencia:value})}>
                              <Picker.Item label='diario' value="diario"></Picker.Item>
                              <Picker.Item label='semanal' value='semanal'></Picker.Item>
                              <Picker.Item label='mensual' value='mensual'></Picker.Item>
@@ -209,28 +209,28 @@ export default function DetalleHabito() {
                                   
             </View>
             <View style={styles.contenedorForm}>
-                <Text>Activo</Text>
+                <Text style={{color:"white"}}>Activo</Text>
                 <Switch value={FormDataHabitos.activo} onValueChange={value=>setFormDataHabitos({ ...FormDataHabitos,activo:value})}></Switch>
             </View>
             <View style={styles.contenedorForm}> 
-                <Text>Fecha inicio</Text>
-                <Text>{FormDataHabitos.fecha_inicio?new Date(FormDataHabitos.fecha_inicio).toLocaleDateString():""} </Text>
+                <Text style={{color:"white"}}>Fecha inicio</Text>
+                <Text style={{color:"white"}}>{FormDataHabitos.fecha_inicio?new Date(FormDataHabitos.fecha_inicio).toLocaleDateString():""} </Text>
             </View>
             <View >
                 {loadding?
                 <View style={styles.btn_update}>
-                    <ActivityIndicator color={"purple"}></ActivityIndicator>
+                    <ActivityIndicator color={"#db515e"}></ActivityIndicator>
                 </View>
                 :
                 <Pressable style={styles.btn_update} onPress={()=>UpdateHabitos()}>
-                    <Text style={{textAlign:"center"}}>Actualizar datos</Text>
+                    <Text style={{textAlign:"center",color:"white"}}>Actualizar datos</Text>
                 </Pressable>
                 }
                 
             </View>
             
        </View>
-       :<Text>No hay datos</Text>}
+       :<Text style={{color:"white"}}>No hay datos</Text>}
     </View>
     </ScrollView>
     </>
@@ -270,12 +270,13 @@ const styles=StyleSheet.create({
     btn_update:{
         borderWidth:2,
         borderStyle:'solid',
-        borderColor:'black',
+        borderColor:'#4b4b4b',
         padding:10,
         margin:5,
         borderRadius:20,
     },
     contenedorP:{
+        backgroundColor:"#252525",
         margin:20,        
         textAlign:'left',
         padding:20,

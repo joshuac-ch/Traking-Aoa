@@ -71,39 +71,39 @@ export default function create() {
   //paso sigueinte rellenar con datos flasos sobre la app
     return (
     <>
-    <Stack.Screen options={{title:'Crear Perfil'}}></Stack.Screen>
-    <ScrollView>
+    <Stack.Screen options={{title:'Crear Perfil',headerStyle:{backgroundColor:"#131313"},headerTintColor:"white"}}></Stack.Screen>
+    <ScrollView style={{backgroundColor:"#131313"}}>
       <View style={{padding:10}}>
         <View>
-            <Text>Foto: </Text>
+            <Text style={{color:"white"}}>Foto: </Text>
             {userDataForm.imagen&&(
                 <Image style={styles.image} source={{uri:userDataForm.imagen}}></Image>
             )}
             
 
         </View>
-        <View>
-            <Button title='Agregar Imagen' onPress={AddImage}></Button>
-        </View>
         
+        <Pressable onPress={AddImage} style={{backgroundColor:"#252525",padding:10,borderRadius:10,width:150,alignSelf:"center"}}>
+                <Text style={{color:"white",textAlign:"center"}}>Agregar Imagen</Text>
+         </Pressable>
         <View>
-            <Text>Nombre: </Text>
+            <Text style={{color:"white"}}>Nombre: </Text>
             <TextInput style={styles.input_form} onChangeText={text=>setuserDataForm({...userDataForm,nombre:text})} value={userDataForm.nombre} placeholder='ingrese nombre'></TextInput>
         </View>
         <View>
-            <Text>Apellido: </Text>
+            <Text style={{color:"white"}}>Apellido: </Text>
             <TextInput style={styles.input_form} placeholder='ingrese apellido' onChangeText={text=>setuserDataForm({...userDataForm,apellido:text})} value={userDataForm.apellido}></TextInput>
         </View>
         <View>
-            <Text>Telefono: </Text>
+            <Text style={{color:"white"}}>Telefono: </Text>
             <TextInput style={styles.input_form} onChangeText={text=>setuserDataForm({...userDataForm,telefono:text})} value={userDataForm.telefono} placeholder='ingrese telefono'></TextInput>
         </View>
         <View>
-            <Text>Correo: </Text>
+            <Text style={{color:"white"}}>Correo: </Text>
             <TextInput style={styles.input_form} placeholder='ingrese correo electronico' onChangeText={text=>setuserDataForm({...userDataForm,correo:text})} value={userDataForm.correo}></TextInput>
         </View>
         <View>
-            <Text>Contraseña: </Text>
+            <Text style={{color:"white"}}>Contraseña: </Text>
             <TextInput style={styles.input_form} placeholder='ingrese contraseña segura' onChangeText={text=>setuserDataForm({...userDataForm,pass:text})} value={userDataForm.pass}></TextInput>
         </View>
         <View style={{marginBottom:30}}>
@@ -129,9 +129,11 @@ const styles=StyleSheet.create({
         margin:10
     },
     input_form:{
+        color:"white",
         borderWidth:2,
         borderStyle:'solid',
-        borderColor:'black',
+        borderColor:'#141414',
+        backgroundColor:"#4b4b4b",
         width:'100%',
         height:45,
         marginTop:10,
@@ -143,7 +145,7 @@ const styles=StyleSheet.create({
         borderStyle:'solid',
         borderWidth:2,
         borderColor:'transparent',
-        backgroundColor:'purple',       
+        backgroundColor:'#252525',       
         padding:10,
         marginTop:10,
         alignSelf:'center',

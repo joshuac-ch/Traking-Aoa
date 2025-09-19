@@ -226,14 +226,14 @@ export default function Panel() {
       <View style={styles.contenedorpresabe}>
       <Pressable onPress={() => navegar(ruta_principal)}>
         <View style={styles.btn_router}>
-          <IconLeft />         
-            <Text className="text-white text-sm mt-1 pl-10 text-center">Ir a {label}</Text>
+          <IconLeft color='white' />         
+            <Text className="text-white text-sm mt-1 pl-5 text-center ">Ir a {label}</Text>
           </View>
       </Pressable>
 
       <Pressable onPress={() => navegar(create)} >
         <View style={{paddingRight:5}}>
-          <IconAdd />
+          <IconAdd color='white' />
         </View>
       </Pressable>
       </View>
@@ -264,10 +264,10 @@ const [imagenSeleccionada, setimagenSeleccionada] = useState(null)
 const anchoPantalla=Dimensions.get('window').width
 const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.length
   return (
-      <ScrollView>
+      <ScrollView style={{backgroundColor:"#131313"}}>
         
        
-     <Stack.Screen options={{headerShown:false}}></Stack.Screen>
+     <Stack.Screen options={{headerShown:false,contentStyle: { backgroundColor: "#131313" }}}></Stack.Screen>
      <View style={{backgroundColor:"#131313"}}>
         <View key={miuser.id}  style={styles.contenedor_perfil}>
         <View className='flex flex-row '>
@@ -290,7 +290,7 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
         
         </View>
     <View style={{marginLeft:30,marginBottom:10}}>
-       <Text className="text-white text-sm" >Metas para este {new Date().getFullYear()}</Text>
+       <Text className="text-white text-lg " >Metas para este {new Date().getFullYear()}</Text>
     </View>   
    <ScrollView  horizontal showsHorizontalScrollIndicator={false} scrollEnabled={metas.length>=5} contentContainerStyle={{paddingHorizontal:30,alignItems:"center"}}>
     <View style={[styles.contenedorCarrusel]}>
@@ -299,11 +299,11 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
           metas.map((m)=>{
           return(
             <Link href={`/Metas/show/${m.id}`} key={m.id} asChild>
-            <Pressable>
-              <View style={{justifyContent:'center',alignItems:'center'}}>
+            <Pressable >
+              <View style={{justifyContent:'center',alignItems:'center',marginLeft:1,marginRight:1}}>
                 <Image source={{uri:m.imagen}} style={[styles.imagenCarrusel,{width:metas.length>=5?110:anchoImagen}]}></Image>
-                <View style={[styles.TextCarrusel,{width:metas.length>=5?110:anchoImagen}]}>
-                  <Text numberOfLines={1}>{m.titulo}</Text>
+                <View style={[styles.TextCarrusel,{width:metas.length>=5?110:anchoImagen,backgroundColor:"#252525"}]}>
+                  <Text style={{color:"white"}} numberOfLines={1}>{m.titulo}</Text>
                 </View>
             </View>
             </Pressable>
@@ -430,7 +430,7 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
              
               <View style={{flexDirection:'row'}}>
                <Pressable onPress={()=>OcultarComentarios(d.id)} style={{flexDirection:"row"}} >
-                 <IconComment></IconComment>
+                 <IconComment color='white'></IconComment>
                 <Text style={{marginLeft:10,color:"white"}}>Comentarios</Text>
                </Pressable>
               </View>
@@ -452,7 +452,7 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
             <IconDotPublic></IconDotPublic>
           </View>
           <View>
-             <Text style={{fontWeight:"bold",fontSize:14,marginTop:10}}>Todavia no hay publicaciones</Text>
+             <Text style={{fontWeight:"bold",fontSize:14,marginTop:10,color:"white"}}>Todavia no hay publicaciones</Text>
           </View>
        </View>
         }
@@ -620,7 +620,7 @@ const styles=StyleSheet.create({
     paddingLeft:5,
     paddingRight:5,
           
-    boxShadow:'0px 0px 8px 1px black',
+    boxShadow:'0px 0px 8px 1px #4b4b4b',
   },
     contenedor_perfil:{
       

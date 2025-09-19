@@ -7,8 +7,8 @@ export default function Index() {
   return (
     <>
     <View style={styles.container}>
-    <StatusBar style="auto" />
-    <AppPrincipal></AppPrincipal>
+    <StatusBar style="auto" backgroundColor={"#131313"}/>
+    <AppPrincipal style={{backgroundColor:"#131313"}}></AppPrincipal>
     </View>
     </>
   )
@@ -16,7 +16,7 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',   
+    backgroundColor: '#131313',   
     width:400,
     justifyContent: 'center',
   },

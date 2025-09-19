@@ -45,10 +45,10 @@ export default function Buscardor() {
 
     return (
    <>
-   <ScrollView>
+   <ScrollView style={{backgroundColor:"#131313"}}>
     
      <Stack.Screen options={{headerShown:false}}></Stack.Screen>
-     <View style={{backgroundColor:"#131313",height:"900"}}>{/*Verificar si no hay otra forma que ponerlo asi */}
+     <View >{/*Verificar si no hay otra forma que ponerlo asi */}
      <View style={{flexDirection:"row",alignItems:"center",justifyContent:"center",marginTop:60,}}>
         <View>
             <Image source={{uri:GetImage(creador.imagen)}} style={{width:50,borderRadius:50,height:50}}></Image>

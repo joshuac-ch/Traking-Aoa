@@ -7,7 +7,7 @@ import constantes from "expo-constants"
 import { useUser } from '../../components/UserContext'
 import GetImage from '../../utils/GetImage'
 import getHost from '../../hooks/getHost'
-export default function notificaciones() {
+export default function Notificaciones() {
   const [notiUser, setnotiUser] = useState([])
   const {user}=useUser()
   const host=getHost()
@@ -72,30 +72,30 @@ export default function notificaciones() {
 
   return ( 
     <>
-    <ScrollView>
+    <ScrollView style={{backgroundColor:"#131313"}}>
     <Stack.Screen options={{headerShown:false}}></Stack.Screen>
-    <View style={{marginTop:55}}></View>
-    <View >
+    
+    <View style={{paddingTop:55}}>
      
     <View>
           <View style={{flexDirection:"row",justifyContent:"space-between",margin:10,alignItems:"center"}}>
             <View style={{flexDirection:"row",alignItems:"center"}}>
               <Image source={{uri:GetImage(creador.imagen)}} style={{width:50,height:50,borderRadius:50}}></Image>
-              <Text style={{marginLeft:10,fontSize:18,fontWeight:"bold"}}>Notificaciones</Text>
+              <Text style={{marginLeft:10,fontSize:18,fontWeight:"bold",color:"white"}}>Notificaciones</Text>
             </View>
             <View>
-              <IconSettings></IconSettings>
+              <IconSettings color='white'></IconSettings>
             </View>
           </View>
           <View style={{flexDirection:"row",justifyContent:"space-around",alignItems:"center",margin:10}}>
             <View>
-              <Text style={{fontWeight:"bold"}}>Todas</Text>
+              <Text style={{fontWeight:"bold",color:"white"}}>Todas</Text>
             </View>
             <View>
-              <Text>Verificado</Text>
+              <Text className='text-white'>Verificado</Text>
             </View>
             <View>
-              <Text>Menciones</Text>
+              <Text className='text-white'>Menciones</Text>
             </View>
           </View>
           <View>
@@ -120,16 +120,16 @@ export default function notificaciones() {
                     )}
                   </View>
                   <View>
-                    <Text>{n.creador.nombre } {n.noti.mensaje}</Text>
-                    <Text>{n.post.titulo}</Text>
-                    <Text>{n.post.descripcion}</Text>
+                    <Text style={{color:"white"}}>{n.creador.nombre } {n.noti.mensaje}</Text>
+                    <Text style={{color:"white"}}>{n.post.titulo}</Text>
+                    <Text style={{color:"white"}}>{n.post.descripcion}</Text>
                     {n.post.imagen&&(
                       <Image style={{width:100,height:100,borderRadius:20}} source={{uri:GetImage(n.post.imagen)}}></Image>
                     )}
                   </View>
                 </View>
                 <View>
-                  <IconElipsis></IconElipsis>
+                  <IconElipsis color='white'></IconElipsis>
                 </View>
                 
               </View>
@@ -205,7 +205,7 @@ export default function notificaciones() {
               <IconDontNoti></IconDontNoti>
            </View>
            <View style={{marginTop:50}}>
-             <Text style={{fontWeight:"bold"}}>No hay notificaciones actualmente</Text>
+             <Text style={{fontWeight:"bold",color:"white"}}>No hay notificaciones actualmente</Text>
            </View>
         </View>}
 
@@ -232,7 +232,7 @@ const styles=StyleSheet.create({
     paddingRight:15,
     paddingBottom:10,
     flexDirection:'row',    
-    borderColor:"black",
+    borderColor:"#4d4d4d",
     borderStyle:"solid",
     borderTopWidth:2,
     justifyContent:"space-between",

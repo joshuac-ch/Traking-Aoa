@@ -169,33 +169,34 @@ export default function UserDiferent() {
     return (    
     <>
         
-   <ScrollView>
-    <Stack.Screen options={{headerShown:true}}></Stack.Screen>
+   <ScrollView style={{backgroundColor:"#131313"}}>
+    
+    <Stack.Screen options={{title:"Usuario",headerShown:true,headerStyle:{backgroundColor:"#131313"},headerTintColor:"white"}}></Stack.Screen>
    <View style={styles.contenedor_principal}>
     <View >
-        <Text >{UserDiferent.nombre}</Text>
+        <Text style={{color:"white"}} >{UserDiferent.nombre}</Text>
     </View>
     <View style={{alignItems:'center'}}>
         <Image style={styles.image} source={{uri:GetImage(UserDiferent.imagen)}}></Image>
-        <Text >{UserDiferent.correo}</Text>
+        <Text style={{color:"white"}}>{UserDiferent.correo}</Text>
     </View>
     <View style={styles.contenedor_sub}>
         <Pressable onPress={()=>navegarListaSiguiendo()}>
             <View style={styles.box}>
-                <Text>{myfollows}</Text>
+                <Text style={{color:"white"}}>{myfollows}</Text>
 
-                <Text>Siguiendo</Text>
+                <Text style={{color:"white"}}>Siguiendo</Text>
             </View>
         </Pressable>
         <Pressable onPress={()=>navegarListaFollow()}>
             <View style={styles.box}>
-                <Text>{countSeguidores}</Text>
-                <Text>Seguidores</Text>
+                <Text style={{color:"white"}}>{countSeguidores}</Text>
+                <Text style={{color:"white"}}>Seguidores</Text>
             </View>
         </Pressable>
         <View style={styles.box}>
-            <Text>{countLovePub}</Text>
-            <Text>Me gusta</Text>
+            <Text style={{color:"white"}}>{countLovePub}</Text>
+            <Text style={{color:"white"}}>Me gusta</Text>
             
         </View>
     </View>
@@ -203,7 +204,7 @@ export default function UserDiferent() {
         <View style={styles.contenedor}>
             <Pressable onPress={PressSeguir} >
                 
-                <Text>{estadoActualFollow?"Siguiendo":"Seguir"}</Text>
+                <Text style={{color:"white"}}>{estadoActualFollow?"Siguiendo":"Seguir"}</Text>
             </Pressable>
             {/*
             <Pressable onPress={()=>navegar.push(`/Perfil/${UserDiferent.id}`)}>
@@ -213,25 +214,25 @@ export default function UserDiferent() {
         </View>
         <View style={styles.contenedor}>
             <Pressable>
-                <Text>Compartir Perfil</Text>
+                <Text style={{color:"white"}}>Compartir Perfil</Text>
             </Pressable>
         </View>      
                 
        
     </View>
     <View style={{alignSelf:"center",marginTop:10}}>
-        <Text style={{textAlign:"center"}}>{UserDiferent.des?UserDiferent.des:"Welcome my Profile 💜💜"}</Text>
+        <Text style={{textAlign:"center",color:"white"}}>{UserDiferent.des?UserDiferent.des:"Welcome my Profile 💜💜"}</Text>
     </View>       
    </View>
     <View style={{flexDirection:'row',justifyContent:"space-around",margin:10}}>
         <Pressable onPress={()=>setestadouser("actividades")}>
             <View>
-                <IconActivity></IconActivity>
+                <IconActivity color='white'></IconActivity>
             </View>
         </Pressable>
         <Pressable onPress={()=>setestadouser("loves")}>
             <View>
-                <IconHeart></IconHeart>
+                <IconHeart color='white'></IconHeart>
             </View>
         </Pressable>
     </View> 
@@ -240,7 +241,7 @@ export default function UserDiferent() {
    <View style={{paddingBottom:40}}>
    
     <View>
-        <Text style={{textAlign:'center'}}>Actividades</Text>
+        <Text style={{textAlign:'center',color:"white"}}>Actividades</Text>
      </View>
    <View style={{display:'flex',justifyContent:'center',flexDirection:'row',flexWrap:'wrap'}}>
     
@@ -258,7 +259,7 @@ export default function UserDiferent() {
                                             )}
                                            <View style={styles.div_c_body}>
                                                
-                                                <Text style={{paddingLeft:5}}>{a.rutina.titulo.length>15?a.rutina.titulo.slice(0,12)+"...":a.rutina.titulo}</Text>
+                                                <Text style={{paddingLeft:5,color:"white"}}>{a.rutina.titulo.length>15?a.rutina.titulo.slice(0,12)+"...":a.rutina.titulo}</Text>
                                             </View>
                                              
                                         </View>
@@ -270,7 +271,7 @@ export default function UserDiferent() {
     :<Text style={{fontWeight:'bold',fontSize:15}}>No hay publicaciones de actividades Actualmente </Text>}
    </View>
    <View>
-        <Text style={{textAlign:'center'}}>Habitos</Text>
+        <Text style={{textAlign:'center',color:"white"}}>Habitos</Text>
    </View>
    <View style={{display:'flex',justifyContent:'center',flexDirection:'row',flexWrap:'wrap'}}>
         {dataHabitosAnother.length>0?
@@ -284,7 +285,7 @@ export default function UserDiferent() {
                                     <Image source={{uri:GetImage(h.rutina.imagen)}} style={{width:116,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                 )}
                                 <View style={styles.div_c_body}>
-                                    <Text style={{paddingLeft:5}}>{h.rutina.titulo.length>15?h.rutina.titulo.slice(0,12)+"...":h.rutina.titulo}</Text>
+                                    <Text style={{paddingLeft:5,color:"white"}}>{h.rutina.titulo.length>15?h.rutina.titulo.slice(0,12)+"...":h.rutina.titulo}</Text>
                                 </View>
                             </View>
                         </View>    
@@ -293,13 +294,13 @@ export default function UserDiferent() {
                 
             )
         })
-        :<Text style={{fontWeight:'bold',fontSize:15}}>No hay datos de habitos Actualmente</Text>}
+        :<Text style={{fontWeight:'bold',fontSize:15,color:"white"}}>No hay datos de habitos Actualmente</Text>}
    </View>
    <View>
     {mostrarMetas?
     <View>
         <View>
-            <Text style={{textAlign:'center'}}>Metas</Text>
+            <Text style={{textAlign:'center',color:"white"}}>Metas</Text>
         </View>
         <View  style={{display:'flex',flexDirection:'row',justifyContent:'center',flexWrap:'wrap'}}>
                 {dataMetasAnother.length>0?
@@ -313,7 +314,7 @@ export default function UserDiferent() {
                                             <Image source={{uri:GetImage(m.imagen)}} style={{width:116,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                         )}
                                         <View style={styles.div_c_body}>
-                                            <Text style={{paddingLeft:5}}>{m.titulo.length>15?m.titulo.slice(0,12)+"...":m.titulo}</Text>
+                                            <Text style={{paddingLeft:5,color:"white"}}>{m.titulo.length>15?m.titulo.slice(0,12)+"...":m.titulo}</Text>
                                         </View>
                                     </View>
                                 </View>
@@ -322,7 +323,7 @@ export default function UserDiferent() {
                     )
                 })
                 :
-                    <Text style={{fontWeight:'bold',fontSize:15}}>No hay datos de Metas Actualmente</Text>
+                    <Text style={{fontWeight:'bold',fontSize:15,color:"white"}}>No hay datos de Metas Actualmente</Text>
                 }
         </View>
     </View>
@@ -461,7 +462,7 @@ const styles=StyleSheet.create({
         borderStyle:'solid',
         borderRadius:5,
         width:118,
-        height:180,
+        height:185,
         marginTop:8,
         marginRight:0.8,
         marginLeft:0.8,
@@ -476,6 +477,7 @@ const styles=StyleSheet.create({
         backgroundColor:'transparent',
         alignItems:'flex-start',   
         paddingTop:8,       
+        paddingBottom:5,
         borderBottomLeftRadius:5,
         borderBottomRightRadius:5
     },

@@ -27,24 +27,24 @@ export default function Create() {
     }
     return (
     <>
-    <Stack.Screen options={{title:'Crear Actividad'}}></Stack.Screen>
-   <ScrollView>
+    <Stack.Screen options={{title:'Crear Actividad',headerStyle:{backgroundColor:"#131313"},headerTintColor:"white"}}></Stack.Screen>
+   <ScrollView style={{backgroundColor:"#131313"}}>
     <View className='m-4'>
     <View>
-        <Text>Imagen</Text>
+        <Text style={{color:"white"}}>Imagen</Text>
         <TextInput style={styles.form_input} onChangeText={text=>setDataForm({...DataForm,imagen:text})} value={DataForm.imagen} placeholder='ingrese link de imagen'></TextInput>
     </View>
      <View>
-        <Text>Ingrese el titulo</Text>
+        <Text style={{color:"white"}}>Ingrese el titulo</Text>
         <TextInput style={styles.form_input} onChangeText={text=>setDataForm({...DataForm,titulo:text})} value={DataForm.titulo} placeholder='Titulo...'></TextInput>    
     </View>
      <View>
-        <Text>Descipcion</Text>
+        <Text style={{color:"white"}}>Descipcion</Text>
         <TextInput style={styles.form_input} onChangeText={text=>setDataForm({...DataForm,descripcion:text})} value={DataForm.descripcion} placeholder='Descripcion...'></TextInput>    
     </View >
     <View style={{alignItems:'center'}}>
         <Pressable style={styles.btn_sub} onPress={EnviarDatos}>
-        <Text style={{textAlign:'center'}}>Crear Actividad</Text>
+        <Text style={{textAlign:'center',color:"white"}}>Crear Actividad</Text>
     </Pressable>
     </View>
    </View>
@@ -54,18 +54,20 @@ export default function Create() {
 }
 const styles=StyleSheet.create({
     form_input:{
+        color:"white",
         borderWidth:2,
+        backgroundColor:"#4b4b4b",
         borderStyle:'solid',
-        borderColor:' black',
+        borderColor:'#4b4b4b',
         borderRadius:10,
         padding:10,
         width:'100%',
         marginTop:10,
     },
     btn_sub:{
-        borderStyle:'black',
+        borderStyle:'solid',
         borderWidth:2,
-         borderColor:'black',
+         borderColor:'#4b4b4b',
          borderRadius:10,
          marginTop:10,
          padding:10,        

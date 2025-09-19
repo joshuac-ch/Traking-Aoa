@@ -163,7 +163,7 @@ export default function Perfil() {
          <Pressable onPress={handlerpress}>
                 <Animated.View style={{backgroundColor:backcolor,borderRadius:borderRad}}>
                     <View style={{padding:10}}>                    
-                        <Icono/>
+                        <Icono color={"white"}/>
                     </View>
                 </Animated.View>                
         </Pressable>
@@ -172,49 +172,50 @@ export default function Perfil() {
    
   return (
    <>
-   <ScrollView>
+   <ScrollView style={{backgroundColor:"#131313"}}>
     <Stack.Screen options={{headerShown:false}}></Stack.Screen>
+    <View >
    <View style={styles.contenedor_principal}>
     <View >
-        <Text >{user_specific.nombre}</Text>
+        <Text style={{color:"white"}}>{user_specific.nombre}</Text>
     </View>
     <View style={{alignItems:'center'}}>
         <Image style={styles.image} source={{uri:GetImage(user_specific.imagen)}}></Image>
-        <Text >{user_specific.correo}</Text>
+        <Text style={{color:"white",fontWeight:"semibold"}}>{user_specific.correo}</Text>
     </View>
     <View style={styles.contenedor_sub}>
         <Pressable onPress={()=> navegarListaSiguiendo()}>
             <View style={styles.box}>
-                <Text>{myfollows}</Text>
-                <Text>Siguiendo</Text>
+                <Text style={{color:"white"}}>{myfollows}</Text>
+                <Text style={{color:"white"}}>Siguiendo</Text>
             </View>
         </Pressable>
         <Pressable onPress={()=>navegarListaFollow()}>
             <View style={styles.box}>
-                <Text>{Follows}</Text>
-                <Text>Seguidores</Text>
+                <Text style={{color:"white"}}>{Follows}</Text>
+                <Text style={{color:"white"}}>Seguidores</Text>
             </View>
         </Pressable>
         <View style={styles.box}>
-            <Text>{PubLoves}</Text>
-            <Text>Me gusta</Text>
+            <Text style={{color:"white"}}>{PubLoves}</Text>
+            <Text style={{color:"white"}}>Me gusta</Text>
         </View>
     </View>
     <View style={styles.contenedor_edit}>
         <View style={styles.contenedor}>
             <Pressable onPress={()=>navegar.push(`/Perfil/${user_specific.id}`)}>
-                <Text>Editar Perfil</Text>
+                <Text style={{color:"white"}}>Editar Perfil</Text>
             </Pressable>
         </View>
         <View style={styles.contenedor}>
             <Pressable>
-                <Text>Compartir Perfil</Text>
+                <Text style={{color:"white"}}>Compartir Perfil</Text>
             </Pressable>
         </View>      
         
     </View>
     <View style={{alignSelf:"center",marginTop:10}}>
-        <Text style={{textAlign:"center"}}>{user_specific.des?user_specific.des:"Welcome my Profile 💜💜"}</Text>
+        <Text style={{textAlign:"center",color:"white"}}>{user_specific.des?user_specific.des:"Welcome my Profile 💜💜"}</Text>
     </View>
    
    </View>
@@ -284,7 +285,7 @@ export default function Perfil() {
                                 
                                 )}
                                     <View style={styles.div_c_body}>
-                                        <Text style={{paddingLeft:5}}>{a.rutina.titulo.length>15?a.rutina.titulo.slice(0,12)+"...":a.rutina.titulo}</Text>
+                                        <Text style={{paddingLeft:5,color:"white"}}>{a.rutina.titulo.length>15?a.rutina.titulo.slice(0,12)+"...":a.rutina.titulo}</Text>
                                     </View>
                                 </View>
                             </View> 
@@ -299,8 +300,8 @@ export default function Perfil() {
                         <IconActivityPerfil></IconActivityPerfil>
                     </View>
                     <View>
-                        <Text style={{textAlign:"center",fontWeight:"bold",fontSize:15}}>Sube tu primera Actividad</Text>
-                        <Text style={{textAlign:"center"}}>Tus actividades publicadas apareceran aqui</Text>
+                        <Text style={{color:"white",textAlign:"center",fontWeight:"bold",fontSize:15}}>Sube tu primera Actividad</Text>
+                        <Text style={{color:"white",textAlign:"center"}}>Tus actividades publicadas apareceran aqui</Text>
                     </View>
                      
                    
@@ -329,7 +330,7 @@ export default function Perfil() {
                                 <Image source={{uri:GetImage(a.rutina.imagen)}} style={{width:116,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                               )}
                               <View style={styles.div_c_body}>
-                                    <Text style={{paddingLeft:5}}>{a.rutina.titulo.length>15?a.rutina.titulo.slice(0,12)+"...":a.rutina.titulo}</Text>
+                                    <Text style={{paddingLeft:5,color:"white"}}>{a.rutina.titulo.length>15?a.rutina.titulo.slice(0,12)+"...":a.rutina.titulo}</Text>
                                 </View>
                             </View>
                        </View> 
@@ -343,8 +344,8 @@ export default function Perfil() {
                         <IconActivityPerfil></IconActivityPerfil>
                     </View>
                     <View>
-                        <Text style={{textAlign:"center",fontWeight:"bold",fontSize:15}}>Sube tu primer Habito</Text>
-                        <Text style={{textAlign:"center"}}>Tus habitos publicadas apareceran aqui</Text>
+                        <Text style={{color:"white",textAlign:"center",fontWeight:"bold",fontSize:15}}>Sube tu primer Habito</Text>
+                        <Text style={{color:"white",textAlign:"center"}}>Tus habitos publicadas apareceran aqui</Text>
                     </View>
                      
                    
@@ -354,7 +355,7 @@ export default function Perfil() {
 {/*TENER EN CUENTA QUE METAS NO NESECITA DEL GETIMAGE PORQUE ESTE YA LO USA EN EL SETDATAMETAS*/}
             <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center"}}>
                 <Text style={styles.proyecto_title}>Metas</Text>
-                <IconLock></IconLock>
+                <IconLock color='white'></IconLock>
             </View>
          <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap',justifyContent:'center'}}>
                 {dataMetas.length>0?
@@ -370,7 +371,7 @@ export default function Perfil() {
                                 
                                )}
                                <View style={styles.div_c_body}>
-                                    <Text style={{paddingLeft:5}}>{a.titulo.length>15?a.titulo.slice(0,13)+"...":a.titulo}</Text>
+                                    <Text style={{color:"white",paddingLeft:5}}>{a.titulo.length>15?a.titulo.slice(0,13)+"...":a.titulo}</Text>
                                 </View>
                             </View>
                        </View> 
@@ -384,8 +385,8 @@ export default function Perfil() {
                         <IconActivityPerfil></IconActivityPerfil>
                     </View>
                     <View>
-                        <Text style={{textAlign:"center",fontWeight:"bold",fontSize:15}}>Sube tu primera Meta</Text>
-                        <Text style={{textAlign:"center"}}>Tus metas solo tu las podras vizualizar</Text>
+                        <Text style={{color:"white",textAlign:"center",fontWeight:"bold",fontSize:15}}>Sube tu primera Meta</Text>
+                        <Text style={{color:"white",textAlign:"center"}}>Tus metas solo tu las podras vizualizar</Text>
                     </View>
                      
                    
@@ -397,6 +398,7 @@ export default function Perfil() {
         
         </View> 
         :<Love></Love>}
+    </View>
     </View>
     </ScrollView>   
    </>
@@ -410,7 +412,7 @@ const styles=StyleSheet.create({
         textAlign:'center',
         fontWeight:'bold',
         textDecorationLine:"underline",
-       
+        color:"white",
         padding:10,
     },
     proyecto:{
@@ -425,7 +427,7 @@ const styles=StyleSheet.create({
         borderStyle:'solid',
         borderRadius:5,
         width:118,       
-        height:180,
+        height:185,
         marginTop:8,
         marginRight:0.8,
         marginLeft:0.8,
@@ -439,7 +441,8 @@ const styles=StyleSheet.create({
         boxShadow:"0px 0px 8px 1px black",
         backgroundColor:'transparent',
         alignItems:'flex-start',   
-        paddingTop:8,       
+        paddingTop:8,
+        paddingBottom:5,        
         borderBottomLeftRadius:5,
         borderBottomRightRadius:5
     },
@@ -459,9 +462,11 @@ const styles=StyleSheet.create({
         
     },
     contenedor_principal:{
-        display:'flex',       
-        justifyContent:'center',
-        alignItems:'center',
+      display:'flex',       
+      justifyContent:'center',
+      alignItems:'center',
+      
+      
       marginLeft:0,
       marginRight:0,
       marginBottom:0,

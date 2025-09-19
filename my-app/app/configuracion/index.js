@@ -1,10 +1,10 @@
 import { Link, router, Stack, useRouter } from 'expo-router'
 import React from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { IconLogin, IconSafe, IconUser } from '../../assets/Icons'
 import { useUser } from '../../components/UserContext'
 
-export default function index() {
+export default function Index() {
  const navegar=useRouter()
  const {user,setUser}=useUser()
   
@@ -13,50 +13,51 @@ export default function index() {
  }
     return (
     <>
-    <Stack.Screen options={{headerTitle:"Configuacion"}}></Stack.Screen>
+    <Stack.Screen options={{headerTitle:"Configuacion",headerStyle:{backgroundColor:"#131313"},headerTintColor:"white"}}></Stack.Screen>
+    <ScrollView style={{backgroundColor:"#131313"}}>
     <View>      
         <View style={styles.contenedor}>
             <View style={styles.contenedor_icon}>
-                <IconUser></IconUser>
+                <IconUser color='white'></IconUser>
             </View>
             <View style={styles.contenedor_info}>                
                <Link href={"/configuracion/cuenta/cuenta"} asChild>
                     <Pressable>
-                        <Text>Tu cuenta</Text>
-                        <Text>Consulta Informacion de tu cuenta</Text>
+                        <Text style={{color:"white"}}>Tu cuenta</Text>
+                        <Text style={{color:"white"}}>Consulta Informacion de tu cuenta</Text>
                     </Pressable>
                </Link>
             </View>
        </View>
         <View style={styles.contenedor}>
             <View style={styles.contenedor_icon}>
-                <IconSafe></IconSafe>
+                <IconSafe color='white'></IconSafe>
             </View>
             <View style={styles.contenedor_info}>                
                <Link href={"/configuracion/cuenta/cuenta"} asChild>
                     <Pressable>
-                        <Text>Seguridad</Text>
-                        <Text>agregar funciones de seguridad</Text>
+                        <Text  style={{color:"white"}}>Seguridad</Text>
+                        <Text  style={{color:"white"}}>agregar funciones de seguridad</Text>
                     </Pressable>
                </Link>
             </View>
        </View>
         <View style={styles.contenedor}>
             <View style={styles.contenedor_icon}>
-                <IconLogin></IconLogin>
+                <IconLogin color='white'></IconLogin>
             </View>
             <View style={styles.contenedor_info}>              
                 
                     <Pressable onPress={()=>{
                          logOut()
                          router.replace('/Login/app')}}>
-                      <Text>Cerrar Session</Text>
+                      <Text  style={{color:"white"}}>Cerrar Session</Text>
                     </Pressable>
                 
             </View>
        </View>
     </View>
-    
+    </ScrollView>
     </>
   )
 }
