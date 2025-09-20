@@ -15,12 +15,16 @@ const GetHabitosAll=async(req,res)=>{
     }
 }
 const GetHabitos=async(req,res)=>{
+    try{
     const {usuario_id}=req.params
     const modelo=await Habitos.findAll({where:{usuario_id}})
     if(!modelo){
         return res.status(404).json({message:"No se encontro ese habito"})
     }
     res.status(200).json(modelo)
+    }catch(err){
+        console.error(err.message)
+    }
 }
 const InsertHabitos=async(req,res)=>{
     //const  titulo="Comer 5 comidas al dia"
@@ -29,8 +33,9 @@ const InsertHabitos=async(req,res)=>{
     //const activo=1
     //const fecha_inicio
     //const usuario_id=1
-    const {titulo,descripcion,imagen,frecuencia,activo,fecha,usuario_id}=req.body
-    if(!titulo,!frecuencia){
+    try{
+        const {titulo,descripcion,imagen,frecuencia,activo,fecha,usuario_id}=req.body
+    if(!titulo||!frecuencia){
         return res.status(404).json({message:"No se llenaron todos los campos"})
     }
     const modelo=await Habitos.create({
@@ -50,6 +55,9 @@ const InsertHabitos=async(req,res)=>{
     //    creacion:new Date()
     //})
     res.status(200).json({message:"Se creo el habito correctamente"})
+    }catch(err){
+        console.error(err.message)
+    }
 }
 //const GetAllPublicacionesActividades=async(req,res)=>{
 //    try{
