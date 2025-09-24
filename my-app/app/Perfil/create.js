@@ -1,11 +1,12 @@
-import { Stack } from 'expo-router'
+import { Stack, useRouter } from 'expo-router'
 import React, { useState } from 'react'
-import { View,Text,TextInput, Pressable, Button, Image, StyleSheet, ScrollView } from 'react-native'
+import { View,Text,TextInput, Pressable, Button, Image, StyleSheet, ScrollView, ToastAndroid } from 'react-native'
 import constantes from 'expo-constants'
 import axios from 'axios'
 import * as PickerImage from "expo-image-picker"
 import getHost from '../../hooks/getHost'
 export default function create() {
+  const navegar=useRouter()
   const [userDataForm, setuserDataForm] = useState({
     imagen:'',
     nombre:'',
@@ -44,16 +45,22 @@ export default function create() {
       ...userDataForm,
       imagen: imageUrl,
     });
-
-    alert("Usuario Registrado!!");
+    ToastAndroid.show("Usuario Registrado!!",ToastAndroid.BOTTOM)
+    navegar.replace("/Panel")
   } catch (err) {
-    alert("Hubo un error: " + err.message);
+    ToastAndroid.show("Llene todos los campos",ToastAndroid.BOTTOM)
+    
   }
 };
 
   const AddImage = async () => {
+    let permissionResult = await PickerImage.requestMediaLibraryPermissionsAsync();
+            if (permissionResult.granted === false) {
+            alert("Se necesita permiso para acceder a la galería.");
+            return;
+            }
   let result = await PickerImage.launchImageLibraryAsync({
-    mediaTypes: ['images'],
+    mediaTypes: PickerImage.MediaTypeOptions.All,
     allowsEditing: true,
     aspect: [4, 3],
     quality: 1,
@@ -130,6 +137,7 @@ const styles=StyleSheet.create({
     },
     input_form:{
         color:"white",
+        padding:10,
         borderWidth:2,
         borderStyle:'solid',
         borderColor:'#141414',

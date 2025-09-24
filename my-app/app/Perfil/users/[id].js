@@ -241,7 +241,7 @@ export default function UserDiferent() {
    <View style={{paddingBottom:40}}>
    
     <View>
-        <Text style={{textAlign:'center',color:"white"}}>Actividades</Text>
+        <Text style={{textAlign:'center',color:"white",fontWeight:"bold"}}>Actividades</Text>
      </View>
    <View style={{display:'flex',justifyContent:'center',flexDirection:'row',flexWrap:'wrap'}}>
     
@@ -255,7 +255,7 @@ export default function UserDiferent() {
                                         <View style={{display:'flex',justifyContent:'space-between'}}>
                                            
                                            {a.rutina.imagen&&(
-                                            <Image source={{uri:GetImage(a.rutina.imagen)}} style={{width:116,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                            <Image source={{uri:GetImage(a.rutina.imagen)}} style={{width:114,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                             )}
                                            <View style={styles.div_c_body}>
                                                
@@ -268,10 +268,19 @@ export default function UserDiferent() {
                                   </Link>
         )
     })
-    :<Text style={{fontWeight:'bold',fontSize:15}}>No hay publicaciones de actividades Actualmente </Text>}
+    :
+    <View style={{marginBottom:10,marginTop:10}}>
+        <View style={{flexDirection:"row",alignSelf:"center", borderTopLeftRadius: 50,
+                      borderTopRightRadius: 50,
+                      borderBottomLeftRadius: 50,
+                      borderBottomRightRadius: 50,borderWidth:2,marginTop:5,borderColor:"#4b4b4b",padding:10,borderStyle:"solid"}}>
+                       <IconActivity color='white'></IconActivity>
+                    </View>
+    <Text style={{fontWeight:'bold',fontSize:15,color:"white"}}>No hay publicaciones de actividades</Text>
+    </View>}
    </View>
-   <View>
-        <Text style={{textAlign:'center',color:"white"}}>Habitos</Text>
+   <View style={{marginTop:10}}>
+        <Text style={{textAlign:'center',color:"white",fontWeight:"bold"}}>Habitos</Text>
    </View>
    <View style={{display:'flex',justifyContent:'center',flexDirection:'row',flexWrap:'wrap'}}>
         {dataHabitosAnother.length>0?
@@ -282,7 +291,7 @@ export default function UserDiferent() {
                         <View style={styles.proyecto_c}>
                             <View style={{display:'flex',justifyContent:'space-between'}}>
                                 {h.rutina.imagen&&(
-                                    <Image source={{uri:GetImage(h.rutina.imagen)}} style={{width:116,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                    <Image source={{uri:GetImage(h.rutina.imagen)}} style={{width:114,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                 )}
                                 <View style={styles.div_c_body}>
                                     <Text style={{paddingLeft:5,color:"white"}}>{h.rutina.titulo.length>15?h.rutina.titulo.slice(0,12)+"...":h.rutina.titulo}</Text>
@@ -294,7 +303,16 @@ export default function UserDiferent() {
                 
             )
         })
-        :<Text style={{fontWeight:'bold',fontSize:15,color:"white"}}>No hay datos de habitos Actualmente</Text>}
+        :
+        <View style={{marginTop:10}}> 
+                <View style={{flexDirection:"row",alignSelf:"center", borderTopLeftRadius: 50,
+                      borderTopRightRadius: 50,
+                      borderBottomLeftRadius: 50,
+                      borderBottomRightRadius: 50,borderWidth:2,borderColor:"#4b4b4b",padding:10,marginTop:5,borderStyle:"solid"}}>
+                       <IconActivity color='white'></IconActivity>
+                </View>
+            <Text style={{fontWeight:'bold',fontSize:15,color:"white"}}>No hay publicaciones de habitos </Text>
+        </View>}
    </View>
    <View>
     {mostrarMetas?
@@ -311,7 +329,7 @@ export default function UserDiferent() {
                                 <View style={styles.proyecto_c}>
                                     <View style={{display:'flex',justifyContent:'space-between'}}>
                                         {m.imagen&&(
-                                            <Image source={{uri:GetImage(m.imagen)}} style={{width:116,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                            <Image source={{uri:GetImage(m.imagen)}} style={{width:114,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                         )}
                                         <View style={styles.div_c_body}>
                                             <Text style={{paddingLeft:5,color:"white"}}>{m.titulo.length>15?m.titulo.slice(0,12)+"...":m.titulo}</Text>
@@ -457,7 +475,7 @@ const styles=StyleSheet.create({
     proyecto_c:{
         boxShadow:"0px 0px 2px 1px black",
         flexDirection:'row',
-        borderWidth:1,
+        borderWidth:2,
         borderColor:'black',
         borderStyle:'solid',
         borderRadius:5,
