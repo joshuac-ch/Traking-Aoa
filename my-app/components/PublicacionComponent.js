@@ -12,8 +12,10 @@ export default function PublicacionComponent({datosUser,datasRutina,publicacionI
             <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',margin:10}}>
                 <View style={{display:'flex',flexDirection:'row'}}>
                     <View >
-                        <Link style={{marginRight:10}} href={`/Perfil/users/${datosUser.id}`}>
-                        <Image source={{uri:GetImage(datosUser.imagen)}} style={{width:60,height:60,borderRadius:10,marginRight:10}}></Image>
+                        <Link style={{marginRight:10}} href={`/Perfil/users/${datosUser.id}`} asChild>
+                        <Pressable>
+                            <Image source={{uri:GetImage(datosUser.imagen)}} style={{width:60,height:60,borderRadius:10,marginRight:10}}></Image>
+                        </Pressable>
                         </Link>
                     </View>
                     <View>
