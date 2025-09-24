@@ -222,12 +222,15 @@ export default function Panel() {
   })
  }
  return(
-    <Animated.View style={{backgroundColor:backgroundColor,borderRadius:20}}>      
+    <Animated.View style={{backgroundColor:backgroundColor, borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,}}>      
       <View style={styles.contenedorpresabe}>
       <Pressable onPress={() => navegar(ruta_principal)}>
         <View style={styles.btn_router}>
           <IconLeft color='white' />         
-            <Text className="text-white text-sm mt-1 pl-5 text-center ">Ir a {label}</Text>
+            <Text style={{color:"white",fontWeight:"semibold",alignSelf:"center",marginLeft:10}} >Ir a {label}</Text>
           </View>
       </Pressable>
 
@@ -270,11 +273,11 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
      <Stack.Screen options={{headerShown:false,contentStyle: { backgroundColor: "#131313" }}}></Stack.Screen>
      <View style={{backgroundColor:"#131313"}}>
         <View key={miuser.id}  style={styles.contenedor_perfil}>
-        <View className='flex flex-row '>
+        <View style={{flexDirection:"row"}}>
           <Image style={styles.image} source={{uri:GetImage(miuser.imagen)}}></Image>
         <View style={{flexDirection:'column',justifyContent:"flex-start",marginTop:10,height:20}}>{/*Verficar esto */}
-            <Text className="text-white">{miuser.nombre} {miuser.apellido}</Text>
-            <Text  className="text-white font-bold">{miuser.correo}</Text>
+            <Text style={{color:"white"}} >{miuser.nombre} {miuser.apellido}</Text>
+            <Text style={{color:"white",fontWeight:"bold"}}>{miuser.correo}</Text>
         </View>       
         </View>
 
@@ -290,7 +293,7 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
         
         </View>
     <View style={{marginLeft:30,marginBottom:10}}>
-       <Text className="text-white text-lg " >Metas para este {new Date().getFullYear()}</Text>
+       <Text style={{color:"white",fontWeight:"bold"}}>Metas para este {new Date().getFullYear()}</Text>
     </View>   
    <ScrollView  horizontal showsHorizontalScrollIndicator={false} scrollEnabled={metas.length>=5} contentContainerStyle={{paddingHorizontal:30,alignItems:"center"}}>
     <View style={[styles.contenedorCarrusel]}>
@@ -315,7 +318,7 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
                 <IconDontMetas></IconDontMetas>
               </View>
               <View>
-                <Text className="text-white text-sm mt-1 font-bold">No hay metas</Text>
+                <Text style={{color:"white",fontWeight:"bold"}}>No hay metas</Text>
               </View>
           </View>}      
           
@@ -334,7 +337,7 @@ const anchoImagen=metas.length===1?anchoPantalla-60:(anchoPantalla-60)/metas.len
       
       <Pressable>
         <View>
-        <Text className="text-white text-sm mt-1 font-bold">Analisis inteligente </Text>
+        <Text style={{color:"white",fontWeight:"bold"}} >Analisis inteligente </Text>
       </View>
       </Pressable>
       
@@ -616,11 +619,24 @@ const styles=StyleSheet.create({
     flexDirection:'row',
     justifyContent:"center",
     alignItems:'center',
-    borderRadius:20,
+    
     paddingLeft:5,
     paddingRight:5,
-          
-    boxShadow:'0px 0px 8px 1px #4b4b4b',
+    borderWidth:2,
+    borderColor:"#4b4b4b",
+    borderStyle:"solid",  
+    
+   // 👇 sombra equivalente a box-shadow
+  shadowColor: "#4b4b4b",                // color
+  shadowOffset: { width: 0, height: 0 }, // 0px 0px
+  shadowOpacity: 0.5,                    // opacidad de la sombra
+  shadowRadius: 8,                       // blur radius (≈ 8px)
+
+  elevation: 0, 
+  borderTopLeftRadius: 20,
+  borderTopRightRadius:20,
+  borderBottomLeftRadius: 20,
+  borderBottomRightRadius: 20,
   },
     contenedor_perfil:{
       
@@ -636,8 +652,11 @@ const styles=StyleSheet.create({
     },
     btn_router:{
       flexDirection:'row',
-        
-      padding:5,
+      paddingLeft:5,
+      paddingRight:5,
+      paddingBottom:5,
+      paddingTop:5,
+      
       width:280,
       
         
