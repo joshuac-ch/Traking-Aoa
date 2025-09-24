@@ -1,10 +1,10 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native'
+import { Pressable, ScrollView, StyleSheet, TextInput, ToastAndroid, View } from 'react-native'
 import { Text } from 'react-native'
 import { useUser } from '../../components/UserContext'
 import Constants from "expo-constants"
-import { Stack } from 'expo-router'
+import { Stack, useRouter } from 'expo-router'
 import getHost from '../../hooks/getHost'
 export default function Create() {
     const host=getHost() //No dejar espacios en blancko en el Host
@@ -15,21 +15,24 @@ export default function Create() {
         titulo:'',
         descripcion:''
     })
+    const navegar=useRouter()
     //const [titulo, settitulo] = useState('Toma agua')
     //const [descripcion, setdescripcion] = useState('')
     const EnviarDatos=async()=>{
         try{
             await axios.post(`http://${host}:4000/actividades/i`,DataForm)
-            alert("Se enviaon los datos correctamente")
+            ToastAndroid.show("Se creo la actividad",ToastAndroid.BOTTOM)
+            navegar.replace("/Panel")
         }catch(err){
-            alert("Debe llenar todos los campos")
+           ToastAndroid.show("Debe llenar todos los campos",ToastAndroid.BOTTOM)
+            
         }
     }
     return (
     <>
     <Stack.Screen options={{title:'Crear Actividad',headerStyle:{backgroundColor:"#131313"},headerTintColor:"white"}}></Stack.Screen>
    <ScrollView style={{backgroundColor:"#131313"}}>
-    <View className='m-4'>
+    <View style={{margin:15}}>
     <View>
         <Text style={{color:"white"}}>Imagen</Text>
         <TextInput style={styles.form_input} onChangeText={text=>setDataForm({...DataForm,imagen:text})} value={DataForm.imagen} placeholder='ingrese link de imagen'></TextInput>

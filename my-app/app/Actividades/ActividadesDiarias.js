@@ -39,7 +39,7 @@ export default function ActividadesDiarias() {
     <ScrollView style={{backgroundColor:"#131313"}}>
     <View className=''>
              <View style={styles.header_Acti}>
-            <Text className='font-black text-lg text-white'>Hoy</Text>
+            <Text style={{fontWeight:"bold",color:"white"}}>Hoy</Text>
             <View >
                 <Link href={'/Actividades/Create'} asChild>
                 <Pressable >

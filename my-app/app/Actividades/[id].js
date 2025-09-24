@@ -66,7 +66,7 @@ export default function DetalleActividad() {
         }
     
             await axios.put(`http://${local}:4000/actividades/u/${id}`,{...Formdata,imagen:imagenURL})
-            alert("Se actualizaron los datos")
+            alert("Se actualizo la actividad")
             //setloadding(false)
             //navegar.push("/Panel")
         }catch(err){
@@ -82,9 +82,14 @@ export default function DetalleActividad() {
        }
     },[id])
     const pickImage=async()=>{
-       
+       // pedir permisos
+        let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (permissionResult.granted === false) {
+        alert("Se necesita permiso para acceder a la galería.");
+        return;
+        }
        let result=await ImagePicker.launchImageLibraryAsync({
-           mediaTypes:['images','videos'],
+           mediaTypes: ImagePicker.MediaTypeOptions.All, // 👈 en lugar de array
            allowsEditing:true,
            aspect:[4,6],
            quality:1
@@ -159,7 +164,7 @@ export default function DetalleActividad() {
             </View>
 
            <View>
-             <View  style={styles.contenedor_img} className='p-4'>
+             <View  style={styles.contenedor_img} >
                 {Formdata.imagen&&(
                     <Image source={{uri:Formdata.imagen}} style={{width:200,height:250,borderRadius:20}}></Image>
                 )}
@@ -192,16 +197,16 @@ export default function DetalleActividad() {
                 </Modal>
             </View>
             <View className=''>
-                <Text className='font-black text-white'>Titutlo: </Text>
+                <Text style={{color:"white",fontWeight:"bold"}} >Titutlo: </Text>
                 <TextInput style={styles.input_form} value={Formdata.titulo} onChangeText={text=>setFordata({...Formdata,titulo:text})}></TextInput>
                 
             </View >
             <View >
-                <Text className='font-black text-white'>Desripcion:</Text>
+                <Text style={{color:"white",fontWeight:"bold"}}>Desripcion:</Text>
                 <TextInput style={styles.des_input_form} value={Formdata.descripcion} onChangeText={text=>setFordata({...Formdata,descripcion:text})}></TextInput>
             </View>
             <View className=''>
-                <Text className='font-black text-white'>Fecha Emitida: </Text>
+                <Text style={{color:"white",fontWeight:"bold"}}>Fecha Emitida: </Text>
                 <Text style={{color:"white"}}>{Formdata.fecha?new Date(Formdata.fecha).toLocaleDateString():""}</Text>
             
           </View>
@@ -242,6 +247,7 @@ const styles=StyleSheet.create({
         borderStyle:'solid',
         borderColor:"black",
         borderRadius:10,
+        padding:5,
         marginTop:10,
         marginBottom:10,
     },
@@ -253,6 +259,7 @@ const styles=StyleSheet.create({
         flexWrap:'wrap',
         backgroundColor:"white",
         borderRadius:10,
+        padding:10,
         marginTop:10,
         marginBottom:10,
         height:100
@@ -265,7 +272,7 @@ const styles=StyleSheet.create({
         boxShadow:'0px 0px 8px 1px black'
     },
     contenedor_img:{
-        
+        padding:20,
         display:'flex',
         flexDirection:'column',
         justifyContent:'center',       
