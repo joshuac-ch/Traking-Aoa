@@ -92,10 +92,10 @@ export default function Notificaciones() {
               <Text style={{fontWeight:"bold",color:"white"}}>Todas</Text>
             </View>
             <View>
-              <Text className='text-white'>Verificado</Text>
+              <Text style={{color:"white"}} >Verificado</Text>
             </View>
             <View>
-              <Text className='text-white'>Menciones</Text>
+              <Text style={{color:"white"}} >Menciones</Text>
             </View>
           </View>
           <View>
@@ -155,14 +155,14 @@ export default function Notificaciones() {
                       }
                     </View>
                     <View>
-                      <Text>{n.noti.mensaje} a {n.creador.nombre}</Text>
-                      <Text>{n.contenido.titulo}</Text>
+                      <Text style={{color:"white"}}>{n.noti.mensaje} a {n.creador.nombre}</Text>
+                      <Text style={{color:"white"}}>{n.contenido.titulo}</Text>
                       {n.contenido.imagen&&(
                         <Image source={{uri:GetImage(n.contenido.imagen)}} style={{width:100,height:150,borderRadius:10}}></Image>
                       )}
                     </View>
                   </View>
-                  <View><IconElipsis></IconElipsis></View>
+                  <View><IconElipsis color='white'></IconElipsis></View>
                   </View>
                 </Pressable>
                </Link>
@@ -185,11 +185,11 @@ export default function Notificaciones() {
                     }
                   </View>
                   <View>
-                    <Text>{n.follow.mensaje} {n.user.nombre}</Text>
+                    <Text style={{color:"white"}}>{n.follow.mensaje} {n.user.nombre}</Text>
                     
                   </View>
                 </View>
-                 <View><IconElipsis></IconElipsis></View>
+                 <View><IconElipsis color='white'></IconElipsis></View>
               </View>
               </Pressable>
              </Link>
