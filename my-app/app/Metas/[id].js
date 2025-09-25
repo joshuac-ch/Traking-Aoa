@@ -82,8 +82,14 @@ export default function DetalleMetas() {
         })
     }
     const OpenImage=async()=>{
+        // pedir permisos
+        let permissionResult = await ImagePicket.requestMediaLibraryPermissionsAsync();
+        if (permissionResult.granted === false) {
+        alert("Se necesita permiso para acceder a la galería.");
+        return;
+        }
         let result=await ImagePicket.launchImageLibraryAsync({
-            mediaTypes:'images',
+            mediaTypes: ImagePicket.MediaTypeOptions.All, // 👈 en lugar de array
             allowsEditing:true,
             aspect:[4,6],
             quality:1
@@ -102,9 +108,9 @@ export default function DetalleMetas() {
         {
         <View style={{marginTop:20,marginBottom:30}}>
        {FormDataMetas!=null?
-       <View className='m-4'>
+       <View style={{margin:15}}>
             <View>
-                <Text className='font-black text-lg text-white'>Imagen: </Text>
+                <Text style={{color:"white",fontWeight:"bold"}}>Imagen: </Text>
               {FormDataMetas.imagen&&
               (  <Image style={{width:200,alignSelf:'center',height:300,borderRadius:10}} source={{uri:FormDataMetas.imagen}}></Image>)
               }
@@ -114,23 +120,23 @@ export default function DetalleMetas() {
                 
             </View>
            <View>
-                <Text className='font-black text-lg text-white'>Titulo: </Text>
+                <Text style={{color:"white",fontWeight:"bold"}}>Titulo: </Text>
                 <TextInput style={styles.form_input}
                 onChangeText={text=>setFormDataMetas({...FormDataMetas,titulo:text})} value={FormDataMetas.titulo}></TextInput>
             </View>
             <View>
-                <Text className='font-black text-lg text-white'>Descripcion: </Text>
+                <Text style={{color:"white",fontWeight:"bold"}}>Descripcion: </Text>
                 <TextInput style={styles.form_input}
                 onChangeText={text=>setFormDataMetas({...FormDataMetas,descripcion:text})} value={FormDataMetas.descripcion}></TextInput>    
             </View>
             <View>
-                <Text className='font-black text-lg text-white'>Meta Total: </Text>
+                <Text style={{color:"white",fontWeight:"bold"}}>Meta Total: </Text>
                 <TextInput style={styles.form_input} 
                  onChangeText={text=>setFormDataMetas({...FormDataMetas,meta_total:text})} value={FormDataMetas.meta_total}></TextInput>
             </View>
             <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
                <View style={{margin:5}}>
-                 <Text className='font-black text-lg text-white'>Fecha Limite: </Text>
+                 <Text style={{color:"white",fontWeight:"bold"}}>Fecha Limite: </Text>
                 <Text style={{color:"white"}}>{FormDataMetas.fecha_limite.toLocaleDateString()}</Text>  
                 </View>              
                 <Pressable style={{padding:5}} onPress={SeleccionDate}>
@@ -170,6 +176,7 @@ const styles=StyleSheet.create({
     },
     form_input:{
         color:"white",
+        padding:5,
         borderRadius:10,
         borderWidth:2,
         borderStyle:'solid',

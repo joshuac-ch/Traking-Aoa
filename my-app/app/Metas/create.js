@@ -1,11 +1,11 @@
 import { Picker } from '@react-native-picker/picker'
 import React,{useState } from 'react'
-import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, ToastAndroid, View } from 'react-native'
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker'
 import axios from 'axios'
 import Constants from "expo-constants"
 import { useUser } from '../../components/UserContext'
-import { Stack } from 'expo-router'
+import { Stack, useRouter } from 'expo-router'
 import * as ImagePicker from "expo-image-picker"
 import getHost from '../../hooks/getHost'
 export default function Create() {
@@ -19,14 +19,15 @@ export default function Create() {
     fecha_limite:new Date(),
     meta_total:100
   })
+  const navegar=useRouter()
   const EnviarDatos=async()=>{
-    try{
+    try{      
       const host=getHost()
       await axios.post(`http://${host}:4000/metas/i`,FormMetas)      
-      alert("Se creo la meta")
-
+      ToastAndroid.show("Se creo la meta",ToastAndroid.BOTTOM)
+      navegar.replace("/Panel")
     }catch(err){
-      alert(err.message)
+      ToastAndroid.show("Llenne todos los campos",ToastAndroid.BOTTOM)      
     }
   }
   
@@ -46,7 +47,7 @@ export default function Create() {
       <ScrollView style={{backgroundColor:"#131313"}}>
     <View>
       <Stack.Screen options={{title:'Crear Metas',headerStyle:{backgroundColor:"#131313"},headerTintColor:"white"}}></Stack.Screen>
-       <View className='m-4'>
+       <View style={{margin:15}}>
         <View>
         <Text style={{color:"white"}}>Crear Nueva Meta</Text>
        </View>
