@@ -3,12 +3,12 @@ import 'dotenv/config';
 
 export default {
   expo: {
-    name: 'Tracking-Aot',
-    slug: 'tracking-aot',
+    name: 'Tracking Aot',
+    slug: 'track12',
     version: '1.0.0',
     scheme: 'meta',
     orientation: 'portrait',
-    icon: './assets/corona.png',
+    icon: './assets/flor2.png',
     userInterfaceStyle: 'light',
     splash: {
       image: './assets/splash-icon.png',
@@ -16,18 +16,18 @@ export default {
       backgroundColor: '#ffffff',
     },
     extra: {
-      host: "192.168.18.25",
+      host: "3.87.87.124",
       eas:{
-         projectId: "63f98d9a-6f67-4a94-bd8d-085d71d5ff6f"
+         projectId: "7d4d14aa-8adc-447e-9b6b-85c42d24ecce"
       }
     },
     ios: {
       supportsTablet: true,
     },
     android: {
-      package: "com.ninodev1.trackingoat",
+      package: "com.ninodev3.track12",
       adaptiveIcon: {
-        foregroundImage: './assets/corona.png',
+        foregroundImage: './assets/flor2.png',
         backgroundColor: '#ffffff',
       },
       edgeToEdgeEnabled: true,
@@ -36,6 +36,8 @@ export default {
     web: {
       favicon: './assets/favicon.png',
     },
-    plugins: ['expo-router'],
+    plugins: [
+      "expo-router"
+    ]
   },
 };
