@@ -281,7 +281,7 @@ export default function Perfil() {
 
                                 <View style={{display:'flex',justifyContent:'space-between'}}>
                                 {a.rutina.imagen&&(
-                                    <Image source={{uri:GetImage(a.rutina.imagen)}} style={{width:116,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                    <Image source={{uri:GetImage(a.rutina.imagen)}} style={{width:114,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                 
                                 )}
                                     <View style={styles.div_c_body}>
@@ -327,7 +327,7 @@ export default function Perfil() {
                             
                             <View style={{display:'flex',justifyContent:'space-between'}}>
                               {a.rutina.imagen&&(
-                                <Image source={{uri:GetImage(a.rutina.imagen)}} style={{width:116,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                <Image source={{uri:GetImage(a.rutina.imagen)}} style={{width:114,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                               )}
                               <View style={styles.div_c_body}>
                                     <Text style={{paddingLeft:5,color:"white"}}>{a.rutina.titulo.length>15?a.rutina.titulo.slice(0,12)+"...":a.rutina.titulo}</Text>
@@ -367,7 +367,7 @@ export default function Perfil() {
                             
                             <View style={{display:'flex',justifyContent:'space-between'}}>
                                {a.imagen &&(
-                                <Image source={{uri:a.imagen}} style={{width:116,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
+                                <Image source={{uri:a.imagen}} style={{width:114,height:150,borderStyle:'solid',borderTopLeftRadius:3,borderTopRightRadius:3}}></Image>
                                 
                                )}
                                <View style={styles.div_c_body}>
@@ -422,7 +422,7 @@ const styles=StyleSheet.create({
     proyecto_c:{
         boxShadow:"0px 0px 2px 1px black",
         flexDirection:'row',
-        borderWidth:1,
+        borderWidth:2,
         borderColor:'black',
         borderStyle:'solid',
         borderRadius:5,
